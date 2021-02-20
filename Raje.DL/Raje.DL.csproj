@@ -14,4 +14,9 @@
 		<ProjectReference Include="..\Raje.Infra\Raje.Infra.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Services\DAL\DataAccess\" />
+	  <Folder Include="Services\DAL\Model\" />
+	</ItemGroup>
+
 </Project>
