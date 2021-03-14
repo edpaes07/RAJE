@@ -9,12 +9,11 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Raje.BLL.Services.Base
 {
-    public abstract class BaseCRUDService<TEntity, TResponse, TRequest, TSearchRequest, TSearchResponse> : ICRUDService<TEntity, TResponse, TRequest, TSearchRequest, TSearchResponse>
+    public abstract class BaseCRUDService<TEntity, TResponse, TRequest, TSearchRequest, TSearchResponse> : BaseService, ICRUDService<TEntity, TResponse, TRequest, TSearchRequest, TSearchResponse>
         where TEntity : IEntity
         where TResponse : IBaseResponse
         where TRequest : IBaseRequest
@@ -26,7 +25,7 @@ namespace Raje.BLL.Services.Base
         public readonly IRepository<TEntity> _repository;
         public readonly IMapper _mapper;
 
-        public BaseCRUDService(IRepository<TEntity> repository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
+        public BaseCRUDService(IRepository<TEntity> repository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _repository = repository;
             _mapper = mapper;
@@ -40,10 +39,6 @@ namespace Raje.BLL.Services.Base
             var query = _repository
                 .Query()
                 .Where(_ => _.FlagActive == active || active == null);
-
-            var filterByUser = GetFilterByUser();
-            if (filterByUser != null)
-                query.Where(filterByUser);
 
             var models = await query.SearchAsync();
 
@@ -63,10 +58,6 @@ namespace Raje.BLL.Services.Base
             var query = _repository
                 .Query()
                 .Where(_ => _.Id == id);
-
-            var filterByUser = GetFilterByUser();
-            if (filterByUser != null)
-                query.Where(filterByUser);
 
             TEntity model = await query
                 .FirstOrDefaultAsync();
@@ -112,11 +103,6 @@ namespace Raje.BLL.Services.Base
                 .PagedSearchAsync(search.PageIndex, search.PageSize);
             var searchResponse = _mapper.Map<BaseSearchResponse<TSearchResponse>>(searchResult);
             return searchResponse;
-        }
-
-        public virtual Expression<Func<TEntity, bool>> GetFilterByUser()
-        {
-            return null;
         }
     }
 }

@@ -1,9 +1,15 @@
 using Raje.BLL.Injections;
+using Raje.BLL.Mapper;
 using Raje.DAL.EF;
+using Raje.DL.DB.Admin;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -14,10 +20,15 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
+using System.Security.Principal;
+using System.Text;
+using Raje.DL.Services.BLL.Identity;
+using Raje.Infra.Const;
+using Raje.BLL.Services.Identity.Jwt;
 
 namespace Raje.API
 {
@@ -43,6 +54,7 @@ namespace Raje.API
                 o.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
+            ConfigAuthorizationService(services);
             ConfigDataBaseService(services);
             EFRepositoryDI.Config(services);
             BLLServicesDI.Config(services);
@@ -83,6 +95,8 @@ namespace Raje.API
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
+                mc.AddProfile(new MediaProfile());
+                mc.AddProfile(new UserProfile());
             });
 
             IMapper mapper = mapperConfig.CreateMapper();
@@ -96,7 +110,6 @@ namespace Raje.API
             , ILoggerFactory loggerFactory
             , IApiVersionDescriptionProvider apiProviderDescription)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -124,34 +137,94 @@ namespace Raje.API
             {
                 endpoints.MapControllers();
             });
-
         }
 
         private static readonly LoggerFactory ConsoleLoggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
+
+        #region [Authorization]
+        public virtual void ConfigAuthorizationService(IServiceCollection services)
+        {
+            var jwtOptions = new JwtOptions();
+            Configuration.GetSection("jwt").Bind(jwtOptions);
+            services.AddSingleton(jwtOptions);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "MultipleAuthentication";
+                options.DefaultChallengeScheme = "MultipleAuthentication";
+            })
+            .AddPolicyScheme("MultipleAuthentication", "Authorization Bearer or APIKey", options =>
+            {
+                options.ForwardDefaultSelector = context =>
+                {
+                    return JwtBearerDefaults.AuthenticationScheme;
+                };
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    // Validate the JWT Issuer (iss) claim
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtOptions.JwtIssuer,
+                    // Validate the JWT Audience (aud) claim
+                    ValidateAudience = true,
+                    ValidAudience = jwtOptions.JwtIssuer,
+
+                    // The signing key must match!
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.JwtKey)),
+
+                    // Validate the token expiry
+                    ValidateLifetime = true,
+                };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policies.UserToken, policy => policy.Requirements.Add(new UserAuthenticationRequirement()));
+            });
+
+            services.AddScoped<IAuthorizationHandler, UserAuthenticationHandler>();
+
+            //Disponibilizar o usuário logado através de DI
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IPrincipal>
+                (provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
+        }
+
+        #endregion
 
         #region [Swagger]
         public virtual void ConfigureSwaggerService(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "Raje API v1.0", Version = "v1.0" });
+                c.SwaggerDoc("v1.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "AppSneakers API v1.0", Version = "v1.0" });
 
-                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
-                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Inserir 'Bearer 'e em seguida o seu json web token (JWT)."
                 });
 
-                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                        },
-                        new List<string>()
+                          new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                }
+                            },
+                            new string[] {}
                     }
                 });
             });
@@ -159,6 +232,8 @@ namespace Raje.API
 
         public virtual void ConfigureSwagger(IApplicationBuilder app, IApiVersionDescriptionProvider apiProviderDescription)
         {
+            app.UseCors(CorsAllow);
+
             app.UseSwagger()
                .UseSwaggerUI(options =>
                {
@@ -188,6 +263,7 @@ namespace Raje.API
         }
 
         #endregion
+
 
         #region [DataBase]
         public virtual void ConfigDataBaseService(IServiceCollection services)

@@ -1,4 +1,6 @@
-﻿namespace Raje.DL.Request.Admin.Base
+﻿using System;
+
+namespace Raje.DL.Request.Admin.Base
 {
     public class BaseRequest : IBaseRequest
     {
