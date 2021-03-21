@@ -1,13 +1,17 @@
 ﻿using Raje.DL.DB.Admin;
 using Raje.DL.Services.BLL.Identity;
+using Raje.Infra.Const;
+using Raje.Infra.Enums;
+using Raje.Infra.Util;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
-namespace Raje.BLL.Services.Identity.Jwt
+namespace Raje.BLL.Services.Identity
 {
     public class JwtTokenService : IJwtTokenService
     {
@@ -22,7 +26,8 @@ namespace Raje.BLL.Services.Identity.Jwt
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Role, user.UserRole.Name),
+                new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(UserClaims.UserLastGuid,user.LastGuidAuthentication)
             };
 
@@ -47,8 +52,9 @@ namespace Raje.BLL.Services.Identity.Jwt
 
         private void AddUserRoleClaims(List<Claim> claims, User user)
         {
-            if (user.Name == UserRoleTypes.User.GetDescription())
+            if (user.UserRole.Name == UserRoleTypes.AdminMaster.GetDescription())
                 return;
         }
+
     }
 }

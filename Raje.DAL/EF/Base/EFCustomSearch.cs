@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Raje.DL.DB.Base;
-using Raje.DL.Services.DAL;
+﻿using Raje.DL.DB.Base;
 using Raje.DL.Services.DAL.DataAccess;
 using Raje.DL.Services.DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

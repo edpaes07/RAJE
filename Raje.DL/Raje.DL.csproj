@@ -1,22 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.5" />
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Raje.Infra\Raje.Infra.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raje.Infra\Raje.Infra.csproj" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Services\DAL\DataAccess\" />
-	  <Folder Include="Services\DAL\Model\" />
-	</ItemGroup>
+  <ItemGroup>
+    <Folder Include="DB\Integration\" />
+    <Folder Include="Response\ERP\" />
+  </ItemGroup>
 
 </Project>

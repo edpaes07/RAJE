@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Raje.DL.Request.Base
+﻿namespace Raje.DL.Request.Admin.Base
 {
     public class BaseResetPasswordRequest : IBaseResetPasswordRequest
     {
-        public string Cpf { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿using Raje.DL.Services.BLL.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Raje.DL.Services.BLL.Identity;
 using Raje.Infra.Const;
-using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,9 +9,9 @@ namespace Raje.BLL.Services.Identity.Jwt
 {
     public class UserAuthenticationHandler : AuthorizationHandler<UserAuthenticationRequirement>
     {
-        readonly ILoginService _service;
+        readonly IUserNameService _service;
 
-        public UserAuthenticationHandler(ILoginService service)
+        public UserAuthenticationHandler(IUserNameService service)
         {
             _service = service;
         }
@@ -25,8 +25,8 @@ namespace Raje.BLL.Services.Identity.Jwt
             }
 
             // Bail out if we can't read an int from the 'Name' claim
-            string id = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
-            if (String.IsNullOrEmpty(id))
+            string loginName = context.User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            if (String.IsNullOrEmpty(loginName))
             {
                 return Task.CompletedTask;
             }
@@ -38,7 +38,7 @@ namespace Raje.BLL.Services.Identity.Jwt
             }
 
             // Finally, validate that the LastGuid value from the claim is equal to LastGuidAuthentication
-            string lastUserGuidAuthentication = requirement.GetLastGuidAuthentication(_service, Convert.ToInt64(id));
+            string lastUserGuidAuthentication = requirement.GetLastGuidAuthentication(_service, loginName);
             if (lastGuidAuthentication == lastUserGuidAuthentication)
             {
                 // Mark the requirement as satisfied
@@ -55,9 +55,9 @@ namespace Raje.BLL.Services.Identity.Jwt
         {
         }
 
-        public string GetLastGuidAuthentication(ILoginService _service, long id)
+        public string GetLastGuidAuthentication(IUserNameService _service, string loginName)
         {
-            return _service.GetLastGuidAuthentication(id);
+            return _service.GetLastGuidAuthentication(loginName);
         }
     }
 }

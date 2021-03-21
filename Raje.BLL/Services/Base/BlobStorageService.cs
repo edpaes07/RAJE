@@ -1,5 +1,4 @@
-﻿using Raje.DL.DB.Admin;
-using Raje.DL.Services.BLL.Base;
+﻿using Raje.DL.Services.BLL.Base;
 using Raje.Infra.Const;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
@@ -8,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Raje.BLL.Services.Base
+namespace Raje.BLL.Services
 {
     public class BlobStorageService : IBlobStorageService
     {
@@ -38,65 +37,6 @@ namespace Raje.BLL.Services.Base
             return await UploadFile(cloudBlockBlob, imageBuffer, stream);
         }
 
-        /// <summary>
-        /// Saves an file to the blob storage configured on app settings file
-        /// </summary>
-        /// <param name="filename">Image file name</param>
-        /// <param name="imageBuffer">Image file bytes buffer</param>
-        /// <param name="stream">Image file in-memory stream</param>
-        /// <returns>Returns TRUE and STRING containing the public URL of the image saved</returns>
-        public async Task<(bool, string)> SaveMediaToStorage(string filename, Media media, byte[] imageBuffer = null, Stream stream = null, string oldFileName = null)
-        {
-            var cloudBlobContainerResult = await GetCloudBlobContainer(BlobContainer.media);
-            // Check if a container was returned
-            if (!cloudBlobContainerResult.Item1)
-                return (false, null);
-
-            string directoryPath = String.Format("{0}", media.FileName);
-
-            CloudBlobDirectory directory = cloudBlobContainerResult.Item2.GetDirectoryReference(directoryPath);
-            CloudBlockBlob cloudBlockBlob = await GetCloudBlockBlob(directory, filename, oldFileName);
-            return await UploadFile(cloudBlockBlob, imageBuffer, stream);
-        }
-
-        public async Task<Stream> DownloadMedia(string fileName, Media media)
-        {
-            Stream mem = new MemoryStream();
-            var cloudBlobContainerResult = await GetCloudBlobContainer(BlobContainer.media);
-            // Check if a container was returned
-            if (!cloudBlobContainerResult.Item1)
-                return null;
-
-            string directoryPath = String.Format("{0}", media.FileName);
-
-            CloudBlobDirectory directory = cloudBlobContainerResult.Item2.GetDirectoryReference(directoryPath);
-            CloudBlockBlob cloudBlockBlob = await GetCloudBlockBlob(directory, fileName);
-
-            if (cloudBlockBlob != null)
-                cloudBlockBlob.DownloadToStream(mem);
-            mem.Position = 0;
-            return mem;
-        }
-
-        public async Task<Stream> DownloadFile(string fileName, Media media)
-        {
-            Stream mem = new MemoryStream();
-            var cloudBlobContainerResult = await GetCloudBlobContainer(BlobContainer.taxreceipt);
-            // Check if a container was returned
-            if (!cloudBlobContainerResult.Item1)
-                return null;
-
-            string directoryPath = String.Format("{0}/{1}/{2}", media.FileName);
-
-            CloudBlobDirectory directory = cloudBlobContainerResult.Item2.GetDirectoryReference(directoryPath);
-            CloudBlockBlob cloudBlockBlob = await GetCloudBlockBlob(directory, fileName);
-
-            if (cloudBlockBlob != null)
-                cloudBlockBlob.DownloadToStream(mem);
-            mem.Position = 0;
-            return mem;
-        }
-
         #region [private]
         private (bool, CloudBlobClient) GetCloudBlobClient()
         {
@@ -113,7 +53,7 @@ namespace Raje.BLL.Services.Base
                 return (false, null);
         }
 
-        private async Task<(bool, CloudBlobContainer)> GetCloudBlobContainer(string containerName = BlobContainer.blob, bool publicAcess = true)
+        private async Task<(bool, CloudBlobContainer)> GetCloudBlobContainer(string containerName = RajeBlobContainer.rajeblob, bool publicAcess = true)
         {
             var cloudClientResult = GetCloudBlobClient();
             if (!cloudClientResult.Item1)
@@ -136,6 +76,20 @@ namespace Raje.BLL.Services.Base
 
             await cloudBlobContainer.SetPermissionsAsync(permissions);
             return (true, cloudBlobContainer);
+        }
+
+        private async Task<CloudBlockBlob> GetCloudBlockBlob(CloudBlobContainer container, string filename, string oldFileName = null)
+        {
+            //delete old file if exist
+            if (!String.IsNullOrEmpty(oldFileName))
+            {
+                CloudBlockBlob cloudBlockBlobToBeDeleted = container.GetBlockBlobReference(oldFileName);
+                await cloudBlockBlobToBeDeleted.DeleteIfExistsAsync();
+            }
+
+            // Get a reference to the blob address, then upload the file to the blob.
+            CloudBlockBlob cloudBlockBlob = container.GetBlockBlobReference(filename);
+            return cloudBlockBlob;
         }
 
         private async Task<CloudBlockBlob> GetCloudBlockBlob(CloudBlobDirectory container, string filename, string oldFileName = null)
@@ -170,6 +124,16 @@ namespace Raje.BLL.Services.Base
             return (true, cloudBlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString());
         }
 
+        private async Task<(bool, string)> UploadFile(CloudBlockBlob cloudBlockBlob, string fileContent, string contentType)
+        {
+            if (fileContent == null)
+                return (false, null);
+
+            cloudBlockBlob.Properties.ContentType = contentType;
+            await cloudBlockBlob.UploadTextAsync(fileContent);
+
+            return (true, cloudBlockBlob.SnapshotQualifiedStorageUri.PrimaryUri.ToString());
+        }
         #endregion
     }
 }

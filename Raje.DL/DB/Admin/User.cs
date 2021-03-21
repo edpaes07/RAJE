@@ -8,31 +8,36 @@ namespace Raje.DL.DB.Admin
 {
     public class User : EntityAuditBase
     {
-        #region [ Personal Data ]
-
         [Required]
-        [MaxLength(100)]
+        [MaxLength(200)]
         public string FullName { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(320)]
         public string UserName { get; set; }
 
-        [Required]
+        [MaxLength(320)]
+        public string Email { get; set; }
+
         public string PasswordHash { get; set; }
 
         [Required]
         public DateTime BirthDate { get; set; }
 
-        [Required]
-        [MaxLength(200)]
-        public string City { get; set; }
+        [ForeignKey("City")]
+        public long CityId { get; set; }
 
-        [Required]
-        [MaxLength(2)]
-        public string State { get; set; }
+        public City City { get; set; }
 
-        #endregion [ Personal Data ] 
+        [ForeignKey("State")]
+        public long StateId { get; set; }
+
+        public State State { get; set; }
+
+        [ForeignKey("UserRole")]
+        public long UserRoleId { get; set; }
+
+        public UserRole UserRole { get; set; }
 
         [MaxLength(36)]
         public string LastGuidAuthentication { get; set; }
@@ -41,15 +46,5 @@ namespace Raje.DL.DB.Admin
 
         [MaxLength(100)]
         public string RefreshToken { get; set; }
-
-        [MaxLength(6)]
-        public int VerificationCode { get; set; }
-
-        [ForeignKey("Media")]
-        public long? MediaId { get; set; }
-
-        public virtual Media Media { get; set; }
-
-        public virtual ICollection<Assessment> Assessment { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Raje.DL.Request.Admin.Base
+﻿namespace Raje.DL.Request.Admin.Base
 {
     public interface IBaseRequest
     {

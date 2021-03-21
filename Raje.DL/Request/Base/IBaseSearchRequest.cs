@@ -9,7 +9,6 @@ namespace Raje.DL.Request.Admin.Base
         public bool? FlagActive { get; set; }
 
         int PageIndex { get; set; }
-
         int PageSize { get; set; }
     }
 }
