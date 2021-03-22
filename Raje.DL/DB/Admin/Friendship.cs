@@ -5,16 +5,13 @@ namespace Raje.DL.DB.Admin
 {
     public class Friendship : EntityAuditBase
     {
-        [ForeignKey("User")]
         public long UserId { get; set; }
-
-        public virtual User User { get; set; }
 
         [ForeignKey("Friend")]
         public long FriendId { get; set; }
 
         public virtual User Friend { get; set; }
 
-        public bool IsValid { get; set; }
+        public bool IsValid { get; set; } = false;
     }
 }

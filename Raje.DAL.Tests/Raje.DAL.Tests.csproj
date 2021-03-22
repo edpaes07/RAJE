@@ -40,6 +40,12 @@
 	<Content Include="..\Raje.DAL\Seeds\JSONs\user.json" Link="Seeds\JSONs\user.json">
 	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	</Content>
+	  <Content Include="..\Raje.DAL\Seeds\JSONs\media.json" Link="Seeds\JSONs\media.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\Raje.DAL\Seeds\JSONs\contents.json" Link="Seeds\JSONs\contents.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
   </ItemGroup>
  
 </Project>

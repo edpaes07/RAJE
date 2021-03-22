@@ -156,6 +156,8 @@
     <None Remove="Seeds\JSONs\roles.json" />
     <None Remove="Seeds\JSONs\cities.json" />
 	<None Remove="Seeds\JSONs\states.json" />
+	<None Remove="Seeds\JSONs\media.json" />
+	<None Remove="Seeds\JSONs\contents.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -175,6 +177,16 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
 	  <Content Include="Seeds\JSONs\states.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Seeds\JSONs\media.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Seeds\JSONs\contents.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

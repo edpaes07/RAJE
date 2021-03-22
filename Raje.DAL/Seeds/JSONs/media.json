@@ -1,0 +1,167 @@
+﻿[
+  {
+    "id": 1,
+    "fileName": "admin.png",
+    "filePath": "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1.png",
+    "folder": "user",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 2,
+    "fileName": "aline.png",
+    "filePath": "https://eadgrad.mackenzie.br/pluginfile.php/170408/user/icon/lambda/f1?rev=7243795.png",
+    "folder": "user",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 3,
+    "fileName": "edmilson.png",
+    "filePath": "https://eadgrad.mackenzie.br/pluginfile.php/173357/user/icon/lambda/f1?rev=8826157.png",
+    "folder": "user",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 4,
+    "fileName": "joni.png",
+    "filePath": "https://eadgrad.mackenzie.br/pluginfile.php/158332/user/icon/lambda/f1?rev=3801575.png",
+    "folder": "user",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 5,
+    "fileName": "rita.png",
+    "filePath": "https://eadgrad.mackenzie.br/pluginfile.php/157831/user/icon/lambda/f1?rev=7653277.png",
+    "folder": "user",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 6,
+    "fileName": "ao_farol.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/ao-farol-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 7,
+    "fileName": "rei_lear.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/rei-lear-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 8,
+    "fileName": "moby_dick.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/moby-dick-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 9,
+    "fileName": "a_divina_comedia.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/a-divina-comedia-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 10,
+    "fileName": "madame_bovary.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/madame-bovary-1-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 11,
+    "fileName": "viagem_ao_fim_da_noite.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/viagem-ao-fim-da-noite-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 12,
+    "fileName": "iliada.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/iliada-homero-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 13,
+    "fileName": "o_livro_do_desassossego.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/livro-do-desassossego-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 14,
+    "fileName": "pantagruel.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/pantagruel-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 15,
+    "fileName": "guerra_e_paz.jpg",
+    "filePath": "https://cdn.culturagenial.com/imagens/guerra-e-paz-cke.jpg",
+    "folder": "book",
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  }
+]

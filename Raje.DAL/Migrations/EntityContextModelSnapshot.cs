@@ -39147,6 +39147,10 @@ namespace Raje.DAL.Migrations
                         .HasColumnType("int")
                         .HasMaxLength(4);
 
+                    b.Property<string>("Synopsis")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -39162,6 +39166,88 @@ namespace Raje.DAL.Migrations
                     b.HasIndex("MediaId");
 
                     b.ToTable("Contents");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Author = "Virginia Woolf",
+                            Country = "Inglaterra",
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FlagActive = true,
+                            IsValid = true,
+                            MediaId = 6L,
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup",
+                            NumberSeasons = 0,
+                            Publisher = "L&PMClassicosMordernos",
+                            ReleaseYear = 1927,
+                            Synopsis = "A narrativa segue a família Ramsay e os verões passados na sua casa de praia, na ilha de Skye. Mais do que a história que é contada, a leitura vale a pena pelas suas reflexões sobre a infância, a memória e as relações humanas.",
+                            Title = "Ao Farol",
+                            Type = "Livro"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            Author = "William Shakespeare",
+                            Country = "Inglaterra",
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FlagActive = true,
+                            IsValid = true,
+                            MediaId = 7L,
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup",
+                            NumberSeasons = 0,
+                            Publisher = "PeixotoNeto",
+                            ReleaseYear = 1606,
+                            Synopsis = " Rei Lear, uma de suas obras-primas, é uma tragédia inspirada no folclore britânico que conta a história de um rei que foi traído por duas de suas filhas, motivadas pela ganância.",
+                            Title = "O Rei Lear",
+                            Type = "Livro"
+                        });
+                });
+
+            modelBuilder.Entity("Raje.DL.DB.Admin.Friendship", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("FlagActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("FriendId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendId");
+
+                    b.ToTable("Friendship");
                 });
 
             modelBuilder.Entity("Raje.DL.DB.Admin.Log", b =>
@@ -39268,6 +39354,188 @@ namespace Raje.DAL.Migrations
                     b.HasIndex("FlagActive");
 
                     b.ToTable("Media");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "admin.png",
+                            FilePath = "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1.png",
+                            FlagActive = true,
+                            Folder = "user",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "aline.png",
+                            FilePath = "https://eadgrad.mackenzie.br/pluginfile.php/170408/user/icon/lambda/f1?rev=7243795.png",
+                            FlagActive = true,
+                            Folder = "user",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "edmilson.png",
+                            FilePath = "https://eadgrad.mackenzie.br/pluginfile.php/173357/user/icon/lambda/f1?rev=8826157.png",
+                            FlagActive = true,
+                            Folder = "user",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "joni.png",
+                            FilePath = "https://eadgrad.mackenzie.br/pluginfile.php/158332/user/icon/lambda/f1?rev=3801575.png",
+                            FlagActive = true,
+                            Folder = "user",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "rita.png",
+                            FilePath = "https://eadgrad.mackenzie.br/pluginfile.php/157831/user/icon/lambda/f1?rev=7653277.png",
+                            FlagActive = true,
+                            Folder = "user",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 6L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "ao_farol.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/ao-farol-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 7L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "rei_lear.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/rei-lear-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 8L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "moby_dick.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/moby-dick-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 9L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "a_divina_comedia.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/a-divina-comedia-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 10L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "madame_bovary.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/madame-bovary-1-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 11L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "viagem_ao_fim_da_noite.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/viagem-ao-fim-da-noite-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "iliada.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/iliada-homero-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "o_livro_do_desassossego.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/livro-do-desassossego-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "pantagruel.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/pantagruel-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = "Seed Setup",
+                            FileName = "guerra_e_paz.jpg",
+                            FilePath = "https://cdn.culturagenial.com/imagens/guerra-e-paz-cke.jpg",
+                            FlagActive = true,
+                            Folder = "book",
+                            ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ModifiedBy = "Seed Setup"
+                        });
                 });
 
             modelBuilder.Entity("Raje.DL.DB.Admin.State", b =>
@@ -39582,6 +39850,7 @@ namespace Raje.DAL.Migrations
                             FlagActive = true,
                             FullName = "admin",
                             LastGuidAuthentication = "7fc55b62-2c80-406b-a2b2-911ea7f9ba63",
+                            MediaId = 1L,
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Setup",
                             PasswordHash = "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==",
@@ -39601,6 +39870,7 @@ namespace Raje.DAL.Migrations
                             FlagActive = true,
                             FullName = "Aline de Oliveira Soares",
                             LastGuidAuthentication = "7fc55b62-2c80-406b-a2b2-911ea7f9ba63",
+                            MediaId = 2L,
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Setup",
                             PasswordHash = "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==",
@@ -39620,6 +39890,7 @@ namespace Raje.DAL.Migrations
                             FlagActive = true,
                             FullName = "Edmilson Bispo Paes dos Santos",
                             LastGuidAuthentication = "7fc55b62-2c80-406b-a2b2-911ea7f9ba63",
+                            MediaId = 3L,
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Setup",
                             PasswordHash = "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==",
@@ -39639,6 +39910,7 @@ namespace Raje.DAL.Migrations
                             FlagActive = true,
                             FullName = "Joni Welter Ramos",
                             LastGuidAuthentication = "7fc55b62-2c80-406b-a2b2-911ea7f9ba63",
+                            MediaId = 4L,
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Setup",
                             PasswordHash = "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==",
@@ -39658,6 +39930,7 @@ namespace Raje.DAL.Migrations
                             FlagActive = true,
                             FullName = "Rita de Cassia Duarte Garcia",
                             LastGuidAuthentication = "7fc55b62-2c80-406b-a2b2-911ea7f9ba63",
+                            MediaId = 5L,
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ModifiedBy = "Seed Setup",
                             PasswordHash = "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==",
@@ -39743,6 +40016,15 @@ namespace Raje.DAL.Migrations
                     b.HasOne("Raje.DL.DB.Admin.Media", "Media")
                         .WithMany()
                         .HasForeignKey("MediaId");
+                });
+
+            modelBuilder.Entity("Raje.DL.DB.Admin.Friendship", b =>
+                {
+                    b.HasOne("Raje.DL.DB.Admin.User", "Friend")
+                        .WithMany("Friends")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Raje.DL.DB.Admin.User", b =>

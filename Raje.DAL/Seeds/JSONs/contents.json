@@ -1,0 +1,42 @@
+﻿[
+  {
+    "id": 1,
+    "type": "Livro",
+    "title": "Ao Farol",
+    "author": "Virginia Woolf",
+    "publisher": "L&PMClassicosMordernos",
+    "director": null,
+    "mainCast": null,
+    "country": "Inglaterra",
+    "releaseYear": "1927",
+    "numberSeasons": 0,
+    "synopsis": "A narrativa segue a família Ramsay e os verões passados na sua casa de praia, na ilha de Skye. Mais do que a história que é contada, a leitura vale a pena pelas suas reflexões sobre a infância, a memória e as relações humanas.",
+    "isValid": true,
+    "mediaId": 6,
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  },
+  {
+    "id": 2,
+    "type": "Livro",
+    "title": "O Rei Lear",
+    "author": "William Shakespeare",
+    "publisher": "PeixotoNeto",
+    "director": null,
+    "mainCast": null,
+    "country": "Inglaterra",
+    "releaseYear": "1606",
+    "numberSeasons": 0,
+    "synopsis": " Rei Lear, uma de suas obras-primas, é uma tragédia inspirada no folclore britânico que conta a história de um rei que foi traído por duas de suas filhas, motivadas pela ganância.",
+    "isValid": true,
+    "mediaId": 7,
+    "flagactive": true,
+    "createdby": "Seed Setup",
+    "createdat": "2020-08-01 00:00:00.0000000",
+    "modifiedat": "2020-08-01 00:00:00.0000000",
+    "modifiedby": "Seed Setup"
+  }
+]

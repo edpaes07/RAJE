@@ -42,8 +42,8 @@ namespace Raje.DAL.Seeds.Models
         [JsonProperty("refreshtoken")]
         public string RefreshToken { get; set; }
 
-        [JsonProperty("verificationcode")]
-        public int VerificationCode { get; set; }
+        [JsonProperty("mediaId")]
+        public long MediaId { get; set; }
 
         [JsonProperty("flagactive")]
         public bool FlagActive { get; set; }

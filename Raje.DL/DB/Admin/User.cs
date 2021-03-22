@@ -53,5 +53,7 @@ namespace Raje.DL.DB.Admin
         public virtual Media Media { get; set; }
 
         public virtual ICollection<Assessment> Assessment { get; set; }
+
+        public virtual ICollection<Friendship> Friends { get; set; }
     }
 }

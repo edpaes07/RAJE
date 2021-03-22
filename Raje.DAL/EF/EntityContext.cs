@@ -20,17 +20,21 @@ namespace Raje.DAL.EF
         {
         }
 
-        public virtual DbSet<Media> Media { get; set; }
+        public virtual DbSet<Assessment> Assessment { get; set; }
 
         public virtual DbSet<City> City { get; set; }
+
+        public virtual DbSet<Contents> Contents { get; set; }
+
+        public virtual DbSet<Friendship> Friendship { get; set; }
+
+        public virtual DbSet<Log> Log { get; set; }
 
         public virtual DbSet<State> State { get; set; }
 
         public virtual DbSet<User> User { get; set; }
 
         public virtual DbSet<UserRole> UserRole { get; set; }
-
-        public virtual DbSet<Log> Log { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -78,6 +82,31 @@ namespace Raje.DAL.EF
 
         private void CreateSeeds(ModelBuilder modelBuilder)
         {
+            #region [Seed - Media]
+            var mediaSeed = GetSeeds<MediaSeed>(@"Seeds\JSONs\media.json");
+            var medias = mediaSeed.Select(data => new Media()
+            {
+                Id = data.Id
+                ,
+                FileName = data.FileName
+                ,
+                FilePath = data.FilePath
+                ,
+                Folder = data.Folder
+                ,
+                FlagActive = data.FlagActive
+                ,
+                CreatedBy = data.CreatedBy
+                ,
+                CreatedAt = data.CreatedAt
+                ,
+                ModifiedBy = data.ModifiedBy
+                ,
+                ModifiedAt = data.ModifiedAt
+            });
+            modelBuilder.Entity<Media>().HasData(medias);
+            #endregion
+
             #region [Seed - State]
             var statesSeed = GetSeeds<StateSeed>($"Seeds{Path.DirectorySeparatorChar}JSONs{Path.DirectorySeparatorChar}states.json");
             var states = statesSeed.Select(ss => new State() { Id = ss.Id, Name = ss.Name, FlagActive = true, Abbreviation = ss.Abbreviation });
@@ -126,6 +155,8 @@ namespace Raje.DAL.EF
                 ,
                 RefreshToken = data.RefreshToken
                 ,
+                MediaId = data.MediaId
+                ,
                 FlagActive = data.FlagActive
                 ,
                 CreatedBy = data.CreatedBy
@@ -137,6 +168,49 @@ namespace Raje.DAL.EF
                 ModifiedAt = data.ModifiedAt
             });
             modelBuilder.Entity<User>().HasData(users);
+            #endregion
+
+            #region [Seed - Contents]
+            var contentsSeed = GetSeeds<ContentsSeed>(@"Seeds\JSONs\contents.json");
+            var contents = contentsSeed.Select(data => new Contents()
+            {
+                Id = data.Id
+                ,
+                Title = data.Title
+                ,
+                Type = data.Type
+                ,
+                Author = data.Author
+                ,
+                Publisher = data.Publisher
+                ,
+                Director = data.Director
+                ,
+                MainCast = data.MainCast
+                ,
+                Country = data.Country
+                ,
+                ReleaseYear = data.ReleaseYear
+                ,
+                NumberSeasons = data.NumberSeasons
+                ,
+                IsValid = data.IsValid
+                ,
+                MediaId = data.MediaId
+                ,
+                Synopsis = data.Synopsis
+                ,
+                FlagActive = data.FlagActive
+                ,
+                CreatedBy = data.CreatedBy
+                ,
+                CreatedAt = data.CreatedAt
+                ,
+                ModifiedBy = data.ModifiedBy
+                ,
+                ModifiedAt = data.ModifiedAt
+            });
+            modelBuilder.Entity<Contents>().HasData(contents);
             #endregion
         }
 
