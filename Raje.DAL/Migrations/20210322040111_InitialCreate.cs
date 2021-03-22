@@ -253,7 +253,7 @@ namespace Raje.DAL.Migrations
                 columns: new[] { "Id", "CreatedAt", "CreatedBy", "FileName", "FilePath", "FlagActive", "Folder", "ModifiedAt", "ModifiedBy" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "admin.png", "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1.png", true, "user", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup" },
+                    { 1L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "admin.png", "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1", true, "user", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup" },
                     { 15L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "guerra_e_paz.jpg", "https://cdn.culturagenial.com/imagens/guerra-e-paz-cke.jpg", true, "book", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup" },
                     { 13L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "o_livro_do_desassossego.jpg", "https://cdn.culturagenial.com/imagens/livro-do-desassossego-cke.jpg", true, "book", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup" },
                     { 12L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "iliada.jpg", "https://cdn.culturagenial.com/imagens/iliada-homero-cke.jpg", true, "book", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup" },

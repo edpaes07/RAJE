@@ -39362,7 +39362,7 @@ namespace Raje.DAL.Migrations
                             CreatedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = "Seed Setup",
                             FileName = "admin.png",
-                            FilePath = "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1.png",
+                            FilePath = "https://eadgrad.mackenzie.br/theme/image.php/lambda/core/1614177314/u/f1",
                             FlagActive = true,
                             Folder = "user",
                             ModifiedAt = new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
