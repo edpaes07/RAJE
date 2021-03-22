@@ -9,7 +9,7 @@ namespace Raje.BLL.Services.Identity
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, OnlyAdminMasterGestaoAuthorizationRequirement requirement)
         {
-            if (context.User.IsInRole(UserRoleTypes.AdminMaster.GetDescription()) || context.User.IsInRole(UserRoleTypes.Gestao.GetDescription()))
+            if (context.User.IsInRole(UserRoleTypes.AdminMaster.GetDescription()))
             {
                 context.Succeed(requirement);
             }

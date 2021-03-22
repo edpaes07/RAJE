@@ -9,9 +9,7 @@ namespace Raje.BLL.Services.Identity
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, AtLeastAdminLojaMasterGestorAuthorizationRequirement requirement)
         {
-            if (context.User.IsInRole(UserRoleTypes.AdminMaster.GetDescription())
-                || context.User.IsInRole(UserRoleTypes.Gestao.GetDescription())
-                || context.User.IsInRole(UserRoleTypes.AdminLoja.GetDescription()))
+            if (context.User.IsInRole(UserRoleTypes.AdminMaster.GetDescription()))
             {
                 context.Succeed(requirement);
             }

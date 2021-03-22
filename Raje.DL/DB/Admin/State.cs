@@ -12,6 +12,5 @@ namespace Raje.DL.DB.Admin
         [Required]
         [MaxLength(2)]
         public string Abbreviation { get; set; }
-
     }
 }

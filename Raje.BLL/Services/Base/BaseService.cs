@@ -36,50 +36,6 @@ namespace Raje.BLL.Services.Base
             }
         }
 
-        public bool IsUserGestao
-        {
-            get
-            {
-                string userRoleValue = _httpContextAccessor.HttpContext.User?.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;
-                if (!string.IsNullOrEmpty(userRoleValue))
-                    return userRoleValue == UserRoleTypes.Gestao.GetDescription();
-                return false;
-            }
-        }
-
-        public bool IsUserAdminLoja
-        {
-            get
-            {
-                string userRoleValue = _httpContextAccessor.HttpContext.User?.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;
-                if (!string.IsNullOrEmpty(userRoleValue))
-                    return userRoleValue == UserRoleTypes.AdminLoja.GetDescription();
-                return false;
-            }
-        }
-
-        public bool IsUserOperador
-        {
-            get
-            {
-                string userRoleValue = _httpContextAccessor.HttpContext.User?.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;
-                if (!string.IsNullOrEmpty(userRoleValue))
-                    return userRoleValue == UserRoleTypes.Operador.GetDescription();
-                return false;
-            }
-        }
-
-        public bool IsUserMarketing
-        {
-            get
-            {
-                string userRoleValue = _httpContextAccessor.HttpContext.User?.FindFirst(c => c.Type == ClaimTypes.Role)?.Value;
-                if (!string.IsNullOrEmpty(userRoleValue))
-                    return userRoleValue == UserRoleTypes.Marketing.GetDescription();
-                return false;
-            }
-        }
-
         public BaseService(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;

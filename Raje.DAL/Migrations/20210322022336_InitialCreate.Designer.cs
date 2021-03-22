@@ -10,8 +10,8 @@ using Raje.DAL.EF;
 namespace Raje.DAL.Migrations
 {
     [DbContext(typeof(EntityContext))]
-    [Migration("20210321194952_addUserSeed")]
-    partial class addUserSeed
+    [Migration("20210322022336_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,56 @@ namespace Raje.DAL.Migrations
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Raje.DL.DB.Admin.Assessment", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Commentary")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1024)")
+                        .HasMaxLength(1024);
+
+                    b.Property<long>("ContentsId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<bool>("FlagActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int")
+                        .HasMaxLength(2);
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContentsId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Assessment");
+                });
 
             modelBuilder.Entity("Raje.DL.DB.Admin.City", b =>
                 {
@@ -39038,6 +39088,84 @@ namespace Raje.DAL.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Raje.DL.DB.Admin.Contents", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("Director")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("FlagActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MainCast")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
+                    b.Property<long?>("MediaId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("ModifiedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<int>("NumberSeasons")
+                        .HasColumnType("int")
+                        .HasMaxLength(2);
+
+                    b.Property<string>("Publisher")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("ReleaseYear")
+                        .HasColumnType("int")
+                        .HasMaxLength(4);
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(6)")
+                        .HasMaxLength(6);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MediaId");
+
+                    b.ToTable("Contents");
+                });
+
             modelBuilder.Entity("Raje.DL.DB.Admin.Log", b =>
                 {
                     b.Property<long>("Id")
@@ -39123,6 +39251,11 @@ namespace Raje.DAL.Migrations
 
                     b.Property<bool>("FlagActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Folder")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
 
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
@@ -39395,6 +39528,9 @@ namespace Raje.DAL.Migrations
                         .HasColumnType("nvarchar(36)")
                         .HasMaxLength(36);
 
+                    b.Property<long?>("MediaId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
@@ -39426,6 +39562,8 @@ namespace Raje.DAL.Migrations
                     b.HasIndex("CityId");
 
                     b.HasIndex("FlagActive");
+
+                    b.HasIndex("MediaId");
 
                     b.HasIndex("StateId");
 
@@ -39563,11 +39701,34 @@ namespace Raje.DAL.Migrations
                         new
                         {
                             Id = 1L,
+                            Description = "Permissão para cadastrar livros, filmes, series e avaliacoes.",
+                            FlagActive = true,
+                            Name = "Usuario Comum",
+                            SystemCode = 1
+                        },
+                        new
+                        {
+                            Id = 2L,
                             Description = "Permissão para visualizar, cadastrar e editar todos as entidades.",
                             FlagActive = true,
                             Name = "Admin Master",
-                            SystemCode = 1
+                            SystemCode = 2
                         });
+                });
+
+            modelBuilder.Entity("Raje.DL.DB.Admin.Assessment", b =>
+                {
+                    b.HasOne("Raje.DL.DB.Admin.Contents", "Contents")
+                        .WithMany("Assessment")
+                        .HasForeignKey("ContentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Raje.DL.DB.Admin.User", "User")
+                        .WithMany("Assessment")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Raje.DL.DB.Admin.City", b =>
@@ -39579,6 +39740,13 @@ namespace Raje.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Raje.DL.DB.Admin.Contents", b =>
+                {
+                    b.HasOne("Raje.DL.DB.Admin.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId");
+                });
+
             modelBuilder.Entity("Raje.DL.DB.Admin.User", b =>
                 {
                     b.HasOne("Raje.DL.DB.Admin.City", "City")
@@ -39586,6 +39754,10 @@ namespace Raje.DAL.Migrations
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Raje.DL.DB.Admin.Media", "Media")
+                        .WithMany()
+                        .HasForeignKey("MediaId");
 
                     b.HasOne("Raje.DL.DB.Admin.State", "State")
                         .WithMany()

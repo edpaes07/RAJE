@@ -5,7 +5,6 @@ namespace Raje.DL.DB.Admin
 {
     public class Log : EntityAuditBase
     {
-
         public bool Input { get; set; }
 
         [Required]
@@ -24,6 +23,5 @@ namespace Raje.DL.DB.Admin
         public string Request { get; set; }
 
         public string Response { get; set; }
-
     }
 }

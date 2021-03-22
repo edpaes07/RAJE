@@ -38,30 +38,6 @@ namespace Raje.Base.Tests._Builders
             return this;
         }
 
-        public MockHttpContextAccessorBuilder WithGestaoUser()
-        {
-            Claims.Add(new Claim(ClaimTypes.Role, UserRoleTypes.Gestao.GetDescription()));
-            return this;
-        }
-
-        public MockHttpContextAccessorBuilder WithAdminLojaUser()
-        {
-            Claims.Add(new Claim(ClaimTypes.Role, UserRoleTypes.AdminLoja.GetDescription()));
-            return this;
-        }
-
-        public MockHttpContextAccessorBuilder WithOperadorUser()
-        {
-            Claims.Add(new Claim(ClaimTypes.Role, UserRoleTypes.Operador.GetDescription()));
-            return this;
-        }
-
-        public MockHttpContextAccessorBuilder WithDeviceUser()
-        {
-            Claims.Add(new Claim(ClaimTypes.Role, UserRoleTypes.Device.GetDescription()));
-            return this;
-        }
-
         public MockHttpContextAccessorBuilder WithUserName(string userName)
         {
             int index = Claims.FindIndex(_ => _.Type == ClaimTypes.Name);

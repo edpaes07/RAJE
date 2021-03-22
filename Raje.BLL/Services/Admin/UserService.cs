@@ -106,9 +106,6 @@ namespace Raje.BLL.Services.Admin
 
             if (model.Id == 0 && model.Password == null)
                 throw new ArgumentNullException("Password é Obrigatório.");
-
-            if (model.UserRoleId != ((long)UserRoleTypes.Device & (long)UserRoleTypes.Marketing) && await IsEmailInUse(model.Email, model.Id))
-                throw new ArgumentNullException("Usuário já cadastrado.");
         }
 
         private async Task<bool> IsUserNameInUse(string login, long? id)

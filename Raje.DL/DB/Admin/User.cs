@@ -46,5 +46,12 @@ namespace Raje.DL.DB.Admin
 
         [MaxLength(100)]
         public string RefreshToken { get; set; }
+
+        [ForeignKey("Media")]
+        public long? MediaId { get; set; }
+
+        public virtual Media Media { get; set; }
+
+        public virtual ICollection<Assessment> Assessment { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Raje.DL.DB.Admin
 {
-    //TODO: Definir depois do identity
     public class UserRole : EntityBase
     {
         [Required]

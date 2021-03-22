@@ -43,7 +43,8 @@ namespace Raje.DAL.Migrations
                     ModifiedBy = table.Column<string>(maxLength: 500, nullable: false),
                     ModifiedAt = table.Column<DateTime>(nullable: false),
                     FileName = table.Column<string>(maxLength: 400, nullable: false),
-                    FilePath = table.Column<string>(maxLength: 1000, nullable: false)
+                    FilePath = table.Column<string>(maxLength: 1000, nullable: false),
+                    Folder = table.Column<string>(maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -79,6 +80,40 @@ namespace Raje.DAL.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UserRole", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Contents",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FlagActive = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 500, nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<string>(maxLength: 500, nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    Type = table.Column<string>(maxLength: 6, nullable: false),
+                    Title = table.Column<string>(maxLength: 100, nullable: false),
+                    Author = table.Column<string>(maxLength: 100, nullable: true),
+                    Publisher = table.Column<string>(maxLength: 100, nullable: true),
+                    Director = table.Column<string>(maxLength: 100, nullable: true),
+                    MainCast = table.Column<string>(maxLength: 200, nullable: true),
+                    Country = table.Column<string>(maxLength: 100, nullable: false),
+                    ReleaseYear = table.Column<int>(maxLength: 4, nullable: false),
+                    NumberSeasons = table.Column<int>(maxLength: 2, nullable: false),
+                    IsValid = table.Column<bool>(nullable: false),
+                    MediaId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Contents_Media_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Media",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,7 +158,8 @@ namespace Raje.DAL.Migrations
                     UserRoleId = table.Column<long>(nullable: false),
                     LastGuidAuthentication = table.Column<string>(maxLength: 36, nullable: true),
                     FirstAccess = table.Column<bool>(nullable: false),
-                    RefreshToken = table.Column<string>(maxLength: 100, nullable: true)
+                    RefreshToken = table.Column<string>(maxLength: 100, nullable: true),
+                    MediaId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -133,6 +169,12 @@ namespace Raje.DAL.Migrations
                         column: x => x.CityId,
                         principalTable: "City",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_User_Media_MediaId",
+                        column: x => x.MediaId,
+                        principalTable: "Media",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_User_State_StateId",
                         column: x => x.StateId,
@@ -146,12 +188,46 @@ namespace Raje.DAL.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Assessment",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FlagActive = table.Column<bool>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 500, nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<string>(maxLength: 500, nullable: false),
+                    ModifiedAt = table.Column<DateTime>(nullable: false),
+                    Grade = table.Column<int>(maxLength: 2, nullable: false),
+                    Commentary = table.Column<string>(maxLength: 1024, nullable: false),
+                    UserId = table.Column<long>(nullable: false),
+                    ContentsId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Assessment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Assessment_Contents_ContentsId",
+                        column: x => x.ContentsId,
+                        principalTable: "Contents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Assessment_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "State",
                 columns: new[] { "Id", "Abbreviation", "FlagActive", "Name" },
                 values: new object[,]
                 {
                     { 11L, "RO", true, "Rondônia" },
+                    { 53L, "DF", true, "Distrito Federal" },
                     { 52L, "GO", true, "Goiás" },
                     { 51L, "MT", true, "Mato Grosso" },
                     { 50L, "MS", true, "Mato Grosso do Sul" },
@@ -164,7 +240,6 @@ namespace Raje.DAL.Migrations
                     { 31L, "MG", true, "Minas Gerais" },
                     { 29L, "BA", true, "Bahia" },
                     { 28L, "SE", true, "Sergipe" },
-                    { 27L, "AL", true, "Alagoas" },
                     { 26L, "PE", true, "Pernambuco" },
                     { 25L, "PB", true, "Paraíba" },
                     { 24L, "RN", true, "Rio Grande do Norte" },
@@ -177,13 +252,17 @@ namespace Raje.DAL.Migrations
                     { 14L, "RR", true, "Roraima" },
                     { 13L, "AM", true, "Amazonas" },
                     { 12L, "AC", true, "Acre" },
-                    { 53L, "DF", true, "Distrito Federal" }
+                    { 27L, "AL", true, "Alagoas" }
                 });
 
             migrationBuilder.InsertData(
                 table: "UserRole",
                 columns: new[] { "Id", "Description", "FlagActive", "Name", "SystemCode" },
-                values: new object[] { 1L, "Permissão para visualizar, cadastrar e editar todos as entidades.", true, "Admin Master", 1 });
+                values: new object[,]
+                {
+                    { 1L, "Permissão para cadastrar livros, filmes, series e avaliacoes.", true, "Usuario Comum", 1 },
+                    { 2L, "Permissão para visualizar, cadastrar e editar todos as entidades.", true, "Admin Master", 2 }
+                });
 
             migrationBuilder.InsertData(
                 table: "City",
@@ -5834,13 +5913,35 @@ namespace Raje.DAL.Migrations
 
             migrationBuilder.InsertData(
                 table: "User",
-                columns: new[] { "Id", "BirthDate", "CityId", "CreatedAt", "CreatedBy", "Email", "FirstAccess", "FlagActive", "FullName", "LastGuidAuthentication", "ModifiedAt", "ModifiedBy", "PasswordHash", "RefreshToken", "StateId", "UserName", "UserRoleId" },
-                values: new object[] { 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "admin@teste.com", false, true, "admin", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "admin", 1L });
+                columns: new[] { "Id", "BirthDate", "CityId", "CreatedAt", "CreatedBy", "Email", "FirstAccess", "FlagActive", "FullName", "LastGuidAuthentication", "MediaId", "ModifiedAt", "ModifiedBy", "PasswordHash", "RefreshToken", "StateId", "UserName", "UserRoleId" },
+                values: new object[,]
+                {
+                    { 1L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "admin@teste.com", false, true, "admin", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", null, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "admin", 1L },
+                    { 2L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "aline_mimile@outlook.com", false, true, "Aline de Oliveira Soares", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", null, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "19004346", 1L },
+                    { 3L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "ed-0307@outlook.com.br", false, true, "Edmilson Bispo Paes dos Santos", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", null, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "19010291", 1L },
+                    { 4L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "joni@tedenium.com.br", false, true, "Joni Welter Ramos", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", null, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "19005636", 1L },
+                    { 5L, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 1303908L, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "rigarcia09@icloud.com", false, true, "Rita de Cassia Duarte Garcia", "7fc55b62-2c80-406b-a2b2-911ea7f9ba63", null, new DateTime(2020, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Seed Setup", "AQAAAAEAACcQAAAAEO6i2KT0GaiqqBNQX27Oq5r5jIjTVvAUa8KErs+tv8ItcpNEIsiM/vm6gp6C05UHnA==", null, 35L, "19000448", 1L }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessment_ContentsId",
+                table: "Assessment",
+                column: "ContentsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Assessment_UserId",
+                table: "Assessment",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_City_StateId",
                 table: "City",
                 column: "StateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contents_MediaId",
+                table: "Contents",
+                column: "MediaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Log_CreatedBy_Input_Code_Api_CreatedAt",
@@ -5863,6 +5964,11 @@ namespace Raje.DAL.Migrations
                 column: "FlagActive");
 
             migrationBuilder.CreateIndex(
+                name: "IX_User_MediaId",
+                table: "User",
+                column: "MediaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_StateId",
                 table: "User",
                 column: "StateId");
@@ -5881,16 +5987,22 @@ namespace Raje.DAL.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Assessment");
+
+            migrationBuilder.DropTable(
                 name: "Log");
 
             migrationBuilder.DropTable(
-                name: "Media");
+                name: "Contents");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
                 name: "City");
+
+            migrationBuilder.DropTable(
+                name: "Media");
 
             migrationBuilder.DropTable(
                 name: "UserRole");

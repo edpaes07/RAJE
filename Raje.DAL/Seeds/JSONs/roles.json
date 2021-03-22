@@ -2,6 +2,12 @@
   {
     "id": 1,
     "systemCode": 1,
+    "name": "Usuario Comum",
+    "description": "Permissão para cadastrar livros, filmes, series e avaliacoes."
+  },
+  {
+    "id": 2,
+    "systemCode": 2,
     "name": "Admin Master",
     "description": "Permissão para visualizar, cadastrar e editar todos as entidades."
   }

@@ -16,37 +16,31 @@ namespace Raje.DL.DB.Admin
         [MaxLength(1000)]
         public string FilePath { get; set; }
 
+        [Required]
+        [MaxLength(200)]
+        public string Folder { get; set; }
+
+        public void SetInfo(string filePath, string fileName, string folder)
+        {
+            FileName = fileName;
+            FilePath = filePath;
+            Folder = folder;
+        }
+
         public Media() { }
 
-        public Media(string fileName, string filePath)
+        public Media(string fileName, string filePath, string folder)
         {
             RuleValidation.New()
-                .When(string.IsNullOrEmpty(fileName), RajeValidationMessages.FileName)
-                .When(string.IsNullOrEmpty(filePath), RajeValidationMessages.FilePath)
+                .When(string.IsNullOrEmpty(fileName), ValidationMessages.FileName)
+                .When(string.IsNullOrEmpty(filePath), ValidationMessages.FilePath)
+                .When(string.IsNullOrEmpty(folder), ValidationMessages.Folder)
                 .ThrowException();
 
             FileName = fileName;
             FilePath = filePath;
+            Folder = folder;
             FlagActive = true;
-        }
-
-        /// <summary>
-        /// Usado apenas no Campanha
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="filePath"></param>
-        /// <param name="modefiedAt"></param>
-        public Media(long id, string filePath, DateTime modefiedAt)
-        {
-            FilePath = filePath;
-            Id = id;
-            ModifiedAt = modefiedAt;
-        }
-
-        public void SetInfo(string filePath, string fileName)
-        {
-            FileName = fileName;
-            FilePath = filePath;
         }
     }
 }
