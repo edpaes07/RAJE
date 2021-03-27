@@ -97,7 +97,7 @@ namespace Raje.BLL.Services.Admin
             if (String.IsNullOrEmpty(model.Email))
                 return;
 
-            var encryptedToken = EncrypterdToken(model.PasswordHash);
+            var encryptedToken = EncryptedToken(model.PasswordHash);
 
             await _emailSenderService.SendAsync(
                 model.Email,
@@ -178,7 +178,7 @@ namespace Raje.BLL.Services.Admin
         #endregion
 
 
-        public string EncrypterdToken(string passwordHash)
+        public string EncryptedToken(string passwordHash)
         {
             var encryptedToken = _timeLimitedDataProtector.Protect(passwordHash, TimeSpan.FromMinutes(_resetPasswordOptions.ExpirationMinutes));
             var encodedEncryptedToken = WebUtility.UrlEncode(encryptedToken);

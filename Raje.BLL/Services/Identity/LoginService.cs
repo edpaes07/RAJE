@@ -1,75 +1,70 @@
-﻿using Raje.DL.DB.Admin;
-using Raje.DL.Request.Identity;
+﻿using Microsoft.AspNetCore.Identity;
+using Raje.DL.DB.Admin;
+using Raje.DL.Request.Admin.Base;
 using Raje.DL.Response.Identity;
 using Raje.DL.Services.BLL.Identity;
 using Raje.DL.Services.DAL.DataAccess;
-using AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Raje.BLL.Services.Admin
+namespace Raje.BLL.Services.Identity
 {
-    public class UserNameService : IUserNameService
+    public class LoginService : ILoginService
     {
         private readonly IRepository<User> _repository;
-        private readonly IMapper _mapper;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly IJwtTokenService _jwtTokenService;
         private readonly IResetPasswordService _resetPasswordService;
 
-        public UserNameService(IRepository<User> repository
-            , IMapper mapper
+        public LoginService(IRepository<User> repository
             , IPasswordHasher<User> passwordHasher
             , IJwtTokenService jwtTokenService
             , IResetPasswordService resetPasswordService
             )
         {
             _repository = repository;
-            _mapper = mapper;
             _passwordHasher = passwordHasher;
             _jwtTokenService = jwtTokenService;
             _resetPasswordService = resetPasswordService;
         }
 
-        public async Task<LoginResponse> UserName(LoginRequest request)
+        public async Task<LoginResponse> Login(BaseLoginRequest request)
         {
             var model = await _repository.Query()
-                .Where(model => model.FlagActive && model.UserName == request.UserName)
-                .IncludeEntity(_ => _.UserRole)
+                .Where(model => model.FlagActive && (model.UserName == request.UserName))
                 .FirstOrDefaultAsync();
 
             if (model == null)
                 throw new KeyNotFoundException("Usuário ou senha inválido.");
             var passwordVerification = _passwordHasher.VerifyHashedPassword(model, model.PasswordHash, request.Password);
+
             if (passwordVerification == PasswordVerificationResult.Failed)
                 throw new KeyNotFoundException("Usuário ou senha inválido.");
 
-            return GetLoginResponse(model, request.IsFirstAccessNeeded);
+            return GetLoginResponse(model);
         }
 
-        public async Task<LoginResponse> Refresh(RefreshTokenRequest request)
+        public async Task<LoginResponse> Refresh(BaseRefreshTokenRequest request)
         {
             var model = await _repository.Query()
                 .Where(model => model.FlagActive && model.UserName == request.UserName && model.RefreshToken == request.RefreshToken)
-                .IncludeEntity(_ => _.UserRole)
                 .FirstOrDefaultAsync();
 
             if (model == null)
                 throw new KeyNotFoundException("RefreshToken inválido.");
 
-            return GetLoginResponse(model, true);
+            return GetLoginResponse(model);
         }
 
-        private LoginResponse GetLoginResponse(User model, bool IsFirstAccessNeeded)
+        private LoginResponse GetLoginResponse(User model)
         {
             var response = new LoginResponse();
             response.FirstAccess = model.FirstAccess;
-            if (model.FirstAccess && IsFirstAccessNeeded)
-                response.Token = _resetPasswordService.EncrypterdToken(model.PasswordHash);
+            if (model.FirstAccess)
+                response.Token = _resetPasswordService.EncryptedToken(model.PasswordHash);
             else
             {
                 UpdateUserAccessInfo(model);
@@ -86,21 +81,21 @@ namespace Raje.BLL.Services.Admin
             _repository.Update(model);
         }
 
-        public string GetLastGuidAuthentication(string loginName)
+        public string GetLastGuidAuthentication(long id)
         {
             var model = _repository.Query()
                .Where(state => state.FlagActive
-                   && state.UserName == loginName)
+                   && (state.Id == id))
                .Search()
                .FirstOrDefault();
             return model.LastGuidAuthentication;
         }
 
-        public string GetLastRefreshToken(string loginName)
+        public string GetLastRefreshToken(long id)
         {
             var model = _repository.Query()
                .Where(state => state.FlagActive
-                   && state.UserName == loginName)
+                   && (state.Id == id))
                .Search()
                .FirstOrDefault();
             return model.RefreshToken;

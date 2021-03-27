@@ -20,6 +20,6 @@ namespace Raje.DL.Services.BLL.Identity
 
         Task SendUserEmail(User model);
 
-        string EncrypterdToken(string passwordHash);
+        string EncryptedToken(string passwordHash);
     }
 }

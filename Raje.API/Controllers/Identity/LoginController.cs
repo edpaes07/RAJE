@@ -16,8 +16,8 @@ namespace Raje.API.Controllers.Identity
     [AllowAnonymous]
     public class LoginController : ControllerBase
     {
-        private readonly IUserNameService _service;
-        public LoginController(IUserNameService service)
+        private readonly ILoginService _service;
+        public LoginController(ILoginService service)
         {
             _service = service;
         }
@@ -33,7 +33,7 @@ namespace Raje.API.Controllers.Identity
             {
                 try
                 {
-                    var loginResult = await _service.UserName(request);
+                    var loginResult = await _service.Login(request);
                     return Ok(loginResult);
                 }
                 catch (ArgumentNullException ex)
