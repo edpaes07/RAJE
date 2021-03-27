@@ -1,6 +1,5 @@
 using Raje.BLL.Injections;
 using Raje.BLL.Services.Admin;
-using Raje.BLL.Services.Identity;
 using Raje.DAL.EF;
 using Raje.DL.DB.Admin;
 using Raje.DL.Services.BLL.Base;
@@ -29,10 +28,11 @@ using Newtonsoft.Json;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using Raje.BLL.Services.Identity.Jwt;
+using AutoMapper;
+using Raje.BLL.Mapper;
 
 namespace Raje.API
 {
@@ -97,7 +97,19 @@ namespace Raje.API
                 options.EnableForHttps = true;
                 options.Providers.Add<BrotliCompressionProvider>();
             });
-            services.AddApplicationInsightsTelemetry();
+
+            services.AddApplicationInsightsTelemetry(Configuration);
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ContentsProfile());
+                mc.AddProfile(new LogProfile());
+                mc.AddProfile(new UserProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

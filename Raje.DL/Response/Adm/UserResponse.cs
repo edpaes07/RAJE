@@ -16,9 +16,6 @@ namespace Raje.DL.Response.Adm
 
         public long UserRoleId { get; set; }
 
-        public long CompanyId { get; set; }
-
-
         public UserRole UserRole { get; set; }
     }
 }
