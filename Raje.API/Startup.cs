@@ -1,8 +1,10 @@
 using Raje.BLL.Injections;
-using Raje.BLL.Mapper;
+using Raje.BLL.Services.Admin;
 using Raje.DAL.EF;
 using Raje.DL.DB.Admin;
-using AutoMapper;
+using Raje.DL.Services.BLL.Base;
+using Raje.DL.Services.BLL.Identity;
+using Raje.Infra.Const;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -23,12 +25,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Serilog;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 using System.Security.Principal;
 using System.Text;
-using Raje.DL.Services.BLL.Identity;
-using Raje.Infra.Const;
 using Raje.BLL.Services.Identity.Jwt;
+using AutoMapper;
+using Raje.BLL.Mapper;
 
 namespace Raje.API
 {
@@ -84,6 +88,9 @@ namespace Raje.API
             ConfigureSwaggerService(services);
 
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
+            services.Configure<SMTPOptions>(Configuration.GetSection("SMTPSettings"));
+            services.Configure<ResetPasswordOptions>(Configuration.GetSection("ResetPasswordSettings"));
+            services.Configure<TaxReceiptSettings>(Configuration.GetSection("TaxReceiptSettings"));
 
             services.AddResponseCompression(options =>
             {
@@ -95,7 +102,8 @@ namespace Raje.API
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
-                mc.AddProfile(new MediaProfile());
+                mc.AddProfile(new ContentsProfile());
+                mc.AddProfile(new LogProfile());
                 mc.AddProfile(new UserProfile());
             });
 
@@ -110,6 +118,8 @@ namespace Raje.API
             , ILoggerFactory loggerFactory
             , IApiVersionDescriptionProvider apiProviderDescription)
         {
+            loggerFactory.AddSerilog();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -131,6 +141,9 @@ namespace Raje.API
             app.UseRouting();
             app.UseAuthorization();
             ConfigureSwagger(app, apiProviderDescription);
+
+            //Add our new middleware to the pipeline
+            app.UseMiddleware<LoggingMiddlewareService>();
 
             app.UseResponseCompression();
             app.UseEndpoints(endpoints =>
@@ -186,7 +199,7 @@ namespace Raje.API
 
             services.AddScoped<IAuthorizationHandler, UserAuthenticationHandler>();
 
-            //Disponibilizar o usu·rio logado atravÈs de DI
+            //Disponibilizar o usu√°rio logado atrav√©s de DI
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IPrincipal>
                 (provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
@@ -201,30 +214,24 @@ namespace Raje.API
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "AppSneakers API v1.0", Version = "v1.0" });
+                c.SwaggerDoc("v1.0", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "RAJE API v1.0", Version = "v1.0" });
 
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                c.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
                 {
+                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
                     Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Inserir 'Bearer 'e em seguida o seu json web token (JWT)."
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
                 {
                     {
-                          new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                }
-                            },
-                            new string[] {}
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+                        },
+                        new List<string>()
                     }
                 });
             });
@@ -232,8 +239,6 @@ namespace Raje.API
 
         public virtual void ConfigureSwagger(IApplicationBuilder app, IApiVersionDescriptionProvider apiProviderDescription)
         {
-            app.UseCors(CorsAllow);
-
             app.UseSwagger()
                .UseSwaggerUI(options =>
                {
@@ -264,7 +269,6 @@ namespace Raje.API
 
         #endregion
 
-
         #region [DataBase]
         public virtual void ConfigDataBaseService(IServiceCollection services)
         {
@@ -283,4 +287,5 @@ namespace Raje.API
 
         #endregion
     }
+
 }

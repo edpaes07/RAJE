@@ -1,8 +1,6 @@
 ﻿using Raje.DL.DB.Base;
 using Raje.DL.Services.DAL.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Raje.DL.Services.DAL.DataAccess

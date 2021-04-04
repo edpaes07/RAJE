@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Raje.DL.Services.DAL.Model;
 
 namespace Raje.DL.Services.DAL.DataAccess
 {

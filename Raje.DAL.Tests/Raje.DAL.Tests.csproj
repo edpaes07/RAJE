@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>  
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Raje.Base.Tests\Raje.Base.Tests.csproj" />
+    <ProjectReference Include="..\Raje.DAL\Raje.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Raje.DAL\Seeds\JsonPathConverter.cs" Link="Seeds\JsonPathConverter.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="..\Raje.DAL\Seeds\Models\StateSeed.cs" Link="Seeds\Models\StateSeed.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\Raje.DAL\Seeds\JSONs\cities.json" Link="Seeds\JSONs\cities.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Raje.DAL\Seeds\JSONs\roles.json" Link="Seeds\JSONs\roles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Raje.DAL\Seeds\JSONs\states.json" Link="Seeds\JSONs\states.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+	<Content Include="..\Raje.DAL\Seeds\JSONs\user.json" Link="Seeds\JSONs\user.json">
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	</Content>
+	  <Content Include="..\Raje.DAL\Seeds\JSONs\media.json" Link="Seeds\JSONs\media.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="..\Raje.DAL\Seeds\JSONs\contents.json" Link="Seeds\JSONs\contents.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+  </ItemGroup>
+ 
+</Project>

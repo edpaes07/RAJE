@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Raje.DL.DB.Base;
+﻿using Raje.DL.DB.Base;
+using Raje.DL.Services.DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,36 @@ namespace Raje.DAL.EF.Base
                     if (state == EntityState.Deleted)
                         model.FlagActive = false;
                 }
+            }
+        }
+
+        public override void UpdateAuditInfo(EntityAuditBase model, EnumEntityState state)
+        {
+            if (model == null)
+                return;
+
+            String usuarioAtual = CurrentUserName();
+            switch (state)
+            {
+                case EnumEntityState.Inserir:
+
+                    model.CreatedBy = usuarioAtual;
+                    model.CreatedAt = DateTime.Now;
+                    model.ModifiedBy = usuarioAtual;
+                    model.ModifiedAt = DateTime.Now;
+                    model.FlagActive = true;
+                    break;
+
+                case EnumEntityState.Atualizar:
+                    model.ModifiedBy = usuarioAtual;
+                    model.ModifiedAt = DateTime.Now;
+                    break;
+
+                case EnumEntityState.ExcluirLogico:
+                    model.ModifiedBy = usuarioAtual;
+                    model.ModifiedAt = DateTime.Now;
+                    model.FlagActive = false;
+                    break;
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using Raje.DL.Request.Admin.Base;
-using System;
 
 namespace Raje.DL.Request.Admin
 {
@@ -9,12 +8,10 @@ namespace Raje.DL.Request.Admin
 
         public string UserName { get; set; }
 
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public string Email { get; set; }
 
-        public string City { get; set; }
-
-        public string State { get; set; }
+        public long UserRoleId { get; set; }
     }
 }

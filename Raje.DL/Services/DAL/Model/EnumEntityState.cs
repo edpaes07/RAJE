@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Raje.DL.Services.DAL.Model
+﻿namespace Raje.DL.Services.DAL.Model
 {
     public enum EnumEntityState
     {

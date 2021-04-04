@@ -1,5 +1,8 @@
 ﻿using Raje.DL.DB.Admin;
 using Raje.DL.Services.BLL.Identity;
+using Raje.Infra.Const;
+using Raje.Infra.Enums;
+using Raje.Infra.Util;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -22,7 +25,7 @@ namespace Raje.BLL.Services.Identity.Jwt
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.FullName),
                 new Claim(UserClaims.UserLastGuid,user.LastGuidAuthentication)
             };
 
@@ -47,7 +50,7 @@ namespace Raje.BLL.Services.Identity.Jwt
 
         private void AddUserRoleClaims(List<Claim> claims, User user)
         {
-            if (user.Name == UserRoleTypes.User.GetDescription())
+            if (user.FullName == UserRoleTypes.User.GetDescription())
                 return;
         }
     }

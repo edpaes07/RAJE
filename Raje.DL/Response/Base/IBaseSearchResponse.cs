@@ -6,7 +6,6 @@ namespace Raje.DL.Response.Base
          where T : IBaseResponse
     {
         int PageIndex { get; set; }
-
         int PageSize { get; set; }
 
         IEnumerable<T> Data { get; set; }

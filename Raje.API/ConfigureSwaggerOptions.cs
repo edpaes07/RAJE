@@ -1,4 +1,4 @@
-ï»¿using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
@@ -37,21 +37,21 @@ namespace Raje.API
         {
             var info = new OpenApiInfo()
             {
-                Title = "PR PROF ADS â€“ RAJE",
+                Title = "PR PROF ADS – RAJE",
                 Version = description.ApiVersion.ToString(),
-                Description = "API para uso do aplicativo Raje desenvolvido no trabalho de Tecnologia em AnÃ¡lise e Desenvolvimento de Sistemas.<br/><br/>"
+                Description = "API para uso do aplicativo Raje desenvolvido no trabalho de Tecnologia em Análise e Desenvolvimento de Sistemas.<br/><br/>"
                 + "<b>Integrantes:</b><br/>"
-                + "Nome: Aline de Oliveira Soares â€“ TIA: 19004346<br/>"
-                + "Nome: Edmilson Bispo Paes dos Santos â€“ TIA: 19010291<br/>"
-                + "Nome: Joni Welter Ramos â€“ TIA: 19005636<br/>"
-                + "Nome: Rita de Cassia Duarte Garcia â€“ TIA: 19000448",
+                + "Nome: Aline de Oliveira Soares – TIA: 19004346<br/>"
+                + "Nome: Edmilson Bispo Paes dos Santos – TIA: 19010291<br/>"
+                + "Nome: Joni Welter Ramos – TIA: 19005636<br/>"
+                + "Nome: Rita de Cassia Duarte Garcia – TIA: 19000448",
                 Contact = new OpenApiContact() { Name = "Professor Fabio Silva Lopes", Url = new Uri("https://eadgrad.mackenzie.br/user/view.php?id=469&course=1") },
-                License = new OpenApiLicense() { Name = "PrÃ¡tica profissional em anÃ¡lise e desenvolvimento de sistemas", Url = new Uri("https://eadgrad.mackenzie.br/course/view.php?id=3373") }
+                License = new OpenApiLicense() { Name = "Prática profissional em análise e desenvolvimento de sistemas", Url = new Uri("https://eadgrad.mackenzie.br/course/view.php?id=3373") }
             };
 
             if (description.IsDeprecated)
             {
-                info.Description += "Esta versÃ£o da API foi descontinuada.";
+                info.Description += "Esta versão da API foi descontinuada.";
             }
 
             return info;

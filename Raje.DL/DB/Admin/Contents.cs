@@ -38,6 +38,9 @@ namespace Raje.DL.DB.Admin
         [MaxLength(2)]
         public int NumberSeasons { get; set; }
 
+        [Required]
+        public string Synopsis { get; set; }
+
         public bool IsValid { get; set; }
 
         [ForeignKey("Media")]
@@ -45,6 +48,6 @@ namespace Raje.DL.DB.Admin
 
         public virtual Media Media { get; set; }
 
-        public virtual ICollection<Assessment> Assessment { get; set; }
+        public virtual IEnumerable<Assessment> Assessment { get; set; }
     }
 }

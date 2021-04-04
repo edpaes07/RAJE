@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Raje.DAL.EF.Base;
+﻿using Raje.DAL.EF.Base;
+using Raje.DAL.Queries;
 using Raje.DL.DB.Base;
-using Raje.DL.Services.DAL;
 using Raje.DL.Services.DAL.DataAccess;
+using Raje.DL.Services.DAL.Model;
+using Raje.DL.Services.DAL.QueryServices;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace Raje.BLL.Injections
         public static void Config(IServiceCollection servicesContainer)
         {
             ConfigEFRepository(servicesContainer, typeof(EFRepository<>), typeof(IEntity));
+            ConfigQuery(servicesContainer);
         }
 
         private static void ConfigEFRepository(IServiceCollection servicesContainer, Type InfraTypeRef, Type DomainTypeRef)
@@ -91,6 +94,13 @@ namespace Raje.BLL.Injections
                 servicesContainer.AddTransient(reg.Service, reg.Implementation);
             foreach (var reg in modelRegistrations)
                 servicesContainer.AddTransient(reg.Service, reg.Implementation);
+        }
+
+        private static void ConfigQuery(IServiceCollection servicesContainer)
+        {
+            servicesContainer.AddTransient<IUserQueryService, UserQueryService>();
+            servicesContainer.AddTransient<ILogQueryService, LogQueryService>();
+
         }
     }
 }

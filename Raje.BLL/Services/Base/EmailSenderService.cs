@@ -5,13 +5,13 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace Raje.BLL.Services.Base
+namespace Raje.BLL.Services.Admin
 {
-    public class EmailSenderService : IEmailSenderService
+    public class EmailSenderservice : IEmailSenderService
     {
         private readonly SMTPOptions _smtpOptions;
 
-        public EmailSenderService(IOptions<SMTPOptions> smtpOptions)
+        public EmailSenderservice(IOptions<SMTPOptions> smtpOptions)
         {
             _smtpOptions = smtpOptions.Value;
         }

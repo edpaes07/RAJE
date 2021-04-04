@@ -1,10 +1,16 @@
 ﻿using Raje.DL.Request.Admin.Base;
-using Raje.DL.Request.Base;
+using System.Collections.Generic;
 
 namespace Raje.DL.Request.Admin
 {
     public class UserSearchRequest : BaseSearchRequest
     {
-        public string UserName { get; set; }
+        public IEnumerable<long> StoreIds { get; set; }
+
+        public IEnumerable<long> FranchiseeGroupIds { get; set; }
+
+        public long? UserRoleId { get; set; }
+
+        public string Cpf { get; set; }
     }
 }

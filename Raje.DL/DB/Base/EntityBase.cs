@@ -1,4 +1,4 @@
-﻿using Raje.DL.Services.DAL;
+﻿using Raje.DL.Services.DAL.Model;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

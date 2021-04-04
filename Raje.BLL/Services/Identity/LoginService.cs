@@ -1,9 +1,9 @@
-﻿using Raje.DL.DB.Admin;
-using Raje.DL.Request.Base;
+﻿using Microsoft.AspNetCore.Identity;
+using Raje.DL.DB.Admin;
+using Raje.DL.Request.Admin.Base;
 using Raje.DL.Response.Identity;
 using Raje.DL.Services.BLL.Identity;
 using Raje.DL.Services.DAL.DataAccess;
-using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,13 +34,13 @@ namespace Raje.BLL.Services.Identity
         public async Task<LoginResponse> Login(BaseLoginRequest request)
         {
             var model = await _repository.Query()
-                .Where(model => model.FlagActive && (model.Cpf == request.Login || model.Email == request.Login))
+                .Where(model => model.FlagActive && (model.UserName == request.UserName))
                 .FirstOrDefaultAsync();
 
             if (model == null)
                 throw new KeyNotFoundException("Usuário ou senha inválido.");
             var passwordVerification = _passwordHasher.VerifyHashedPassword(model, model.PasswordHash, request.Password);
-           
+
             if (passwordVerification == PasswordVerificationResult.Failed)
                 throw new KeyNotFoundException("Usuário ou senha inválido.");
 
@@ -50,7 +50,7 @@ namespace Raje.BLL.Services.Identity
         public async Task<LoginResponse> Refresh(BaseRefreshTokenRequest request)
         {
             var model = await _repository.Query()
-                .Where(model => model.FlagActive && (model.Cpf == request.Login || model.Email == request.Login) && model.RefreshToken == request.RefreshToken)
+                .Where(model => model.FlagActive && model.UserName == request.UserName && model.RefreshToken == request.RefreshToken)
                 .FirstOrDefaultAsync();
 
             if (model == null)
@@ -85,7 +85,7 @@ namespace Raje.BLL.Services.Identity
         {
             var model = _repository.Query()
                .Where(state => state.FlagActive
-                   && (state.Id == id ))
+                   && (state.Id == id))
                .Search()
                .FirstOrDefault();
             return model.LastGuidAuthentication;

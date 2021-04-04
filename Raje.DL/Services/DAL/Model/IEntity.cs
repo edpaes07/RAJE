@@ -1,4 +1,4 @@
-﻿namespace Raje.DL.Services.DAL
+﻿namespace Raje.DL.Services.DAL.Model
 {
     public interface IEntity
     {

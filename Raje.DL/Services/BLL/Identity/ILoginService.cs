@@ -1,4 +1,4 @@
-﻿using Raje.DL.Request.Base;
+﻿using Raje.DL.Request.Admin.Base;
 using Raje.DL.Response.Identity;
 using Raje.DL.Services.BLL.Base;
 using System.Threading.Tasks;

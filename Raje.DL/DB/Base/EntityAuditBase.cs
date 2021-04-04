@@ -1,8 +1,6 @@
-﻿using Raje.DL.Services.DAL;
+﻿using Raje.DL.Services.DAL.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Raje.DL.DB.Base
 {
@@ -11,7 +9,7 @@ namespace Raje.DL.DB.Base
     /// </summary>
     public abstract class EntityAuditBase : EntityBase, IEntityAudit
     {
-        ///<summary>Login do usuário que efetuou a inclusão </summary>
+        ///<summary>UserName do usuário que efetuou a inclusão </summary>
         [Required]
         [MaxLength(500)]
         public string CreatedBy { get; set; }
@@ -20,7 +18,7 @@ namespace Raje.DL.DB.Base
         [Required]
         public DateTime CreatedAt { get; set; }
 
-        ///<summary>Login do usuário que efetuou a alteração </summary>
+        ///<summary>UserName do usuário que efetuou a alteração </summary>
         [Required]
         [MaxLength(500)]
         public string ModifiedBy { get; set; }

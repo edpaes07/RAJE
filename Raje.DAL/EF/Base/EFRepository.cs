@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Raje.DL.DB.Base;
+﻿using Raje.DL.DB.Base;
 using Raje.DL.Services.DAL.DataAccess;
 using Raje.DL.Services.DAL.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +17,11 @@ namespace Raje.DAL.EF.Base
         public EFRepository(DbContext db)
         {
             _dbContext = db;
-            _dbContext.Database.SetCommandTimeout(300);//TODO: verificar soluição melhor
+            //TODO: Melhorar isso - timeout em upload de arquivos grandes.
+            if (_dbContext.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+            {
+                _dbContext.Database.SetCommandTimeout(300);
+            }
         }
 
         protected virtual void Set(T model, EntityState state)
@@ -142,7 +146,7 @@ namespace Raje.DAL.EF.Base
             return "usuario TESTE";
         }
 
-        public void UpdateAuditInfo(EntityAuditBase model, EnumEntityState state)
+        public virtual void UpdateAuditInfo(EntityAuditBase model, EnumEntityState state)
         {
             if (model == null)
                 return;

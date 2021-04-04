@@ -1,7 +1,7 @@
-﻿namespace Raje.DL.Request.Base
+﻿namespace Raje.DL.Request.Admin.Base
 {
     public interface IBaseResetPasswordRequest
     {
-        public string Cpf { get; set; }
+        string UserName { get; set; }
     }
 }

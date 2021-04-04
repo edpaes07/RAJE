@@ -1,24 +1,28 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="AspNetCore.Authentication.ApiKey" Version="2.2.0" />
-		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-		<PackageReference Include="BrotliSharpLib" Version="0.3.3" />
-		<PackageReference Include="DocumentFormat.OpenXml" Version="2.11.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
-		<PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
-		<PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.1.7" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Authentication.ApiKey" Version="2.2.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="BrotliSharpLib" Version="0.3.3" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.11.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
+    <PackageReference Include="Microsoft.Azure.Storage.Common" Version="11.1.7" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Raje.DAL\Raje.DAL.csproj" />
-		<ProjectReference Include="..\Raje.DL\Raje.DL.csproj" />
-		<ProjectReference Include="..\Raje.Infra\Raje.Infra.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Raje.DAL\Raje.DAL.csproj" />
+    <ProjectReference Include="..\Raje.DL\Raje.DL.csproj" />
+    <ProjectReference Include="..\Raje.Infra\Raje.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Integration\" />
+  </ItemGroup>
 
 </Project>

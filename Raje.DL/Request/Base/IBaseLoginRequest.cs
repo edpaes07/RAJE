@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Raje.DL.Request.Base
+﻿namespace Raje.DL.Request.Admin.Base
 {
     public interface IBaseLoginRequest
     {
-        string Login { get; set; }
+        string UserName { get; set; }
 
         string Password { get; set; }
     }

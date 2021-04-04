@@ -1,6 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Raje.BLL.ConfigAutoMapper;
 using Raje.DL.Services.BLL.Base;
+using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Raje.BLL.Injections
     {
         public static void Config(IServiceCollection servicesContainer)
         {
+            servicesContainer.AddSingleton(ConfigMapper.Configure());
             servicesContainer.AddAutoMapper(typeof(IDependencyInjectionService).Assembly);
 
             // Get all types in BLL assembly (dll)

@@ -1,33 +1,221 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>netcoreapp3.1</TargetFramework>
-		<UserSecretsId>dcdd061e-53d0-4079-a3c3-b67699e272e4</UserSecretsId>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="AutoMapper" Version="10.1.1" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.2">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Migrations\20200621223327_Init.cs" />
+    <Compile Remove="Migrations\20200621223327_Init.Designer.cs" />
+    <Compile Remove="Migrations\20200621223658_Init.cs" />
+    <Compile Remove="Migrations\20200621223658_Init.Designer.cs" />
+    <Compile Remove="Migrations\20200628163220_add_SystemTables.cs" />
+    <Compile Remove="Migrations\20200628163220_add_SystemTables.Designer.cs" />
+    <Compile Remove="Migrations\20200708122840_addRelationFranchiseeStore.cs" />
+    <Compile Remove="Migrations\20200708122840_addRelationFranchiseeStore.Designer.cs" />
+    <Compile Remove="Migrations\20200708125906_addFranchiseeStoreRelation.cs" />
+    <Compile Remove="Migrations\20200708125906_addFranchiseeStoreRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200708130230_addFranchiseeStoreRelation.cs" />
+    <Compile Remove="Migrations\20200708130230_addFranchiseeStoreRelation.Designer.cs" />
+    <Compile Remove="Migrations\20200708203146_hassUserRelationShip.cs" />
+    <Compile Remove="Migrations\20200708203146_hassUserRelationShip.Designer.cs" />
+    <Compile Remove="Migrations\20200708215714_hassUserRelationShip.cs" />
+    <Compile Remove="Migrations\20200708215714_hassUserRelationShip.Designer.cs" />
+    <Compile Remove="Migrations\20200708223003_hassUserRelationShip.cs" />
+    <Compile Remove="Migrations\20200708223003_hassUserRelationShip.Designer.cs" />
+    <Compile Remove="Migrations\20200709212847_AddSKU.cs" />
+    <Compile Remove="Migrations\20200709212847_AddSKU.Designer.cs" />
+    <Compile Remove="Migrations\20200713214151_AddOrder.cs" />
+    <Compile Remove="Migrations\20200713214151_AddOrder.Designer.cs" />
+    <Compile Remove="Migrations\20200714170925_UpdateOrderColumnNullableFKs.cs" />
+    <Compile Remove="Migrations\20200714170925_UpdateOrderColumnNullableFKs.Designer.cs" />
+    <Compile Remove="Migrations\20200715135629_SKUUniqueRefId.cs" />
+    <Compile Remove="Migrations\20200715135629_SKUUniqueRefId.Designer.cs" />
+    <Compile Remove="Migrations\20200715154749_AddStockTable.cs" />
+    <Compile Remove="Migrations\20200715154749_AddStockTable.Designer.cs" />
+    <Compile Remove="Migrations\20200715160317_AddStockTable.cs" />
+    <Compile Remove="Migrations\20200715160317_AddStockTable.Designer.cs" />
+    <Compile Remove="Migrations\20200718005230_addProcSearchUser.cs" />
+    <Compile Remove="Migrations\20200718005230_addProcSearchUser.Designer.cs" />
+    <Compile Remove="Migrations\20200718010134_addUserSearch.cs" />
+    <Compile Remove="Migrations\20200718010134_addUserSearch.Designer.cs" />
+    <Compile Remove="Migrations\20200718010252_addColumnLog.cs" />
+    <Compile Remove="Migrations\20200718010252_addColumnLog.Designer.cs" />
+    <Compile Remove="Migrations\20200718011050_addSP_SearchUsers.cs" />
+    <Compile Remove="Migrations\20200718011050_addSP_SearchUsers.Designer.cs" />
+    <Compile Remove="Migrations\20200718014004_addView.cs" />
+    <Compile Remove="Migrations\20200718014004_addView.Designer.cs" />
+    <Compile Remove="Migrations\20200718014415_addUserSearchResponse.cs" />
+    <Compile Remove="Migrations\20200718014415_addUserSearchResponse.Designer.cs" />
+    <Compile Remove="Migrations\20200718172814_teste.cs" />
+    <Compile Remove="Migrations\20200718172814_teste.Designer.cs" />
+    <Compile Remove="Migrations\20200718173852_addUserSearchResponse.cs" />
+    <Compile Remove="Migrations\20200718173852_addUserSearchResponse.Designer.cs" />
+    <Compile Remove="Migrations\20200718181425_addUserSearchResponse.cs" />
+    <Compile Remove="Migrations\20200718181425_addUserSearchResponse.Designer.cs" />
+    <Compile Remove="Migrations\20200721163619_AddClientTable.cs" />
+    <Compile Remove="Migrations\20200721163619_AddClientTable.Designer.cs" />
+    <Compile Remove="Migrations\20200723120846_UpdateColumnsOrderReferenceStore.cs" />
+    <Compile Remove="Migrations\20200723120846_UpdateColumnsOrderReferenceStore.Designer.cs" />
+    <Compile Remove="Migrations\20200723145147_addInvoice.cs" />
+    <Compile Remove="Migrations\20200723145147_addInvoice.Designer.cs" />
+    <Compile Remove="Migrations\20200723151253_addInvoice.cs" />
+    <Compile Remove="Migrations\20200723151253_addInvoice.Designer.cs" />
+    <Compile Remove="Migrations\20200723214240_asasa.cs" />
+    <Compile Remove="Migrations\20200723214240_asasa.Designer.cs" />
+    <Compile Remove="Migrations\20200726230454_addPrice.cs" />
+    <Compile Remove="Migrations\20200726230454_addPrice.Designer.cs" />
+    <Compile Remove="Migrations\20200727152827_RemoveCOlumnIsActiveFromOrder.cs" />
+    <Compile Remove="Migrations\20200727152827_RemoveCOlumnIsActiveFromOrder.Designer.cs" />
+    <Compile Remove="Migrations\20200727180441_teste.cs" />
+    <Compile Remove="Migrations\20200727180441_teste.Designer.cs" />
+    <Compile Remove="Migrations\20200728025651_RemoveCOlumnTokenHookFromStore.cs" />
+    <Compile Remove="Migrations\20200728025651_RemoveCOlumnTokenHookFromStore.Designer.cs" />
+    <Compile Remove="Migrations\20200731121048_seedCompanyBUAndBrand.cs" />
+    <Compile Remove="Migrations\20200731121048_seedCompanyBUAndBrand.Designer.cs" />
+    <Compile Remove="Migrations\20200731143735_seed.cs" />
+    <Compile Remove="Migrations\20200731143735_seed.Designer.cs" />
+    <Compile Remove="Migrations\20200731154247_Company.cs" />
+    <Compile Remove="Migrations\20200731154247_Company.Designer.cs" />
+    <Compile Remove="Migrations\20200731161507_seedBUBrand.cs" />
+    <Compile Remove="Migrations\20200731161507_seedBUBrand.Designer.cs" />
+    <Compile Remove="Migrations\20200731180848_seedUserAdmin.cs" />
+    <Compile Remove="Migrations\20200731180848_seedUserAdmin.Designer.cs" />
+    <Compile Remove="Migrations\20200802184802_addPriorityRuleColumn.cs" />
+    <Compile Remove="Migrations\20200802184802_addPriorityRuleColumn.Designer.cs" />
+    <Compile Remove="Migrations\20200811184512_AddTableDeviceAndTableCategory.cs" />
+    <Compile Remove="Migrations\20200811184512_AddTableDeviceAndTableCategory.Designer.cs" />
+    <Compile Remove="Migrations\20200811185802_AddTableDeviceAndTableCategory.cs" />
+    <Compile Remove="Migrations\20200811185802_AddTableDeviceAndTableCategory.Designer.cs" />
+    <Compile Remove="Migrations\20200812141501_seedCategory.cs" />
+    <Compile Remove="Migrations\20200812141501_seedCategory.Designer.cs" />
+    <Compile Remove="Migrations\20200812141750_seedCategory.cs" />
+    <Compile Remove="Migrations\20200812141750_seedCategory.Designer.cs" />
+    <Compile Remove="Migrations\20200811145037_refreshToken.cs" />
+    <Compile Remove="Migrations\20200811145037_refreshToken.Designer.cs" />
+    <Compile Remove="Migrations\20200813180853_addProcLog.cs" />
+    <Compile Remove="Migrations\20200813180853_addProcLog.Designer.cs" />
+    <Compile Remove="Migrations\20200814142011_AddCampaignTableAndCampaignDevicesTable.cs" />
+    <Compile Remove="Migrations\20200814142011_AddCampaignTableAndCampaignDevicesTable.Designer.cs" />
+    <Compile Remove="Migrations\20200814142808_AddCampaignTableAndCampaignDevicesTable.cs" />
+    <Compile Remove="Migrations\20200814142808_AddCampaignTableAndCampaignDevicesTable.Designer.cs" />
+    <Compile Remove="Migrations\20200814143721_AddCampaignTableAndCampaignDevicesTable.cs" />
+    <Compile Remove="Migrations\20200814143721_AddCampaignTableAndCampaignDevicesTable.Designer.cs" />
+    <Compile Remove="Migrations\20200817141859_AddCampaignAndCampaignDevicesTable.cs" />
+    <Compile Remove="Migrations\20200817141859_AddCampaignAndCampaignDevicesTable.Designer.cs" />
+    <Compile Remove="Migrations\20200817193041_AddOrderStatusTable.cs" />
+    <Compile Remove="Migrations\20200817193041_AddOrderStatusTable.Designer.cs" />
+    <Compile Remove="Migrations\20200817195212_addRajeOrderStatusTable.cs" />
+    <Compile Remove="Migrations\20200817195212_addRajeOrderStatusTable.Designer.cs" />
+    <Compile Remove="Migrations\20200819174616_SeedRajeOrderStatus.cs" />
+    <Compile Remove="Migrations\20200819174616_SeedRajeOrderStatus.Designer.cs" />
+    <Compile Remove="Migrations\20200819175056_SeedRajeOrderStatus.cs" />
+    <Compile Remove="Migrations\20200819175056_SeedRajeOrderStatus.Designer.cs" />
+    <Compile Remove="Migrations\20200819184933_SeedRajeOrderStatus.cs" />
+    <Compile Remove="Migrations\20200819184933_SeedRajeOrderStatus.Designer.cs" />
+    <Compile Remove="Migrations\20200819185620_SeedRajeOrderStatus.cs" />
+    <Compile Remove="Migrations\20200819185620_SeedRajeOrderStatus.Designer.cs" />
+    <Compile Remove="Migrations\20200819205559_UpdateColumnNameDeviceAndCategoryMaxLength.cs" />
+    <Compile Remove="Migrations\20200819205559_UpdateColumnNameDeviceAndCategoryMaxLength.Designer.cs" />
+    <Compile Remove="Migrations\20200819204134_teste.cs" />
+    <Compile Remove="Migrations\20200819204134_teste.Designer.cs" />
+    <Compile Remove="Migrations\20200823155220_addSPHealthCheck.cs" />
+    <Compile Remove="Migrations\20200823155220_addSPHealthCheck.Designer.cs" />
+    <Compile Remove="Migrations\20200823161629_updateLogColumns.cs" />
+    <Compile Remove="Migrations\20200823161629_updateLogColumns.Designer.cs" />
+    <Compile Remove="Migrations\20200826135552_CreateAddressTableAndUpdateClientToRemoveAddressInfo.cs" />
+    <Compile Remove="Migrations\20200826135552_CreateAddressTableAndUpdateClientToRemoveAddressInfo.Designer.cs" />
+    <Compile Remove="Migrations\20200827184952_addColumnsClientTable.cs" />
+    <Compile Remove="Migrations\20200827184952_addColumnsClientTable.Designer.cs" />
+    <Compile Remove="Migrations\20200827191341_updateColumnPhone.cs" />
+    <Compile Remove="Migrations\20200827191341_updateColumnPhone.Designer.cs" />
+    <Compile Remove="Migrations\20200908224727_correctInvoiceRelationShip.cs" />
+    <Compile Remove="Migrations\20200908224727_correctInvoiceRelationShip.Designer.cs" />
+    <Compile Remove="Migrations\20201217185852_addFranchiseeGroupIdInSafetyStock.cs" />
+    <Compile Remove="Migrations\20201217185852_addFranchiseeGroupIdInSafetyStock.Designer.cs" />
+    <Compile Remove="Migrations\20200917042801_addPagarMeModels.cs" />
+    <Compile Remove="Migrations\20200917042801_addPagarMeModels.Designer.cs" />
+    <Compile Remove="Migrations\20200917044131_addPagarMeModels.cs" />
+    <Compile Remove="Migrations\20200917044131_addPagarMeModels.Designer.cs" />
+    <Compile Remove="Migrations\20200917044639_addPagarMeModels.cs" />
+    <Compile Remove="Migrations\20200917044639_addPagarMeModels.Designer.cs" />
+    <Compile Remove="Migrations\20200917114050_addPagarMeModels.cs" />
+    <Compile Remove="Migrations\20200917114050_addPagarMeModels.Designer.cs" />
+    <Compile Remove="Migrations\20201217142436_UpdateRefundStatusColor.cs" />
+    <Compile Remove="Migrations\20201217142436_UpdateRefundStatusColor.Designer.cs" />
+    <Compile Remove="Migrations\20201222175403_CreateTableRefundReason.cs" />
+    <Compile Remove="Migrations\20201222175403_CreateTableRefundReason.Designer.cs" />
+    <Compile Remove="Migrations\20201222182051_seedInsertRefundReasons.cs" />
+    <Compile Remove="Migrations\20201222182051_seedInsertRefundReasons.Designer.cs" />
+    <Compile Remove="Migrations\20201223135531_seedInsertRefundReasons.cs" />
+    <Compile Remove="Migrations\20201223135531_seedInsertRefundReasons.Designer.cs" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\Raje.DL\Raje.DL.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+	<None Remove="Seeds\JSONs\user.json" />
+    <None Remove="Seeds\JSONs\roles.json" />
+    <None Remove="Seeds\JSONs\cities.json" />
+	<None Remove="Seeds\JSONs\states.json" />
+	<None Remove="Seeds\JSONs\media.json" />
+	<None Remove="Seeds\JSONs\contents.json" />
+  </ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Migrations\" />
-	</ItemGroup>
+  <ItemGroup>
+	  <Content Include="Seeds\JSONs\user.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+    <Content Include="Seeds\JSONs\roles.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Seeds\JSONs\cities.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+	  <Content Include="Seeds\JSONs\states.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Seeds\JSONs\media.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Seeds\JSONs\contents.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Raje.DL\Raje.DL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Seeds\JSONs\cities.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
 
 </Project>

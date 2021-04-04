@@ -1,4 +1,4 @@
-﻿using Raje.DL.Request.Base;
+﻿using Raje.DL.Request.Admin.Base;
 
 namespace Raje.DL.Request.Identity
 {
@@ -6,6 +6,8 @@ namespace Raje.DL.Request.Identity
     {
         public string Password { get; set; }
 
-        public int VerificationCode { get; set; }
+        public string ConfirmPassword { get; set; }
+
+        public string Token { get; set; }
     }
 }
