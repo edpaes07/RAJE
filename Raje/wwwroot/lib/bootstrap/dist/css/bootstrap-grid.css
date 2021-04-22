@@ -17,7 +17,7 @@ html {
 
 .container {
   width: 100%;
-  padding-right: 15px;
+  padding-right: 50px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
@@ -49,7 +49,7 @@ html {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
+  padding-right: 50px;
   padding-left: 15px;
   margin-right: auto;
   margin-left: auto;
@@ -83,7 +83,7 @@ html {
 .col-xl-auto {
   position: relative;
   width: 100%;
-  padding-right: 15px;
+  padding-right: 80px;
   padding-left: 15px;
 }
 

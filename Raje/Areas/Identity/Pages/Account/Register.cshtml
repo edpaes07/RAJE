@@ -1,19 +1,18 @@
 ﻿@page
 @model RegisterModel
+</br>
 
 @if (User.IsInRole(Raje.WC.AdminRole))
 {
-    <h1>Register an Admin Account</h1>
-}
+<h1>Cadastrar uma conta de Administrador</h1> }
 else
 {
-    <h1>Register</h1>
-}
+<h1>Cadastrar</h1>}
 
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h4>Create a new account.</h4>
+            <h4>Criar uma nova conta.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -43,43 +42,40 @@ else
             </div>
             @if (User.IsInRole(Raje.WC.AdminRole))
             {
-                <button type="submit" class="btn btn-warning">Register Admin User</button>
-            }
-            else
-            {
-                <button type="submit" class="btn btn-primary">Register</button>
-            }
+<button type="submit" class="btn btn-warning">Registrar usuário administrador</button> }
+else
+{
+<button type="submit" class="btn btn-primary">Cadastrar-se</button>}
 
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">
         <section>
-            <h4>Use another service to register.</h4>
+            <h4>Seja Bem Vindo ao Raje.</h4>
             <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            @{ if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
-                    <div>
-                        <p>
-                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
-                            for details on setting up this ASP.NET application to support logging in via external services.
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
+    <div>
+        <p style="text-align: justify;">
+            Nossa empresa, optou por criar um aplicativo de recomendação para
+            Filmes, Séries e Livros, capaz de permitir acesso e participação dos nossos
+            colaboradores, de modo a prover interação com contribuições na forma de dicas e
+            recomendações sobre filmes, livros e séries.
+        </p>
+        &nbsp;&nbsp;<img src="https://lh4.googleusercontent.com/-DH47KG2gJnQ/VIRNPxW0xgI/AAAAAAAAMrk/hEZvxbprXu4/s300/2014back_logo.png" alt="some text" width=150 height=150>
+        &nbsp;&nbsp;<img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width=200 height=100>
+    </div> }
+else
+{
+<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+    <div>
+        <p>
+            @foreach (var provider in Model.ExternalLogins)
+            {
+<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>}
+        </p>
+    </div>
+</form> } }
         </section>
     </div>
 </div>
