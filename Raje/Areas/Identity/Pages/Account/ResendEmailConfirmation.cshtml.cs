@@ -48,7 +48,7 @@ namespace Raje.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "E-mail de verificação enviado. Por favor verifique seu email.");
+                ModelState.AddModelError(string.Empty, "E-mail de verificação enviado. Por favor verifique seu e-mail.");
                 return Page();
             }
 
@@ -65,7 +65,7 @@ namespace Raje.Areas.Identity.Pages.Account
                 "Confirme seu e-mail",
                 $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
 
-            ModelState.AddModelError(string.Empty, "E-mail de verificação enviado. Por favor verifique seu email.");
+            ModelState.AddModelError(string.Empty, "E-mail de verificação enviado. Por favor verifique seu e-mail.");
             return Page();
         }
     }
