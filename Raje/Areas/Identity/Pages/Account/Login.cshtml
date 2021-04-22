@@ -1,8 +1,9 @@
 ﻿@page
 @model LoginModel
-    </br>
-@{ ViewData["Title"] = "Entrar"; }
 
+@{ ViewData["Title"] = "Entrar"; }
+</br>
+</br>
 <h1>@ViewData["Title"]</h1>
 <div class="row">
     <div class="col-md-4">
@@ -40,8 +41,8 @@
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Criar uma nova conta</a>
                     </p>
                     @*<p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
-                    </p>*@
+                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
+                        </p>*@
                 </div>
             </form>
         </section>
