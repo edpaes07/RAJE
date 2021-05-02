@@ -34,22 +34,22 @@
                         </li>
                         @if (User.IsInRole(WC.AdminRole))
                         {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Content Management
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationType" asp-action="Index">Application Type</a>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create Admin User</a>
-                        </div>
-                    </li>
-}
-                        <li><a href="#" class="nav-link">Filmes</a></li>
-                        <li><a href="#" class="nav-link">Séries</a></li>
-                        <li><a href="#" class="nav-link">Livros</a></li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Content Management
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Category</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationType" asp-action="Index">Application Type</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Product</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Create Admin User</a>
+                                </div>
+                            </li>
+                        }
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a></li>
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Séries</a></li>
+                        <li><a class="nav-link text-dark" asp-area="" asp-controller="Livros" asp-action="Index">Livros</a></li>
                         <li><a href="#" class="nav-link">Amigos</a></li>
                         <li><a href="#" class="nav-link">Solicitações</a></li>
                     </ul>

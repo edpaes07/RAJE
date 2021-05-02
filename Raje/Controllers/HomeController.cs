@@ -26,12 +26,23 @@ namespace Raje.Controllers
 
         public IActionResult Index()
         {
-            HomeVM homeVM = new HomeVM()
+            var filmes = _db.Filmes.ToList();
+            var series = _db.Series.ToList();
+            var livros = _db.Livros.ToList();
+
+            ListagemViewModel retorno = new ListagemViewModel
             {
-                Products = _db.Product.Include(u => u.Category).Include(u => u.ApplicationType),
-                Categories = _db.Category
+                Filmes = filmes,
+                HomeVM = new HomeVM
+                {
+                    Products = _db.Product.Include(u => u.Category).Include(u => u.ApplicationType),
+                    Categories = _db.Category
+                },
+                Livros = livros,
+                Series = series
             };
-            return View(homeVM);
+
+            return View(retorno);
         }
 
         public IActionResult Details(int id)
@@ -42,7 +53,7 @@ namespace Raje.Controllers
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
             }
-            
+
 
 
             DetailsVM DetailsVM = new DetailsVM()
@@ -53,7 +64,7 @@ namespace Raje.Controllers
             };
 
 
-            foreach(var item in shoppingCartList)
+            foreach (var item in shoppingCartList)
             {
                 if (item.ProductId == id)
                 {
@@ -64,11 +75,11 @@ namespace Raje.Controllers
             return View(DetailsVM);
         }
 
-        [HttpPost,ActionName("Details")]
+        [HttpPost, ActionName("Details")]
         public IActionResult DetailsPost(int id)
         {
             List<ShoppingCart> shoppingCartList = new List<ShoppingCart>();
-            if(HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart)!=null
+            if (HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart) != null
                 && HttpContext.Session.Get<IEnumerable<ShoppingCart>>(WC.SessionCart).Count() > 0)
             {
                 shoppingCartList = HttpContext.Session.Get<List<ShoppingCart>>(WC.SessionCart);
@@ -92,7 +103,7 @@ namespace Raje.Controllers
             {
                 shoppingCartList.Remove(itemToRemove);
             }
-            
+
             HttpContext.Session.Set(WC.SessionCart, shoppingCartList);
             return RedirectToAction(nameof(Index));
         }
