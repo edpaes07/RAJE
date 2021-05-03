@@ -31,15 +31,27 @@
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Anos" class="control-label">Ano</label>
-                <input asp-for="Anos" class="form-control" />
-                <span asp-validation-for="Anos" class="text-danger"></span>
+                <label asp-for="Ano" class="control-label">Ano</label>
+                <input asp-for="Ano" class="form-control" />
+                <span asp-validation-for="Ano" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroTemporadas" class="control-label">Número de Temporadas</label>
                 <input asp-for="NumeroTemporadas" class="form-control" />
                 <span asp-validation-for="NumeroTemporadas" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Sinopse" class="control-label">Sinopse</label>
+                <input asp-for="Sinopse" class="form-control" />
+                <span asp-validation-for="Sinopse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="FirstName">Imagem</label>
+                <div class="col-md-10">
+                    <input type="file" name="file" id="ImageUpload" />
+                </div>
+            </div>
+            </br>
             <div class="form-group">
                 <input type="submit" value="Adicionar" class="btn btn-success" />
             </div>

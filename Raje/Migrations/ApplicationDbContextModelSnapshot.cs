@@ -277,6 +277,9 @@ namespace Raje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Sinopse")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -301,6 +304,9 @@ namespace Raje.Migrations
 
                     b.Property<string>("Pais")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sinopse")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Titulo")
@@ -372,6 +378,9 @@ namespace Raje.Migrations
 
                     b.Property<string>("Pais")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sinopse")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Titulo")

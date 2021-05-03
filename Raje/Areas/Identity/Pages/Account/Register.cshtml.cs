@@ -7,6 +7,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,18 @@ namespace Raje.Areas.Identity.Pages.Account
 
             [Display(Name = "Número de telefone")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Data de Nascimento")]
+            public DateTime Birthdate { get; set; }
+
+            [Display(Name = "Cidade")]
+            public string City { get; set; }
+
+            [Display(Name = "Estado")]
+            public string State { get; set; }
+
+            [Display(Name = "Imagem")]
+            public IFormFile Image { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -141,7 +154,6 @@ namespace Raje.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
             return Page();
         }
     }
