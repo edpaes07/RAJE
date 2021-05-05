@@ -2880,7 +2880,7 @@
     if (!isRequired) {
       var _requesting = '`' + requestingName + '`';
       var requested = '`' + requestedName + '`';
-      console.warn(requested + ' modifier is required by ' + _requesting + ' modifier in order to work, be sure to include it before ' + _requesting + '!');
+        console.warn(requested + ' modificador é requerido por ' + _requesting + ' modificador para funcionar, certifique-se de incluí-lo antes ' + _requesting + '!');
     }
     return isRequired;
   }
