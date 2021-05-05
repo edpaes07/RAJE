@@ -32,11 +32,11 @@
                     </form> } }
         </section>
     </div>
-    </br>
     <div class="col-md-1"></div>
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
+                </br>
                 <h4>Realizar Login</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
@@ -69,8 +69,8 @@
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Criar uma nova conta</a>
                     </p>
                     @*<p>
-                            <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
-                        </p>*@
+                <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
+            </p>*@
                 </div>
             </form>
         </section>
