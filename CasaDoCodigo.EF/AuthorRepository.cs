@@ -1,15 +1,15 @@
-﻿using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Model;
+﻿using Raje.Core.Repository;
+using Raje.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CasaDoCodigo.EF
+namespace Raje.EF
 {
     public class AuthorRepository: RepositoryBase<Author, int>, IAuthorRepository
     {
-        public AuthorRepository(CasaDoCodigoDbContext dbContext)
+        public AuthorRepository(RajeDbContext dbContext)
             : base(dbContext, e => e.Id)
         {
         }

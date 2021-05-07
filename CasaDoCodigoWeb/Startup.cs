@@ -4,11 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Core.Service;
-using CasaDoCodigo.EF;
-using CasaDoCodigo.Model;
-using CasaDoCodigoWeb.Service;
+using Raje.Core.Repository;
+using Raje.Core.Service;
+using Raje.EF;
+using Raje.Model;
+using RajeWeb.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,7 +18,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
-namespace CasaDoCodigoWeb
+namespace RajeWeb
 {
     public class Startup
     {
@@ -41,7 +41,7 @@ namespace CasaDoCodigoWeb
 
             var connectionString = Configuration.GetConnectionString("Default");
 
-            services.AddDbContext<CasaDoCodigoDbContext>(options =>
+            services.AddDbContext<RajeDbContext>(options =>
                 options
                     .EnableSensitiveDataLogging()
                     //.UseLazyLoadingProxies()
@@ -92,7 +92,7 @@ namespace CasaDoCodigoWeb
         
         private void SeedDataBase(IServiceProvider serviceProvider)
         {
-            var dbContext = serviceProvider.GetService<CasaDoCodigoDbContext>();
+            var dbContext = serviceProvider.GetService<RajeDbContext>();
             using (dbContext)
             {
                 var alreadySeeded = dbContext.Authors.Any();
@@ -104,7 +104,7 @@ namespace CasaDoCodigoWeb
             }
         }
         
-        private void SeedDataBaseImpl(CasaDoCodigoDbContext context)
+        private void SeedDataBaseImpl(RajeDbContext context)
         {
             var data = File.ReadAllText("consolidation.json");
             var booksData = JsonConvert.DeserializeObject<BookData[]>(data);

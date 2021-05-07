@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CasaDoCodigo.Model
+namespace Raje.Model
 {
     public class CartItem
     {

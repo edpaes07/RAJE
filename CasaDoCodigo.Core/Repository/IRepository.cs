@@ -1,11 +1,11 @@
-﻿using CasaDoCodigo.Model;
+﻿using Raje.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigo.Core.Repository
+namespace Raje.Core.Repository
 {
     public interface IBookRepository : IRepository<Book, int> { }
     public interface ICategoryRepository : IRepository<Category, int> { }

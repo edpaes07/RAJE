@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using CasaDoCodigo.Model;
+using Raje.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigoWeb.Models
+namespace RajeWeb.Models
 {
     public class BookViewModel
     {

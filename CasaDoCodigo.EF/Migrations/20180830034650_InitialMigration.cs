@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CasaDoCodigo.EF.Migrations
+namespace Raje.EF.Migrations
 {
     public partial class InitialMigration : Migration
     {

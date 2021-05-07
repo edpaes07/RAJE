@@ -1,4 +1,4 @@
-﻿using CasaDoCodigo.Core.Repository;
+﻿using Raje.Core.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,17 +7,17 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigo.EF
+namespace Raje.EF
 {
     public abstract class RepositoryBase<TEntity, TKey> : IRepository<TEntity, TKey>
          where TEntity : class
     {
-        protected readonly CasaDoCodigoDbContext _dbContext;
+        protected readonly RajeDbContext _dbContext;
         protected readonly Expression<Func<TEntity, TKey>> _keySelector;
         
         public virtual IQueryable<TEntity> Query => Set().AsQueryable();
 
-        internal RepositoryBase(CasaDoCodigoDbContext dbContext, Expression<Func<TEntity, TKey>> keySelector)
+        internal RepositoryBase(RajeDbContext dbContext, Expression<Func<TEntity, TKey>> keySelector)
         {
             _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             _keySelector = keySelector ?? throw new ArgumentNullException(nameof(keySelector));

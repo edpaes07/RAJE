@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using CasaDoCodigo.Model;
-using CasaDoCodigoWeb.Models;
+using Raje.Model;
+using RajeWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigoWeb
+namespace RajeWeb
 {
     public class DomainProfile : Profile
     {

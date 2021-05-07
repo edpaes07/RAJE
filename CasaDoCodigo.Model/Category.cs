@@ -1,4 +1,4 @@
-﻿namespace CasaDoCodigo.Model
+﻿namespace Raje.Model
 {
     public class Category
     {

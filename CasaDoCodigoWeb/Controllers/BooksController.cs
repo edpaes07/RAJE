@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
-using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Model;
-using CasaDoCodigoWeb.Models;
+using Raje.Core.Repository;
+using Raje.Model;
+using RajeWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigoWeb.Controllers
+namespace RajeWeb.Controllers
 {
     public class BooksController : Controller
     {

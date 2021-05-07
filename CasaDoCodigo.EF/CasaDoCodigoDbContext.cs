@@ -1,15 +1,15 @@
-﻿using CasaDoCodigo.Model;
+﻿using Raje.Model;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CasaDoCodigo.EF
+namespace Raje.EF
 {
-    public class CasaDoCodigoDbContext : DbContext
+    public class RajeDbContext : DbContext
     {
-        public CasaDoCodigoDbContext(DbContextOptions options) : base(options)
+        public RajeDbContext(DbContextOptions options) : base(options)
         {
         }
 

@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "CasaDoCodigoWeb": {
+    "RajeWeb": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

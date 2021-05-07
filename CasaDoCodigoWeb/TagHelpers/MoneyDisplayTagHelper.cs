@@ -1,4 +1,4 @@
-﻿using CasaDoCodigoWeb.Helpers;
+﻿using RajeWeb.Helpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigoWeb.TagHelpers
+namespace RajeWeb.TagHelpers
 {
     // <moneyDisplay> </moneyDisplay>
     public class MoneyDisplayTagHelper : TagHelper

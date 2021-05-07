@@ -1,13 +1,13 @@
-﻿using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Core.Service;
-using CasaDoCodigo.Model;
+﻿using Raje.Core.Repository;
+using Raje.Core.Service;
+using Raje.Model;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigoWeb.Service
+namespace RajeWeb.Service
 {
     public class InSessionCartService : ICartService
     {

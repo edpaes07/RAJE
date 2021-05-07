@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CasaDoCodigoWeb.Models;
-using CasaDoCodigo.Core.Repository;
+using RajeWeb.Models;
+using Raje.Core.Repository;
 
-namespace CasaDoCodigoWeb.Controllers
+namespace RajeWeb.Controllers
 {
-    // dotnet ef database update --project .\CasaDoCodigo.EF --startup-project .\CasaDoCodigoWeb
+    // dotnet ef database update --project .\Raje.EF --startup-project .\RajeWeb
     public class HomeController : Controller
     {
         private IBookRepository _bookRepository;

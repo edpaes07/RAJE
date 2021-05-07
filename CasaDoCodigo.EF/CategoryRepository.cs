@@ -1,16 +1,16 @@
-﻿using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Model;
+﻿using Raje.Core.Repository;
+using Raje.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CasaDoCodigo.EF
+namespace Raje.EF
 {
     public class CategoryRepository : RepositoryBase<Category, int>, ICategoryRepository
     {
-        public CategoryRepository(CasaDoCodigoDbContext dbContext)
+        public CategoryRepository(RajeDbContext dbContext)
             : base(dbContext, e => e.Id)
         {
         }

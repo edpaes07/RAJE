@@ -1,5 +1,5 @@
-﻿using CasaDoCodigo.Core.Repository;
-using CasaDoCodigo.Model;
+﻿using Raje.Core.Repository;
+using Raje.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,11 +8,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CasaDoCodigo.EF
+namespace Raje.EF
 {
     public class BookRepository : RepositoryBase<Book, int>, IBookRepository
     {
-        public BookRepository(CasaDoCodigoDbContext dbContext)
+        public BookRepository(RajeDbContext dbContext)
             : base(dbContext, e => e.Id)
         {
         }

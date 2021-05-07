@@ -1,9 +1,9 @@
-﻿using CasaDoCodigo.Model;
+﻿using Raje.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CasaDoCodigo.Core.Service
+namespace Raje.Core.Service
 {
     public interface ICartService
     {
