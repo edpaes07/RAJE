@@ -27,8 +27,7 @@ namespace Raje.Models
         [Required]
         public int NumeroTemporadas { get; set; }
 
-        [NotMapped]
-        public IFormFile Imagem { get; set; }
+        public string ImagemURL { get; set; }
 
         public String Sinopse { get; set; }
     }
