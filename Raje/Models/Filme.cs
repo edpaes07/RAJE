@@ -24,8 +24,7 @@ namespace Raje.Models
         [Required]
         public int Ano { get; set; }
 
-        [NotMapped]
-        public IFormFile Imagem { get; set; }
+        public string ImagemURL { get; set; }
 
         public String Sinopse { get; set; }
     }
