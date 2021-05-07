@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CasaDoCodigo.Model\CasaDoCodigo.Model.csproj" />
+    <ProjectReference Include="..\CasaDoCodigo.Model\Raje.Model.csproj" />
   </ItemGroup>
 
 </Project>
