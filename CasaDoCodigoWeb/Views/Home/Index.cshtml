@@ -1,0 +1,130 @@
+﻿@model HomeViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<p class="destaqueDoCupom">
+    Use o código <strong class="destaqueDoCupom-codigo"></strong> e tenha <strong class="destaqueDoCupom-desconto">10%</strong> de desconto!
+    <button class="destaqueDoCupom-remover" title="Remover banner" onclick="removeDiscountBanner()">
+        <!--?xml version="1.0" encoding="iso-8859-1"?-->
+        <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+        <img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width="20%" height="20%">
+    </button>
+</p>
+<section class="vitrineDestacao container">
+    <h2 class="vitrineDestaquinho-titulo">Recomendações</h2>
+    <ul class="vitrineDestacao-lista">
+        <li class="livroNaVitrine vitrineDestacao-item vitrineDestacao-itemSecundario">
+            <a asp-action="Details" asp-controller="Books" asp-route-id="@Model.FeaturedMedium.Id" class="livroNaVitrine-link">
+                <img class="livroNaVitrine-imagem vitrineDestacao-item-imagem" src="@Model.FeaturedMedium.CoverUri" alt="@Model.FeaturedMedium.DisplayName" title="@Model.FeaturedMedium.DisplayName">
+                <div class="vitrineDestacao-item-info" role="presentation">
+                    <h2 class="vitrineDestacao-item-nome livroNaVitrine-nome">
+                        @Model.FeaturedMedium.Title
+                    </h2>
+                    <span class="vitrineDestacao-item-maisDetalhes">Visualizar</span>
+                </div>
+            </a>
+        </li>
+        <li class="livroNaVitrine vitrineDestacao-item vitrineDestacao-itemSecundario">
+            <a asp-action="Details" asp-controller="Books" asp-route-id="@Model.FeaturedSmall.Id" class="livroNaVitrine-link">
+                <img class="livroNaVitrine-imagem vitrineDestacao-item-imagem" src="@Model.FeaturedSmall.CoverUri" alt="@Model.FeaturedSmall.DisplayName" title="@Model.FeaturedSmall.DisplayName">
+                <div class="vitrineDestacao-item-info" role="presentation">
+                    <h2 class="vitrineDestacao-item-nome livroNaVitrine-nome">
+                        @Model.FeaturedSmall.Title
+                    </h2>
+                    <span class="vitrineDestacao-item-maisDetalhes">Visualizar</span>
+                </div>
+            </a>
+        </li>
+        <li class="livroNaVitrine vitrineDestacao-item vitrineDestacao-itemSecundario">
+            <a asp-action="Details" asp-controller="Books" asp-route-id="@Model.FeaturedMedium.Id" class="livroNaVitrine-link">
+                <img class="livroNaVitrine-imagem vitrineDestacao-item-imagem" src="@Model.FeaturedMedium.CoverUri" alt="@Model.FeaturedMedium.DisplayName" title="@Model.FeaturedMedium.DisplayName">
+                <div class="vitrineDestacao-item-info" role="presentation">
+                    <h2 class="vitrineDestacao-item-nome livroNaVitrine-nome">
+                        @Model.FeaturedMedium.Title
+                    </h2>
+                    <span class="vitrineDestacao-item-maisDetalhes">Visualizar</span>
+                </div>
+            </a>
+        </li>
+        <li class="livroNaVitrine vitrineDestacao-item vitrineDestacao-itemSecundario">
+            <a asp-action="Details" asp-controller="Books" asp-route-id="@Model.FeaturedSmall.Id" class="livroNaVitrine-link">
+                <img class="livroNaVitrine-imagem vitrineDestacao-item-imagem" src="@Model.FeaturedSmall.CoverUri" alt="@Model.FeaturedSmall.DisplayName" title="@Model.FeaturedSmall.DisplayName">
+                <div class="vitrineDestacao-item-info" role="presentation">
+                    <h2 class="vitrineDestacao-item-nome livroNaVitrine-nome">
+                        @Model.FeaturedSmall.Title
+                    </h2>
+                    <span class="vitrineDestacao-item-maisDetalhes">Visualizar</span>
+                </div>
+            </a>
+        </li>
+        <li class="livroNaVitrine vitrineDestacao-item vitrineDestacao-itemSecundario">
+            <a asp-action="Details" asp-controller="Books" asp-route-id="@Model.FeaturedMedium.Id" class="livroNaVitrine-link">
+                <img class="livroNaVitrine-imagem vitrineDestacao-item-imagem" src="@Model.FeaturedMedium.CoverUri" alt="@Model.FeaturedMedium.DisplayName" title="@Model.FeaturedMedium.DisplayName">
+                <div class="vitrineDestacao-item-info" role="presentation">
+                    <h2 class="vitrineDestacao-item-nome livroNaVitrine-nome">
+                        @Model.FeaturedMedium.Title
+                    </h2>
+                    <span class="vitrineDestacao-item-maisDetalhes">Visualizar</span>
+                </div>
+            </a>
+        </li>
+    </ul>
+</section>
+<section class="vitrineDestaquinho container">
+    <h2 class="vitrineDestaquinho-titulo">Filmes</h2>
+    <ul class="vitrineDestaquinho-lista">
+
+        @foreach (var item in Model.LastReleases)
+        {
+            <li class="livroNaVitrine vitrineDestaquinho-produto">
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="livroNaVitrine-link" title="@item.Title">
+                    <div class="livroNaVitrine-imagemContainer" role="presentation">
+                        <img class="livroNaVitrine-imagem " src="@item.CoverUri" alt="@item.DisplayName" title="@item.DisplayName">
+                    </div>
+                    <span class="livroNaVitrine-nome">
+                        @item.DisplayName
+                    </span>
+                </a>
+            </li>
+        }
+    </ul>
+</section>
+<section class="vitrineDestaquinho container">
+    <h2 class="vitrineDestaquinho-titulo">Séries</h2>
+    <ul class="vitrineDestaquinho-lista">
+
+        @foreach (var item in Model.LastUpdates)
+        {
+            <li class="livroNaVitrine vitrineDestaquinho-produto">
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="livroNaVitrine-link" title="@item.Title">
+                    <div class="livroNaVitrine-imagemContainer" role="presentation">
+                        <img class="livroNaVitrine-imagem " src="@item.CoverUri" alt="@item.DisplayName" title="@item.DisplayName">
+                    </div>
+                    <span class="livroNaVitrine-nome">
+                        @item.DisplayName
+                    </span>
+                </a>
+            </li>
+        }
+    </ul>
+</section>
+<section class="vitrineDestaquinho container">
+    <h2 class="vitrineDestaquinho-titulo">Livros</h2>
+    <ul class="vitrineDestaquinho-lista">
+
+        @foreach (var item in Model.LastReleases)
+        {
+            <li class="livroNaVitrine vitrineDestaquinho-produto">
+                <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="livroNaVitrine-link" title="@item.Title">
+                    <div class="livroNaVitrine-imagemContainer" role="presentation">
+                        <img class="livroNaVitrine-imagem " src="@item.CoverUri" alt="@item.DisplayName" title="@item.DisplayName">
+                    </div>
+                    <span class="livroNaVitrine-nome">
+                        @item.DisplayName
+                    </span>
+                </a>
+            </li>
+        }
+    </ul>
+</section>
