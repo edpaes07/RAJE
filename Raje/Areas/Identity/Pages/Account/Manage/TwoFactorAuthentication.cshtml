@@ -6,6 +6,7 @@
 }
 
 <partial name="_StatusMessage" for="StatusMessage" />
+</br>
 <h4>@ViewData["Title"]</h4>
 @if (Model.Is2faEnabled)
 {
@@ -37,14 +38,14 @@
             <button type="submit" class="btn btn-default">Esqueça este navegador</button>
         </form>
     }
-<a asp-page="./Disable2fa" class="btn btn-default">Desativar 2FA</a>
+    <a asp-page="./Disable2fa" class="btn btn-default">Desativar 2FA</a>
     <a asp-page="./GenerateRecoveryCodes" class="btn btn-default">Redefinir códigos de recuperação</a>
 }
 
 <h5>Autenticador de Aplicativo</h5>
 @if (!Model.HasAuthenticator)
 {
-<a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-default">Adicionar aplicativo autenticador</a>
+    <a id="enable-authenticator" asp-page="./EnableAuthenticator" class="btn btn-default">Adicionar aplicativo autenticador</a>
 }
 else
 {
