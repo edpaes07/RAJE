@@ -10,7 +10,7 @@ using Raje.Data;
 namespace Raje.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210503013718_InitialCreate")]
+    [Migration("20210520210217_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -239,25 +239,6 @@ namespace Raje.Migrations
                     b.ToTable("ApplicationType");
                 });
 
-            modelBuilder.Entity("Raje.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-                });
-
             modelBuilder.Entity("Raje.Models.Filme", b =>
                 {
                     b.Property<Guid>("Id")
@@ -273,6 +254,9 @@ namespace Raje.Migrations
 
                     b.Property<string>("Elenco")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagemURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pais")
@@ -304,6 +288,9 @@ namespace Raje.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImagemURL")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Pais")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -318,44 +305,6 @@ namespace Raje.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Livros");
-                });
-
-            modelBuilder.Entity("Raje.Models.Product", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApplicationTypeId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
-                    b.Property<string>("ShortDesc")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationTypeId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Product");
                 });
 
             modelBuilder.Entity("Raje.Models.Serie", b =>
@@ -373,6 +322,9 @@ namespace Raje.Migrations
 
                     b.Property<string>("Elenco")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImagemURL")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NumeroTemporadas")
@@ -451,21 +403,6 @@ namespace Raje.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Raje.Models.Product", b =>
-                {
-                    b.HasOne("Raje.Models.ApplicationType", "ApplicationType")
-                        .WithMany()
-                        .HasForeignKey("ApplicationTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Raje.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
