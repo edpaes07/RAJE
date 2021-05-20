@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
+using Raje.ViewModel;
+using System;
 using System.Linq;
 
 namespace Raje.Controllers
@@ -27,13 +29,31 @@ namespace Raje.Controllers
             return View();
         }
 
-
         [HttpPost]
-        public IActionResult Adicionar(Filme filme)
+        public IActionResult Adicionar(FilmeViewModel filme)
         {
+            var imgPrefixo = Guid.NewGuid() + "_";
+
+            if (!Util.Util.UploadArquivo(filme.ImagemUpload, imgPrefixo))
+            {
+                return View(filme);
+            }
+
+            Filme filmeInserir = new Filme
+            {
+                Ano = filme.Ano,
+                Diretor = filme.Diretor,
+                Elenco = filme.Elenco,
+                Pais = filme.Pais,
+                Titulo = filme.Titulo,
+                Sinopse = filme.Sinopse,
+                ImagemURL = imgPrefixo + filme.ImagemUpload.FileName
+
+            };
+
             if (ModelState.IsValid)
             {
-                _context.Filmes.Add(filme);
+                _context.Filmes.Add(filmeInserir);
                 _context.SaveChanges();
             }
 

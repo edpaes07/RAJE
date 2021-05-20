@@ -26,23 +26,28 @@
             {
 
                 <div class="col-lg-4">
-                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-                    <h2>@livro.Titulo</h2>
-                    <p>@livro.Autores</p>
-                    <p>@livro.Ano</p>
+                    <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 100px; height: 130px" />
                     <p>Livro</p>
+                    <h2>@livro.Titulo</h2>
+                    <p>Autor(es): @livro.Autores</p>
+                    <p>País: @livro.Pais</p>
+                    <p>Ano: @livro.Ano</p>
+                    <p>Resumo: @livro.Sinopse</p>
                 </div>
 
             }
             @foreach (var filme in Model.Filmes)
             {
-
                 <div class="col-lg-4">
-                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-                    <h2>@filme.Titulo</h2>
-                    <p>@filme.Diretor</p>
-                    <p>@filme.Ano</p>
+                    <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 100px; height: 130px" />
                     <p>Filme</p>
+                    <h2>@filme.Titulo</h2>
+                    <p>Diretor(es): @filme.Diretor</p>
+                    <p>Elenco: @filme.Elenco</p>
+                    <p>País: @filme.Pais</p>
+                    <p>Ano: @filme.Ano</p>
+                    <p>Resumo: @filme.Sinopse</p>
+                    
                 </div>
 
             }
@@ -50,11 +55,15 @@
             {
 
                 <div class="col-lg-4">
-                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777" /><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-                    <h2>@series.Titulo</h2>
-                    <p>@series.Diretor</p>
-                    <p>@series.Ano</p>
+                    <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 100px; height: 130px" />
                     <p>Série</p>
+                    <h2>@series.Titulo</h2>
+                    <p>Diretor(es): @series.Diretor</p>
+                    <p>Elenco: @series.Elenco</p>
+                    <p>País: @series.Pais</p>
+                    <p>Ano: @series.Ano</p>
+                    <p>Número de Temporadas: @series.NumeroTemporadas</p>
+                    <p>Resumo: @series.Sinopse</p>
                 </div>
 
             }
