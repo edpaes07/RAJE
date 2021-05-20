@@ -1,4 +1,16 @@
-﻿@model IEnumerable<Raje.Models.Filme>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Raje.Utility
+
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
+}
+
+@model IEnumerable<Raje.Models.Filme>
 
 @{
     ViewData["Title"] = "Index";
@@ -30,27 +42,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diretor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Elenco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ano)
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diretor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Elenco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pais)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ano)
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
