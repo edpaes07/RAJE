@@ -19,7 +19,7 @@ namespace Raje.ViewModel
         [Required]
         public String Pais { get; set; }
 
-        //[Required]
+        [Required]
         public int Ano { get; set; }
         public IFormFile ImagemUpload { get; set; }
 
