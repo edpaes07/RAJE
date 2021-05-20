@@ -18,70 +18,75 @@
         <div class="row">
             @foreach (var livro in Model.Livros)
             {
-
-            <div class="col-lg-4">
-                <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
-                <b><p>Livro</p></b>
-                <h2>@livro.Titulo</h2>
-                <div class="col-lg-11">
-                    <font size="2">
-                        <p align=justify>
-                            <b>Autor(es):</b> @livro.Autores<br>
-                            <b>País:</b> @livro.Pais<br>
-                            <b>Ano:</b> @livro.Ano<br>
-                            <b>Resumo:</b> @livro.Sinopse
-                            <br>
-                            <br>
-                        </p>
-                    </font>
+                <br />
+                <div class="col-lg-4">
+                    <p>&nbsp;</p>
+                        <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
+                        <b>
+                    <p>Livro</p></b>
+                    <h2>@livro.Titulo</h2>
+                    <div class="col-lg-11">
+                        <font size="2">
+                            <p align=justify>
+                                <b>Autor(es):</b> @livro.Autores<br>
+                                <b>País:</b> @livro.Pais<br>
+                                <b>Ano:</b> @livro.Ano<br>
+                                <b>Resumo:</b> @livro.Sinopse
+                            </p>
+                            <p />
+                        </font>
+                    </div>
                 </div>
-            </div>
+                <p />
 
-                }
-                @foreach (var filme in Model.Filmes)
-                {
-        <div class="col-lg-4">
-            <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
-            <b><p>Filme</p></b>
-            <h2>@filme.Titulo</h2>
-            <div class="col-lg-11">
-                <font size="2">
-                    <p align=justify>
-                        <b>Diretor(es):</b> @filme.Diretor<br>
-                        <b>Elenco:</b> @filme.Elenco<br>
-                        <b>País:</b> @filme.Pais<br>
-                        <b>Ano:</b> @filme.Ano<br>
-                        <b>Resumo:</b> @filme.Sinopse
-                        <br>
-                        <br>
-                    </p>
-                </font>
-            </div>
-        </div>
+            }
+            @foreach (var filme in Model.Filmes)
+            {
+                <br />
+                <div class="col-lg-4">
+                    <p>&nbsp;</p>
+                    <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
+                    <b><p>Filme</p></b>
+                    <h2>@filme.Titulo</h2>
+                    <div class="col-lg-11">
+                        <font size="2">
+                            <p align=justify>
+                                <b>Diretor(es):</b> @filme.Diretor<br>
+                                <b>Elenco:</b> @filme.Elenco<br>
+                                <b>País:</b> @filme.Pais<br>
+                                <b>Ano:</b> @filme.Ano<br>
+                                <b>Resumo:</b> @filme.Sinopse
+                            </p>
+                            <p />
+                        </font>
+                    </div>
+                </div>
+                <p />
 
             }
             @foreach (var series in Model.Series)
             {
+                <br />
+                <div class="col-lg-4">
+                    <p>&nbsp;</p>
+                    <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
+                    <b><p>Série</p></b>
+                    <h2>@series.Titulo</h2>
+                    <div class="col-lg-11">
+                        <font size="2">
+                            <p align=justify>
+                                <b>Diretor(es):</b> @series.Diretor<br>
+                                <b>Elenco:</b> @series.Elenco<br>
+                                <b>País:</b> @series.Pais<br>
+                                <b>Ano:</b> @series.Ano<br>
+                                <b>Número de Temporadas:</b> @series.NumeroTemporadas<br>
+                                <b>Resumo:</b> @series.Sinopse
+                            </p>
+                            <p />
+                        </font>
+                    </div>
+                </div>
 
-        <div class="col-lg-4">
-            <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
-            <b><p>Série</p></b>
-            <h2>@series.Titulo</h2>
-            <div class="col-lg-11">
-                <font size="2">
-                    <p align=justify>
-                        <b>Diretor(es):</b> @series.Diretor<br>
-                        <b>Elenco:</b> @series.Elenco<br>
-                        <b>País:</b> @series.Pais<br>
-                        <b>Ano:</b> @series.Ano<br>
-                        <b>Número de Temporadas:</b> @series.NumeroTemporadas<br>
-                        <b>Resumo:</b> @series.Sinopse
-                        <br>
-                        <br>
-                    </p>
-                </font>
-            </div>
-        </div>
 
             }
         </div>
