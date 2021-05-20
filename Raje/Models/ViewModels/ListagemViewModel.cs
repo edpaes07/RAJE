@@ -10,6 +10,5 @@ namespace Raje.Models.ViewModels
         public List<Filme> Filmes { get; set; }
         public List<Livro> Livros { get; set; }
         public List<Serie> Series { get; set; }
-        public HomeVM HomeVM { get; set; }
     }
 }
