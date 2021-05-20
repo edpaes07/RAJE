@@ -19,46 +19,57 @@
             @foreach (var livro in Model.Livros)
             {
 
-                <div class="col-lg-4">
-                    <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 100px; height: 130px" />
-                    <p>Livro</p>
-                    <h2>@livro.Titulo</h2>
-                    <p>Autor(es): @livro.Autores</p>
-                    <p>País: @livro.Pais</p>
-                    <p>Ano: @livro.Ano</p>
-                    <p>Resumo: @livro.Sinopse</p>
-                </div>
+            <div class="col-lg-4">
+                <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
+                <b><p>Livro</p></b>
+                <h2>@livro.Titulo</h2>
+                <font size="2">
+                    <p align=justify>
+                        <b>Autor(es):</b> @livro.Autores<br>
+                        <b>País:</b> @livro.Pais<br>
+                        <b>Ano:</b> @livro.Ano<br>
+                        <b>Resumo:</b> @livro.Sinopse
+                    </p>
+                </font>
+            </div>
 
             }
             @foreach (var filme in Model.Filmes)
             {
-                <div class="col-lg-4">
-                    <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 100px; height: 130px" />
-                    <p>Filme</p>
-                    <h2>@filme.Titulo</h2>
-                    <p>Diretor(es): @filme.Diretor</p>
-                    <p>Elenco: @filme.Elenco</p>
-                    <p>País: @filme.Pais</p>
-                    <p>Ano: @filme.Ano</p>
-                    <p>Resumo: @filme.Sinopse</p>
-                    
-                </div>
+        <div class="col-lg-4">
+            <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
+            <b><p>Filme</p></b>
+            <h2>@filme.Titulo</h2>
+            <font size="2">
+                <p align=justify>
+                    <b>Diretor(es):</b> @filme.Diretor<br>
+                    <b>Elenco:</b> @filme.Elenco<br>
+                    <b>País:</b> @filme.Pais<br>
+                    <b>Ano:</b> @filme.Ano<br>
+                    <b>Resumo:</b> @filme.Sinopse
+                </p>
+            </font>
+        </div>
 
             }
             @foreach (var series in Model.Series)
             {
 
-                <div class="col-lg-4">
-                    <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 100px; height: 130px" />
-                    <p>Série</p>
-                    <h2>@series.Titulo</h2>
-                    <p>Diretor(es): @series.Diretor</p>
-                    <p>Elenco: @series.Elenco</p>
-                    <p>País: @series.Pais</p>
-                    <p>Ano: @series.Ano</p>
-                    <p>Número de Temporadas: @series.NumeroTemporadas</p>
-                    <p>Resumo: @series.Sinopse</p>
-                </div>
+        <div class="col-lg-4">
+            <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
+            <b><p>Série</p></b>
+            <h2>@series.Titulo</h2>
+            <font size="2">
+                <p align=justify>
+                    <b>Diretor(es):</b> @series.Diretor<br>
+                    <b>Elenco:</b> @series.Elenco<br>
+                    <b>País:</b> @series.Pais<br>
+                    <b>Ano:</b> @series.Ano<br>
+                    <b>Número de Temporadas:</b> @series.NumeroTemporadas<br>
+                    <b>Resumo:</b> @series.Sinopse
+                </p>
+            </font>
+        </div>
 
             }
         </div>
