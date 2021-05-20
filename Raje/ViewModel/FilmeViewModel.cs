@@ -7,16 +7,16 @@ namespace Raje.ViewModel
 {
     public class FilmeViewModel
     {
-        //[Required]
+        [Required]
         public String Titulo { get; set; }
 
-        //[Required]
+        [Required]
         public String Diretor { get; set; }
 
-        //[Required]
+        [Required]
         public String Elenco { get; set; }
 
-        //[Required]
+        [Required]
         public String Pais { get; set; }
 
         //[Required]
