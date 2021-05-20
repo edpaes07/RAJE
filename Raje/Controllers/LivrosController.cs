@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
+using Raje.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +33,29 @@ namespace Raje.Controllers
 
 
         [HttpPost]
-        public IActionResult Adicionar(Livro livro)
+        public IActionResult Adicionar(LivroViewModel livro)
         {
+            var imgPrefixo = Guid.NewGuid() + "_";
+
+            if (!Util.Util.UploadArquivo(livro.ImagemUpload, imgPrefixo))
+            {
+                return View(livro);
+            }
+
+            Livro livroInserir = new Livro
+            {
+                ImagemURL = imgPrefixo + livro.ImagemUpload.FileName,
+                Ano = livro.Ano,
+                Autores = livro.Autores,
+                Pais = livro.Pais,
+                Sinopse = livro.Sinopse,
+                Titulo = livro.Titulo
+            };
+
+
             if (ModelState.IsValid)
             {
-                _context.Livros.Add(livro);
+                _context.Livros.Add(livroInserir);
                 _context.SaveChanges();
             }
 
