@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Raje.Data;
 
 namespace Raje.Areas.Identity.Pages.Account.Manage
 {
@@ -13,13 +15,16 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public string Username { get; set; }
@@ -35,18 +40,35 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Data de Nascimento")]
+            public DateTime Birthdate { get; set; }
+
+            [Display(Name = "Cidade")]
+            public string City { get; set; }
+
+            [Display(Name = "Estado")]
+            public string State { get; set; }
+
+            [Display(Name = "ImagemUpload")]
+            public IFormFile ImagemUpload { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            //var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+
+            var userCurrent = _context.ApplicationUser.ToList().Where(u => u.Id.Equals(user.Id)).FirstOrDefault();
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = userCurrent.PhoneNumber,
+                Birthdate = userCurrent.Birthdate,
+                City = userCurrent.City,
+                State = userCurrent.State
             };
         }
 
@@ -82,13 +104,24 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Erro inesperado ao tentar definir o número do telefone.";
                     return RedirectToPage();
                 }
             }
 
+            var userCurrent = _context.ApplicationUser.ToList().Where(u => u.Id.Equals(user.Id)).FirstOrDefault();
+
+            userCurrent.PhoneNumber = Input.PhoneNumber;
+            userCurrent.Birthdate = Input.Birthdate;
+            userCurrent.City = Input.City;
+            userCurrent.State = Input.State;
+
+            _context.ApplicationUser.Update(userCurrent);
+            _context.SaveChanges();
+
+
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Seu perfil foi atualizado";
             return RedirectToPage();
         }
     }

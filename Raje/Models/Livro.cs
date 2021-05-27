@@ -14,7 +14,6 @@ namespace Raje.Models
 
         [Required]
         public string Autores { get; set; }
-
         [Required]
         public string Pais { get; set; }
 

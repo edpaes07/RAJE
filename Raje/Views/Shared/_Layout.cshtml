@@ -29,34 +29,31 @@
 
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        <ul class="navbar-nav flex-grow-1">
+                <ul class="navbar-nav flex-grow-1">
 
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            @if (User.IsInRole(WC.AdminRole))
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Gerenciar
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Criar Admin</a>
-                                    </div>
-                                </li>
-                            }
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a></li>
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Séries</a></li>
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Livros" asp-action="Index">Livros</a></li>
-                            <li><a href="#" class="nav-link">Amigos</a></li>
-                            <li><a href="#" class="nav-link">Solicitações</a></li>
-                        </ul>
-                    }
-                    @*else
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    @if (User.IsInRole(WC.AdminRole))
                     {
-                        <script>window.location.href = '/Identity/Account/Login';</script>
-                    }*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Gerenciar
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Criar Admin</a>
+                            </div>
+                        </li>
+                    }
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Séries</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Livros" asp-action="Index">Livros</a></li>
+                    <li><a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Index">Membros</a></li>
+                    <li><a href="#" class="nav-link">Amigos</a></li>
+                    <li><a href="#" class="nav-link">Solicitações</a></li>
+                </ul>
+                    }
                 </div>
             </div>
         </nav>

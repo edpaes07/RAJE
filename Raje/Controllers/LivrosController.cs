@@ -69,5 +69,37 @@ namespace Raje.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //GET - DELETE
+        public IActionResult Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Livro livro = _context.Livros.FirstOrDefault(f => f.Id == id);
+            if (livro == null)
+            {
+                return NotFound();
+            }
+
+            return View(livro);
+        }
+
+        //POST - DELETE
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletePost(Guid? id)
+        {
+            var obj = _context.Livros.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            _context.Livros.Remove(obj);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }

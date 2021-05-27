@@ -7,6 +7,8 @@ namespace Raje.ViewModel
 {
     public class FilmeViewModel
     {
+        public Guid Id { get; set; }
+
         [Required]
         public String Titulo { get; set; }
 
@@ -27,5 +29,7 @@ namespace Raje.ViewModel
         public string ImagemURL { get; set; }
 
         public String Sinopse { get; set; }
+
+        public bool Ativo { get; set; }
     }
 }

@@ -35,7 +35,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Ano)
             </th>
-            <th></th>
+
+            @if (User.IsInRole(WC.AdminRole))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Ativo)
+                </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -61,7 +67,21 @@
             @if (User.IsInRole(WC.AdminRole))
             {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Editar</a> |
+                    @Html.DisplayFor(modelItem => item.Ativo)
+                </td>
+            }
+
+            <td>
+                <a asp-action="List" asp-route-id="@item.Id" class="btn btn-primary">Ver</a>
+            </td>
+
+            @if (User.IsInRole(WC.AdminRole))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                </td>
+
+                <td>
                     <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
                 </td>
             }
