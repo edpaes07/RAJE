@@ -3,6 +3,7 @@ using Raje.Data;
 using Raje.Models;
 using Raje.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raje.Controllers
@@ -18,7 +19,16 @@ namespace Raje.Controllers
 
         public IActionResult Index()
         {
-            var series = _context.Series.ToList();
+            IEnumerable<Serie> series = new List<Serie>();
+
+            if (User.IsInRole(WC.AdminRole))
+            {
+                series = _context.Series.ToList().OrderBy(serie => serie.Ativo);
+            }
+            else
+            {           
+                series = _context.Series.ToList().Where(serie => serie.Ativo = true);
+            }
 
             return View(series);
         }
@@ -48,7 +58,8 @@ namespace Raje.Controllers
                 ImagemURL = imgPrefixo + serie.ImagemUpload.FileName,
                 NumeroTemporadas = serie.NumeroTemporadas,
                 Pais = serie.Pais,
-                Sinopse = serie.Sinopse
+                Sinopse = serie.Sinopse,
+                Ativo = true
             };
 
             if (ModelState.IsValid)

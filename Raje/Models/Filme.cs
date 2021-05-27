@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,5 +28,12 @@ namespace Raje.Models
         public string ImagemURL { get; set; }
 
         public String Sinopse { get; set; }
+
+        public bool Ativo { get; set; }
+
+        public static implicit operator List<object>(Filme v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

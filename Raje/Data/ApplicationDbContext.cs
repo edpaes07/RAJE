@@ -16,8 +16,15 @@ namespace Raje.Data
         }
 
         public DbSet<Filme> Filmes { get; set; }
+
         public DbSet<Serie> Series { get; set; }
+
         public DbSet<Livro> Livros { get; set; }
+
         public DbSet<ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<Amigo> Amigos { get; set; }
+
+        public DbSet<Avaliacao> Avaliacoes { get; set; }
     }
 }

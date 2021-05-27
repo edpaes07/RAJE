@@ -3,6 +3,7 @@ using Raje.Data;
 using Raje.Models;
 using Raje.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Raje.Controllers
@@ -18,11 +19,19 @@ namespace Raje.Controllers
 
         public IActionResult Index()
         {
-            var filmes = _context.Filmes.ToList();
+            IEnumerable<Filme> filmes = new List<Filme>();
 
+            if (User.IsInRole(WC.AdminRole))
+            {
+                filmes = _context.Filmes.ToList().OrderBy(filme => filme.Ativo);
+            }
+            else
+            {
+                filmes = _context.Filmes.ToList().Where(filme => filme.Ativo = true);
+            }
+    
             return View(filmes);
         }
-
 
         public IActionResult Adicionar()
         {
@@ -47,7 +56,8 @@ namespace Raje.Controllers
                 Pais = filme.Pais,
                 Titulo = filme.Titulo,
                 Sinopse = filme.Sinopse,
-                ImagemURL = imgPrefixo + filme.ImagemUpload.FileName
+                ImagemURL = imgPrefixo + filme.ImagemUpload.FileName,
+                Ativo = true
 
             };
 

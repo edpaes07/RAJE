@@ -81,8 +81,8 @@ namespace Raje.Areas.Identity.Pages.Account
             [Display(Name = "Estado")]
             public string State { get; set; }
 
-            [Display(Name = "Imagem")]
-            public IFormFile Image { get; set; }
+            [Display(Name = "ImagemUpload")]
+            public IFormFile ImagemUpload { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -99,13 +99,31 @@ namespace Raje.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/");
+                        returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+   
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhoneNumber=Input.PhoneNumber,
-                FullName = Input.FullName};
+                var user = new ApplicationUser 
+                {   
+                    UserName = Input.Email, 
+                    Email = Input.Email, 
+                    PhoneNumber=Input.PhoneNumber,
+                    FullName = Input.FullName,
+                    Birthdate = Input.Birthdate,
+                    City = Input.City,
+                    State = Input.State       
+                };
+
+                if (Input.ImagemUpload != null)
+                {
+                    var imgPrefixo = Guid.NewGuid() + "_";
+                    Util.Util.UploadArquivo(Input.ImagemUpload, imgPrefixo);
+                    user.ImagemURL = imgPrefixo + Input.ImagemUpload.FileName;
+                }
+                    
                 var result = await _userManager.CreateAsync(user, Input.Password);
+      
                 if (result.Succeeded)
                 {
                     if (User.IsInRole(WC.AdminRole))

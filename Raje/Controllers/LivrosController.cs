@@ -20,17 +20,24 @@ namespace Raje.Controllers
 
         public IActionResult Index()
         {
-            var livros = _context.Livros.ToList();
+            IEnumerable<Livro> livros = new List<Livro>();
+
+            if (User.IsInRole(WC.AdminRole))
+            {
+                livros = _context.Livros.ToList().OrderBy(livro => livro.Ativo);
+            }
+            else
+            {
+                livros = _context.Livros.ToList().Where(livro => livro.Ativo = true);   
+            }
 
             return View(livros);
         }
-
 
         public IActionResult Adicionar()
         {
             return View();
         }
-
 
         [HttpPost]
         public IActionResult Adicionar(LivroViewModel livro)
@@ -49,7 +56,8 @@ namespace Raje.Controllers
                 Autores = livro.Autores,
                 Pais = livro.Pais,
                 Sinopse = livro.Sinopse,
-                Titulo = livro.Titulo
+                Titulo = livro.Titulo,
+                Ativo = true
             };
 
 

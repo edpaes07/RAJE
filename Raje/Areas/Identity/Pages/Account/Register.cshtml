@@ -4,10 +4,10 @@
 
 @if (User.IsInRole(Raje.WC.AdminRole))
 {
-<h1>Cadastrar uma conta de Administrador</h1> }
+    <h1>Cadastrar uma conta de Administrador</h1> }
 else
 {
-<h1>Cadastrar</h1>}
+    <h1>Cadastrar</h1>}
 
 <div class="row">
     <div class="col-md-6 col-md-offset-2">
@@ -40,73 +40,87 @@ else
         </section>
     </div>
     <div class="col-md-1"></div>
-        <div class="col-md-5">
-            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-                </br>
-                <h4>Criar uma nova conta.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.FullName"></label>
-                    <input asp-for="Input.FullName" class="form-control" />
-                    <span asp-validation-for="Input.FullName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.PhoneNumber"></label>
-                    <input asp-for="Input.PhoneNumber" class="form-control" />
-                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.ConfirmPassword"></label>
-                    <input asp-for="Input.ConfirmPassword" class="form-control" />
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Birthdate"></label>
-                    <input asp-for="Input.Birthdate" class="form-control" />
-                    <span asp-validation-for="Input.Birthdate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.City"></label>
-                    <input asp-for="Input.City" class="form-control" />
-                    <span asp-validation-for="Input.City" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.State"></label>
-                    <input asp-for="Input.State" class="form-control" />
-                    <span asp-validation-for="Input.State" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-2" for="FirstName">Imagem</label>
-                    <div class="col-md-10">
-                        <input type="file" name="file" id="ImageUpload" />
-                    </div>
-                </div>
-                <br />
-                @if (User.IsInRole(Raje.WC.AdminRole))
-                {
-                <center><button type="submit" class="btn btn-warning">Registrar usuário administrador</button></center> }
-                else
-                {
-                <center><button type="submit" class="btn btn-primary">Cadastrar-se</button></center>
-                }
-
-            </form>
+    <div class="col-md-5">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
             </br>
-        </div>
+            <h4>Criar uma nova conta.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.FullName"></label>
+                <input asp-for="Input.FullName" class="form-control" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber"></label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Birthdate"></label>
+                <input asp-for="Input.Birthdate" class="form-control" />
+                <span asp-validation-for="Input.Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control" />
+                <span asp-validation-for="Input.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.State"></label>
+                <input asp-for="Input.State" class="form-control" />
+                <span asp-validation-for="Input.State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ImagemUpload" class="control-label"></label>
+
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ImagemUpload" asp-for="Input.ImagemUpload">
+                    <label data-browse="Procurar" style="width: 400px" class="custom-file-label" for="ImagemUpload"></label>
+                    <label style="display: none" id="img_nome"></label>
+                </div>
+
+                <span asp-validation-for="Input.ImagemUpload" class="text-danger"></span>
+            </div>
+            <br />
+            @if (User.IsInRole(Raje.WC.AdminRole))
+            {
+                <center><button type="submit" class="btn btn-warning">Registrar usuário administrador</button></center> }
+            else
+            {
+                <center><button type="submit" class="btn btn-primary">Cadastrar-se</button></center>
+            }
+
+        </form>
+        </br>
     </div>
+</div>
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
-    }
+    <script>
+        $("#ImagemUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
+        });
+
+        $("#ImagemUpload").attr("data-val", "true");
+        $("#ImagemUpload").attr("data-val-required", "Preencha o campo Imagem");
+    </script>
+}

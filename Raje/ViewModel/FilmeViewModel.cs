@@ -21,6 +21,7 @@ namespace Raje.ViewModel
 
         [Required]
         public int Ano { get; set; }
+
         public IFormFile ImagemUpload { get; set; }
 
         public string ImagemURL { get; set; }

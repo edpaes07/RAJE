@@ -24,15 +24,15 @@ namespace Raje.Controllers
 
         public IActionResult Index()
         {
-            var filmes = _db.Filmes.ToList();
-            var series = _db.Series.ToList();
-            var livros = _db.Livros.ToList();
+            IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo = true);
+            IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo = true);
+            IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo = true);
 
             ListagemViewModel retorno = new ListagemViewModel
             {
-                Filmes = filmes,
-                Livros = livros,
-                Series = series
+                Filmes = filmes.ToList(),
+                Livros = livros.ToList(),
+                Series = series.ToList()
             };
 
             return View(retorno);

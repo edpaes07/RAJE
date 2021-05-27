@@ -24,5 +24,7 @@ namespace Raje.Models
         public string ImagemURL { get; set; }
 
         public String Sinopse { get; set; }
+
+        public bool Ativo { get; set; }
     }
 }
