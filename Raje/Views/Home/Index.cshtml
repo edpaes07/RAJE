@@ -14,50 +14,71 @@
 
 <div class="container">
     <br />
-    <div class="text-center">
+    <div class="text-center border p-3">
         <div class="row">
+            <div class="col-lg-12"><center><h2 class="text-info pl-3">Sugestões de Amizade</h2></center></div>
+            @foreach (var user in Model.Users)
+            {
+        <div class="col-lg-4">
+            <img src="~/images/@user.ImagemURL" alt="@user.ImagemURL" style="width: 200px; height: 230px" />
+            <h4>@user.FullName</h4>
+            <td>
+                <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Id" class="btn btn-primary">Ver Perfil</a>
+                <p>&nbsp;</p>
+            </td>
+        </div>
+                <p>&nbsp;</p>
+            }
+            <br />
+            <p>&nbsp;</p>
+            <br />
+            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Livros</h2></center></div>
+            <p>&nbsp;</p>
             @foreach (var livro in Model.Livros)
             {
                 <br />
-                <div class="col-lg-4">
-                    <p>&nbsp;</p>
-                    <b> <p>Livro</p></b>
+                <div class="col-lg-3">
                     <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
                     <h2>@livro.Titulo</h2>
-                        <td>
-                            <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id" class="btn btn-primary">Ver Livro</a>
-                        </td>
+                    <td>
+                        <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id" class="btn btn-primary">Sobre o Livro</a>
+                        <p>&nbsp;</p>
+                    </td>
                 </div>
-                <p />
-
+                <p>&nbsp;</p>
             }
+            <br />
+            <p>&nbsp;</p>
+            <br />
+            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Filmes</h2></center></div>
             @foreach (var filme in Model.Filmes)
             {
-                <br />
-                <div class="col-lg-4">
-                    <p>&nbsp;</p>
-                    <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
-                    <h2>@filme.Titulo</h2>
-                        <td>
-                            <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id" class="btn btn-primary">Ver Filme</a>
-                        </td>
-                </div>
-                <p />
-
+        <div class="col-lg-3">
+            <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
+            <h4>@filme.Titulo</h4>
+            <td>
+                <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id" class="btn btn-primary">Sobre o Filme</a>
+                <p>&nbsp;</p>
+            </td>
+        </div>
+                <p>&nbsp;</p>
             }
+            <br />
+            <p>&nbsp;</p>
+            <br />
+            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Séries</h2></center></div>
             @foreach (var series in Model.Series)
             {
-                <br />
-                <div class="col-lg-4">
-                    <p>&nbsp;</p>
-                    <h>@series.Titulo</h>
-                    <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
-                        <td>
-                            <a asp-controller="Series" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary">Ver Série</a>
-                        </td>
-                </div>
+        <div class="col-lg-3">
 
-
+            <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
+            <h4>@series.Titulo</h4>
+            <td>
+                <a asp-controller="Series" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary">Sobre a Série</a>
+                <p>&nbsp;</p>
+            </td>
+        </div>
+                <p>&nbsp;</p>
             }
         </div>
     </div>

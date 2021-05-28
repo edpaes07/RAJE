@@ -27,12 +27,14 @@ namespace Raje.Controllers
             IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo = true);
             IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo = true);
             IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo = true);
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.Take(3).ToList();
 
             ListagemViewModel retorno = new ListagemViewModel
             {
                 Filmes = filmes.ToList(),
                 Livros = livros.ToList(),
-                Series = series.ToList()
+                Series = series.ToList(),
+                Users = users.ToList()
             };
 
             return View(retorno);
