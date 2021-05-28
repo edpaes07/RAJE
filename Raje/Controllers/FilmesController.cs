@@ -125,6 +125,23 @@ namespace Raje.Controllers
             return RedirectToAction("Index");
         }
 
+        //GET - Details
+        public IActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Filme filme = _db.Filmes.Find(id);
+
+            if (filme == null)
+            {
+                return NotFound();
+            }
+
+            return View(filme);
+        }
+
         //GET - DELETE
         public IActionResult Delete(Guid? id)
         {

@@ -21,21 +21,12 @@
                 <br />
                 <div class="col-lg-4">
                     <p>&nbsp;</p>
-                        <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
-                        <b>
-                    <p>Livro</p></b>
+                    <b> <p>Livro</p></b>
+                    <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
                     <h2>@livro.Titulo</h2>
-                    <div class="col-lg-11">
-                        <font size="2">
-                            <p align=justify>
-                                <b>Autor(es):</b> @livro.Autores<br>
-                                <b>País:</b> @livro.Pais<br>
-                                <b>Ano:</b> @livro.Ano<br>
-                                <b>Resumo:</b> @livro.Sinopse
-                            </p>
-                            <p />
-                        </font>
-                    </div>
+                        <td>
+                            <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id" class="btn btn-primary">Ver Livro</a>
+                        </td>
                 </div>
                 <p />
 
@@ -46,20 +37,10 @@
                 <div class="col-lg-4">
                     <p>&nbsp;</p>
                     <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
-                    <b><p>Filme</p></b>
                     <h2>@filme.Titulo</h2>
-                    <div class="col-lg-11">
-                        <font size="2">
-                            <p align=justify>
-                                <b>Diretor(es):</b> @filme.Diretor<br>
-                                <b>Elenco:</b> @filme.Elenco<br>
-                                <b>País:</b> @filme.Pais<br>
-                                <b>Ano:</b> @filme.Ano<br>
-                                <b>Resumo:</b> @filme.Sinopse
-                            </p>
-                            <p />
-                        </font>
-                    </div>
+                        <td>
+                            <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id" class="btn btn-primary">Ver Filme</a>
+                        </td>
                 </div>
                 <p />
 
@@ -69,22 +50,11 @@
                 <br />
                 <div class="col-lg-4">
                     <p>&nbsp;</p>
+                    <h>@series.Titulo</h>
                     <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
-                    <b><p>Série</p></b>
-                    <h2>@series.Titulo</h2>
-                    <div class="col-lg-11">
-                        <font size="2">
-                            <p align=justify>
-                                <b>Diretor(es):</b> @series.Diretor<br>
-                                <b>Elenco:</b> @series.Elenco<br>
-                                <b>País:</b> @series.Pais<br>
-                                <b>Ano:</b> @series.Ano<br>
-                                <b>Número de Temporadas:</b> @series.NumeroTemporadas<br>
-                                <b>Resumo:</b> @series.Sinopse
-                            </p>
-                            <p />
-                        </font>
-                    </div>
+                        <td>
+                            <a asp-controller="Series" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary">Ver Série</a>
+                        </td>
                 </div>
 
 
