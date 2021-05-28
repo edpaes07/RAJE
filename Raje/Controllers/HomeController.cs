@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -15,19 +16,24 @@ namespace Raje.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
             _logger = logger;
             _db = db;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async System.Threading.Tasks.Task<IActionResult> IndexAsync()
         {
             IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo = true);
             IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo = true);
             IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo = true);
-            IEnumerable<ApplicationUser> users = _db.ApplicationUser.Take(3).ToList();
+
+            var user = await _userManager.GetUserAsync(User);
+
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.Take(3).ToList().Where(u => u.Id != user.Id);
 
             ListagemViewModel retorno = new ListagemViewModel
             {
