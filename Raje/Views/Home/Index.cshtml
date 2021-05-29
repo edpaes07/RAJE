@@ -14,71 +14,60 @@
 
 <div class="container">
     <br />
-    <div class="text-center border p-3">
-        <div class="row">
-            <div class="col-lg-12"><center><h2 class="text-info pl-3">Sugestões de Amizade</h2></center></div>
+    <div class="text-center">
+        <div class="row border p-3 ">
+            <div class="col-lg-12"><h2>Sugestões de Amizade</h2></div>
             @foreach (var user in Model.Users)
             {
-        <div class="col-lg-4">
-            <img src="~/images/@user.ImagemURL" alt="@user.ImagemURL" style="width: 200px; height: 230px" />
-            <h4>@user.FullName</h4>
-            <td>
-                <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Id" class="btn btn-primary">Ver Perfil</a>
-                <p>&nbsp;</p>
-            </td>
-        </div>
-                <p>&nbsp;</p>
+                <br />
+                <div class="col-lg-1">
+                </div>
+                <div class="col-lg-3">
+                    <h4>@user.FullName</h4>
+                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Id"><img src="~/images/@user.ImagemURL" alt="@user.ImagemURL" style="width: 170px; height: 190px" /></a>
+                    <p></p>
+                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Id" class="btn btn-primary border-top-10">Ver Perfil</a>
+                </div>
+                <p />
+
             }
-            <br />
-            <p>&nbsp;</p>
-            <br />
-            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Livros</h2></center></div>
-            <p>&nbsp;</p>
+        </div>
+        <div class="row">
             @foreach (var livro in Model.Livros)
             {
                 <br />
                 <div class="col-lg-3">
-                    <img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" />
-                    <h2>@livro.Titulo</h2>
-                    <td>
-                        <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id" class="btn btn-primary">Sobre o Livro</a>
-                        <p>&nbsp;</p>
-                    </td>
+                    <p>&nbsp;</p>
+                    <h4>@livro.Titulo</h4>
+                    <a asp-controller="Livros" asp-action="Details" asp-route-id="@livro.Id"><img src="~/images/@livro.ImagemURL" alt="@livro.ImagemURL" style="width: 200px; height: 230px" /></a>
+                    <b><p>Livro</p</b>
                 </div>
-                <p>&nbsp;</p>
+                <p />
+
             }
-            <br />
-            <p>&nbsp;</p>
-            <br />
-            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Filmes</h2></center></div>
             @foreach (var filme in Model.Filmes)
             {
-        <div class="col-lg-3">
-            <img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" />
-            <h4>@filme.Titulo</h4>
-            <td>
-                <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id" class="btn btn-primary">Sobre o Filme</a>
-                <p>&nbsp;</p>
-            </td>
-        </div>
-                <p>&nbsp;</p>
+                <br />
+                <div class="col-lg-3">
+                    <p>&nbsp;</p>
+                    <h4>@filme.Titulo</h4>
+                    <a asp-controller="Filmes" asp-action="Details" asp-route-id="@filme.Id"><img src="~/images/@filme.ImagemURL" alt="@filme.ImagemURL" style="width: 200px; height: 230px" /></a>
+                    <b><p>Filme</p></b>
+                    <div class="col-lg-11"></div>
+                </div>
+                <p />
+
             }
-            <br />
-            <p>&nbsp;</p>
-            <br />
-            <div class="border-top p-3 col-lg-12"><center><h2 class="text-info pl-3">Séries</h2></center></div>
             @foreach (var series in Model.Series)
             {
-        <div class="col-lg-3">
-
-            <img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" />
-            <h4>@series.Titulo</h4>
-            <td>
-                <a asp-controller="Series" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary">Sobre a Série</a>
-                <p>&nbsp;</p>
-            </td>
-        </div>
-                <p>&nbsp;</p>
+                <br />
+                <div class="col-lg-3">
+                    <p>&nbsp;</p>
+                    <b><p>Série</p></b>
+                    <a asp-controller="Series" asp-action="Details" asp-route-id="@series.Id"><img src="~/images/@series.ImagemURL" alt="@series.ImagemURL" style="width: 200px; height: 230px" /></a>
+                    <h4>@series.Titulo</h4>
+                    <div class="col-lg-11"></div>
+                </div>
             }
         </div>
     </div>

@@ -27,14 +27,16 @@ namespace Raje.Controllers
 
         public async System.Threading.Tasks.Task<IActionResult> IndexAsync()
         {
-            IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo = true);
-            IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo = true);
-            IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo = true);
+            IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo);
+            IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo);
+            IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo);
 
             var user = await _userManager.GetUserAsync(User);
+            IEnumerable<ApplicationUser> users = new List<ApplicationUser>();
 
-            IEnumerable<ApplicationUser> users = _db.ApplicationUser.Take(3).ToList().Where(u => u.Id != user.Id);
-
+            if (user != null)
+                users = _db.ApplicationUser.Take(3).ToList().Where(u => u.Id != user.Id);
+                
             ListagemViewModel retorno = new ListagemViewModel
             {
                 Filmes = filmes.ToList(),

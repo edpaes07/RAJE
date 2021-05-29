@@ -1,4 +1,4 @@
-﻿@model Raje.Models.Filme
+﻿@model Raje.Models.Serie
 
 <form method="post">
     <input asp-for="Id" hidden />
@@ -22,6 +22,7 @@
                         <b>Elenco:</b> @Model.Elenco<br>
                         <b>País:</b> @Model.Pais<br>
                         <b>Ano:</b> @Model.Ano<br>
+                        <b>Número de Temporadas:</b> @Model.NumeroTemporadas<br>
                         <b>Resumo:</b> @Model.Sinopse
                     </p>
                     <p />
@@ -34,11 +35,11 @@
         </div>
     </div>
     <div class="border p-3">
-        <div class="row">    
+        <div class="row">
             <div class="col-lg-6">
                 <p>&nbsp;</p>
                 <center><h2 class="text-info pl-3">Comentários</h2></center>
-                <p>&nbsp;</p>   
+                <p>&nbsp;</p>
                 <br />
             </div>
         </div>

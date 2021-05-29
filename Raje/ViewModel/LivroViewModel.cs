@@ -6,6 +6,8 @@ namespace Raje.ViewModel
 {
     public class LivroViewModel
     {
+        public Guid Id { get; set; }
+
         [Required]
         public string Titulo { get; set; }
 
@@ -23,5 +25,7 @@ namespace Raje.ViewModel
         public IFormFile ImagemUpload { get; set; }
 
         public String Sinopse { get; set; }
+
+        public bool Ativo { get; set; }
     }
 }

@@ -1,21 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
 using Raje.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Raje.Controllers
 {
     public class LivrosController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public LivrosController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public LivrosController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -24,50 +25,115 @@ namespace Raje.Controllers
 
             if (User.IsInRole(WC.AdminRole))
             {
-                livros = _context.Livros.ToList().OrderBy(livro => livro.Ativo);
+                livros = _db.Livros.ToList().OrderBy(livro => livro.Ativo);
             }
             else
             {
-                livros = _context.Livros.ToList().Where(livro => livro.Ativo = true);   
+                livros = _db.Livros.ToList().Where(livro => livro.Ativo);
             }
 
             return View(livros);
         }
 
-        public IActionResult Adicionar()
+        //GET - UPSERT
+        public IActionResult Upsert(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                LivroViewModel livroNovo = new LivroViewModel();
+                //this is for create
+                return View(livroNovo);
+            }
+            else
+            {
+                var livro = _db.Livros.Find(id);
+
+                if (livro == null)
+                {
+                    return NotFound();
+                }
+
+                LivroViewModel livroNovo = new LivroViewModel()
+                {
+                    Id = livro.Id,
+                    Ativo = livro.Ativo,
+                    Ano = livro.Ano,
+                    Autores = livro.Autores,
+                    Pais = livro.Pais,
+                    Titulo = livro.Titulo,
+                    Sinopse = livro.Sinopse,
+                    ImagemURL = livro.ImagemURL
+                };
+
+                return View(livroNovo);
+            }
         }
 
+        //POST - UPSERT
         [HttpPost]
-        public IActionResult Adicionar(LivroViewModel livro)
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(LivroViewModel livro)
         {
-            var imgPrefixo = Guid.NewGuid() + "_";
-
-            if (!Util.Util.UploadArquivo(livro.ImagemUpload, imgPrefixo))
-            {
-                return View(livro);
-            }
-
             Livro livroInserir = new Livro
             {
-                ImagemURL = imgPrefixo + livro.ImagemUpload.FileName,
+                Id = livro.Id,
+                Ativo = livro.Ativo,
                 Ano = livro.Ano,
                 Autores = livro.Autores,
                 Pais = livro.Pais,
-                Sinopse = livro.Sinopse,
                 Titulo = livro.Titulo,
-                Ativo = true
+                Sinopse = livro.Sinopse,
+                ImagemURL = livro.ImagemURL
             };
 
+            if (livro.ImagemUpload != null)
+            {
+                var imgPrefixo = Guid.NewGuid() + "_";
+
+                if (!Util.Util.UploadArquivo(livro.ImagemUpload, imgPrefixo))
+                {
+                    return View(livro);
+                }
+                livroInserir.ImagemURL = imgPrefixo + livro.ImagemUpload.FileName;
+            }
 
             if (ModelState.IsValid)
             {
-                _context.Livros.Add(livroInserir);
-                _context.SaveChanges();
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                if (livro.Id == null)
+                {
+                    //Creating
+                    _db.Livros.Add(livroInserir);
+                }
+                else
+                {
+                    //updating
+                    _db.Livros.Update(livroInserir);
+                }
+
+                _db.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
+        }
+
+        //GET - Details
+        public IActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Livro livro = _db.Livros.Find(id);
+
+            if (livro == null)
+            {
+                return NotFound();
             }
 
-            return RedirectToAction("Index");
+            return View(livro);
         }
 
         //GET - DELETE
@@ -77,7 +143,8 @@ namespace Raje.Controllers
             {
                 return NotFound();
             }
-            Livro livro = _context.Livros.FirstOrDefault(f => f.Id == id);
+            Livro livro = _db.Livros.Find(id);
+
             if (livro == null)
             {
                 return NotFound();
@@ -91,14 +158,14 @@ namespace Raje.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(Guid? id)
         {
-            var obj = _context.Livros.Find(id);
+            var obj = _db.Livros.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _context.Livros.Remove(obj);
-            _context.SaveChanges();
+            _db.Livros.Remove(obj);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

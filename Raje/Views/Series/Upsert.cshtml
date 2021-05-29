@@ -12,51 +12,72 @@
 
 @model Raje.ViewModel.SerieViewModel
 
-@{
-    ViewData["Title"] = "Adicionar";
+<br />
+@if (Model.Titulo != null)
+{
+    ViewData["Title"] = "Editar Série";
+    <h4>Editar Série</h4>
+}
+else
+{
+    ViewData["Title"] = "Adicionar Série";
+    <h4>Adicionar Série</h4>
 }
 
-<h4>Série</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form enctype="multipart/form-data" asp-action="Adicionar">
+        <form enctype="multipart/form-data" asp-action="Upsert">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @if (Model.Titulo != null)
+            {
+                <div class="form-group">
+                    <label asp-for="Ativo" class="control-label">Ativo:</label>
+                    <input asp-for="Ativo" class="form-control" />
+                    <span asp-validation-for="Ativo" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
-                <label asp-for="Titulo" class="control-label">Título</label>
+                <label asp-for="Titulo" class="control-label">Título:</label>
                 <input asp-for="Titulo" class="form-control" />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Diretor" class="control-label">Diretor(es)</label>
+                <label asp-for="Diretor" class="control-label">Diretor(es):</label>
                 <input asp-for="Diretor" class="form-control" />
                 <span asp-validation-for="Diretor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Elenco" class="control-label"></label>
+                <label asp-for="Elenco" class="control-label">Elenco:</label>
                 <input asp-for="Elenco" class="form-control" />
                 <span asp-validation-for="Elenco" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Pais" class="control-label">País</label>
+                <label asp-for="Pais" class="control-label">País:</label>
                 <input asp-for="Pais" class="form-control" />
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ano" class="control-label">Ano</label>
+                <label asp-for="Ano" class="control-label">Ano:</label>
                 <input asp-for="Ano" class="form-control" />
                 <span asp-validation-for="Ano" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumeroTemporadas" class="control-label">Número de Temporadas</label>
+                <label asp-for="NumeroTemporadas" class="control-label">Número de Temporadas:</label>
                 <input asp-for="NumeroTemporadas" class="form-control" />
                 <span asp-validation-for="NumeroTemporadas" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Sinopse" class="control-label">Sinopse</label>
+                <label asp-for="Sinopse" class="control-label">Sinopse:</label>
                 <input asp-for="Sinopse" class="form-control" />
                 <span asp-validation-for="Sinopse" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <input asp-for="ImagemURL" class="form-control" hidden />
+            </div>
+
             <div class="form-group">
                 <label asp-for="ImagemUpload" class="control-label"></label>
 
@@ -68,31 +89,43 @@
 
                 <span asp-validation-for="ImagemUpload" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
-                <input type="submit" value="Adicionar" onclick="cadastrar()" class="btn btn-success" />
+                @if (Model.Titulo != null)
+                {
+                    //update
+                    <input type="submit" value="Atualizar" onclick="atualizar()" class="btn btn-success" />
+                }
+                else
+                {
+                    //create
+                    <input type="submit" value="Adicionar" onclick="cadastrar()" class="btn btn-success" />
+                }
+                <a asp-action="Index" class="btn btn-danger">Voltar</a>
             </div>
+            <br />
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index" class="btn btn-danger">Voltar</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        $("#ImagemUpload").change(function () {
-            $("#img_nome").text(this.files[0].name);
-            $("#img_nome")[0].style.display = 'block';
-        });
+    $("#ImagemUpload").change(function () {
+    $("#img_nome").text(this.files[0].name);
+    $("#img_nome")[0].style.display = 'block';
+    });
 
-        $("#ImagemUpload").attr("data-val", "true");
-        $("#ImagemUpload").attr("data-val-required", "Preencha o campo Imagem");
+    //$("#ImagemUpload").attr("data-val", "true");
+    //$("#ImagemUpload").attr("data-val-required", "Preencha o campo Imagem");
 
-        function cadastrar() {
-            alert("Cadastro realizado com sucesso!\nPendente Aprovação do Administrador.");
-        }
+    function cadastrar() {
+        alert("Cadastro realizado com sucesso!\nPendente Aprovação do Administrador.");
+    }
+
+    function atualizar() {
+        alert("Série atualizado com sucesso!");
+    }
     </script>
 }

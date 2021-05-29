@@ -4,7 +4,6 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
-
 @if (!SignInManager.IsSignedIn(User))
 {
     <script>window.location.href = '/Identity/Account/Login';</script>

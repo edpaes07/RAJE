@@ -1,39 +1,46 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
-using Raje.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Raje.Controllers
 {
     public class ApplicationUserController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public ApplicationUserController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ApplicationUserController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
             IEnumerable<ApplicationUser> users = new List<ApplicationUser>();
+            users = _db.ApplicationUser.ToList();
 
-            users = _context.ApplicationUser.ToList().OrderBy(user => user.FullName);
-          
             return View(users);
         }
 
-        public IActionResult Perfil()
+        //GET - Details
+        public IActionResult Details(string? id)
         {
-            IEnumerable<ApplicationUser> user = new List<ApplicationUser>();
+            if (id == null)
+            {
+                return NotFound();
+            }
+            ApplicationUser user = _db.ApplicationUser.Find(id);
 
-            user = _context.ApplicationUser.ToList().OrderBy(user => user.FullName);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
             return View(user);
-        }
+        } 
     }
 }

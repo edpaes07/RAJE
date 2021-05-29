@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
 using Raje.ViewModel;
@@ -10,11 +11,12 @@ namespace Raje.Controllers
 {
     public class SeriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public SeriesController(ApplicationDbContext context)
+        private readonly ApplicationDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public SeriesController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
         {
-            _context = context;
+            _db = db;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -23,52 +25,120 @@ namespace Raje.Controllers
 
             if (User.IsInRole(WC.AdminRole))
             {
-                series = _context.Series.ToList().OrderBy(serie => serie.Ativo);
+                series = _db.Series.ToList().OrderBy(serie => serie.Ativo);
             }
             else
-            {           
-                series = _context.Series.ToList().Where(serie => serie.Ativo = true);
+            {
+                series = _db.Series.ToList().Where(serie => serie.Ativo);
             }
 
             return View(series);
         }
 
-        public IActionResult Adicionar()
+        //GET - UPSERT
+        public IActionResult Upsert(Guid? id)
         {
-            return View();
+            if (id == null)
+            {
+                SerieViewModel serieNovo = new SerieViewModel();
+                //this is for create
+                return View(serieNovo);
+            }
+            else
+            {
+                var serie = _db.Series.Find(id);
+
+                if (serie == null)
+                {
+                    return NotFound();
+                }
+
+                SerieViewModel serieNovo = new SerieViewModel()
+                {
+                    Id = serie.Id,
+                    Ativo = serie.Ativo,
+                    Ano = serie.Ano,
+                    Diretor = serie.Diretor,
+                    Elenco = serie.Elenco,
+                    Pais = serie.Pais,
+                    Titulo = serie.Titulo,
+                    Sinopse = serie.Sinopse,
+                    NumeroTemporadas = serie.NumeroTemporadas,
+                    ImagemURL = serie.ImagemURL
+
+                };
+
+                return View(serieNovo);
+            }
         }
 
-
+        //POST - UPSERT
         [HttpPost]
-        public IActionResult Adicionar(SerieViewModel serie)
+        [ValidateAntiForgeryToken]
+        public IActionResult Upsert(SerieViewModel serie)
         {
-            var imgPrefixo = Guid.NewGuid() + "_";
-
-            if (!Util.Util.UploadArquivo(serie.ImagemUpload, imgPrefixo))
+            Serie serieInserir = new Serie
             {
-                return View(serie);
-            }
-
-            var serieInserir = new Serie
-            {
-                Diretor = serie.Diretor,
-                Titulo = serie.Titulo,
+                Id = serie.Id,
+                Ativo = serie.Ativo,
                 Ano = serie.Ano,
+                Diretor = serie.Diretor,
                 Elenco = serie.Elenco,
-                ImagemURL = imgPrefixo + serie.ImagemUpload.FileName,
-                NumeroTemporadas = serie.NumeroTemporadas,
                 Pais = serie.Pais,
+                Titulo = serie.Titulo,
                 Sinopse = serie.Sinopse,
-                Ativo = true
+                NumeroTemporadas = serie.NumeroTemporadas,
+                ImagemURL = serie.ImagemURL
             };
+
+            if (serie.ImagemUpload != null)
+            {
+                var imgPrefixo = Guid.NewGuid() + "_";
+
+                if (!Util.Util.UploadArquivo(serie.ImagemUpload, imgPrefixo))
+                {
+                    return View(serie);
+                }
+                serieInserir.ImagemURL = imgPrefixo + serie.ImagemUpload.FileName;
+            }
 
             if (ModelState.IsValid)
             {
-                _context.Series.Add(serieInserir);
-                _context.SaveChanges();
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                if (serie.Id == null)
+                {
+                    //Creating
+                    _db.Series.Add(serieInserir);
+                }
+                else
+                {
+                    //updating
+                    _db.Series.Update(serieInserir);
+                }
+
+                _db.SaveChanges();
+
+            }
+            return RedirectToAction("Index");
+        }
+
+        //GET - Details
+        public IActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            Serie serie = _db.Series.Find(id);
+
+            if (serie == null)
+            {
+                return NotFound();
             }
 
-            return RedirectToAction("Index");
+            return View(serie);
         }
 
         //GET - DELETE
@@ -78,7 +148,8 @@ namespace Raje.Controllers
             {
                 return NotFound();
             }
-            Serie serie = _context.Series.FirstOrDefault(f => f.Id == id);
+            Serie serie = _db.Series.Find(id);
+
             if (serie == null)
             {
                 return NotFound();
@@ -92,14 +163,14 @@ namespace Raje.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeletePost(Guid? id)
         {
-            var obj = _context.Series.Find(id);
+            var obj = _db.Series.Find(id);
             if (obj == null)
             {
                 return NotFound();
             }
 
-            _context.Series.Remove(obj);
-            _context.SaveChanges();
+            _db.Series.Remove(obj);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
     }

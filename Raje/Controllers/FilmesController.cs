@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Raje.Data;
 using Raje.Models;
 using Raje.ViewModel;
@@ -20,7 +19,6 @@ namespace Raje.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-
         public IActionResult Index()
         {
             IEnumerable<Filme> filmes = new List<Filme>();
@@ -31,12 +29,11 @@ namespace Raje.Controllers
             }
             else
             {
-                filmes = _db.Filmes.ToList().Where(filme => filme.Ativo = true);
+                filmes = _db.Filmes.ToList().Where(filme => filme.Ativo);
             }
 
             return View(filmes);
         }
-
 
         //GET - UPSERT
         public IActionResult Upsert(Guid? id)

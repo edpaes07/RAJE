@@ -1,4 +1,4 @@
-﻿@model Raje.Models.Filme
+﻿@model Raje.Models.Livro
 
 <form method="post">
     <input asp-for="Id" hidden />
@@ -6,7 +6,7 @@
     <br />
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-info pl-3">Excluir Filme</h2>
+            <h2 class="text-info pl-3">Excluir Livro</h2>
         </div>
         <div class="row">
             <div class="col-8">
@@ -20,18 +20,10 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-4">
-                        <label asp-for="Diretor"></label>
+                        <label asp-for="Autores"></label>
                     </div>
                     <div class="col-8">
-                        <input asp-for="Diretor" disabled class="form-control" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-4">
-                        <label asp-for="Elenco"></label>
-                    </div>
-                    <div class="col-8">
-                        <input asp-for="Elenco" disabled class="form-control" />
+                        <input asp-for="Autores" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">

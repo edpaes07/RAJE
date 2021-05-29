@@ -1,4 +1,4 @@
-﻿@model Raje.Models.Filme
+﻿@model Raje.Models.Serie
 
 <form method="post">
     <input asp-for="Id" hidden />
@@ -6,7 +6,7 @@
     <br />
     <div class="border p-3">
         <div class="form-group row">
-            <h2 class="text-info pl-3">Excluir Filme</h2>
+            <h2 class="text-info pl-3">Excluir Série</h2>
         </div>
         <div class="row">
             <div class="col-8">
@@ -48,6 +48,14 @@
                     </div>
                     <div class="col-8">
                         <input asp-for="Ano" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="NumeroTemporadas">Número de Temporadas</label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="NumeroTemporadas" disabled class="form-control" />
                     </div>
                 </div>
                 <div class="form-group row">

@@ -4,21 +4,21 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
+}
+
 @model IEnumerable<Raje.Models.Serie>
 
 @{
     ViewData["Title"] = "Index";
 }
 
-@if (!SignInManager.IsSignedIn(User))
-{
-    <script>window.location.href = '/Identity/Account/Login';</script>
-}
-
 <p>
-    <a asp-action="Adicionar" class="btn btn-success">Adicionar Série</a>
+    <a asp-action="Upsert" class="btn btn-success">Adicionar Série</a>
 </p>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th></th>
@@ -52,51 +52,51 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titulo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Diretor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Elenco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pais)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ano)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroTemporadas)
-            </td>
-
-            @if (User.IsInRole(WC.AdminRole))
-            {
+            <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ativo)
+                    <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
                 </td>
-            }
-
-            <td>
-                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver</a>
-            </td>
-
-            @if (User.IsInRole(WC.AdminRole))
-            {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diretor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Elenco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pais)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ano)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroTemporadas)
                 </td>
 
+                @if (User.IsInRole(WC.AdminRole))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ativo)
+                    </td>
+                }
+
                 <td>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver</a>
                 </td>
-            }
-        </tr>
+
+                @if (User.IsInRole(WC.AdminRole))
+                {
+                    <td>
+                        <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                    </td>
+
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                    </td>
+                }
+            </tr>
         }
     </tbody>
 </table>

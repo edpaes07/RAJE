@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Raje.Models.ViewModels
 {
@@ -12,6 +9,8 @@ namespace Raje.Models.ViewModels
         public Livro Livro { get; set; }
 
         public Serie Serie { get; set; }
+
+        public ApplicationUser User { get; set; }
 
         public List<Filme> Filmes { get; set; }
 
