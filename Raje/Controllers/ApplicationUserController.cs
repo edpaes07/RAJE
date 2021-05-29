@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Raje.Data;
 using Raje.Models;
@@ -10,11 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Internal;
 
 namespace Raje.Controllers
 {
@@ -256,7 +252,7 @@ namespace Raje.Controllers
             return RedirectToAction("Index");
         }
 
-        //POST - AMIGO
+        //POST - ENVIAR SOLICITACAO AMIZADE
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AdicionarAmigo(string id)
@@ -278,6 +274,90 @@ namespace Raje.Controllers
 
             StatusMessageTemp = "Pedido de amizade enviado com sucesso!";
             return LocalRedirect(returnUrl);
+        }
+
+        //POST - ACEITAR SOLICITACAO AMIZADE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AceitarAmigo(string id)
+        {
+            string returnUrl = Url.Content($"~/ApplicationUser/SolicitacoesAmizade");
+            string currentUserId = _userManager.GetUserId(User);
+
+            Amigo amigo = _db.Amigos.ToList()
+                                    .Where(amigo => 
+                                           amigo.Ativo == false &&
+                                           amigo.UserId == id   &&
+                                           amigo.AmigoId == currentUserId)
+                                    .FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                amigo.Ativo = true;
+                _db.Amigos.Update(amigo);
+                _db.SaveChanges();
+            }
+
+            StatusMessageTemp = "Pedido de amizade aceito com sucesso!";
+            return LocalRedirect(returnUrl);
+        }
+
+        //POST - RECUSAR SOLICITACAO AMIZADE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RecusarAmigo(string id)
+        {
+            string returnUrl = Url.Content($"~/ApplicationUser/SolicitacoesAmizade");
+            string currentUserId = _userManager.GetUserId(User);
+
+            Amigo amigo = _db.Amigos.ToList()
+                                    .Where(amigo =>
+                                           amigo.Ativo == false &&
+                                           amigo.UserId == id &&
+                                           amigo.AmigoId == currentUserId)
+                                    .FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                _db.Amigos.Remove(amigo);
+                _db.SaveChanges();
+            }
+
+            StatusMessageTemp = "Pedido de amizade aceito com sucesso!";
+
+            return LocalRedirect(returnUrl);
+        }
+
+        //GET - AMIGO
+        public IActionResult Amigos(string id)
+        {
+            if (id == null)
+            {
+                id = _userManager.GetUserId(User);
+            }
+
+            IEnumerable<Amigo> amigos = _db.Amigos.ToList().Where(amigo => amigo.Ativo);
+
+            var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
+            amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
+
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(user => amigoIds.Contains(user.Id));
+
+            return View(users);
+        }
+
+        //GET - SOLICITACOES
+        public IActionResult SolicitacoesAmizade()
+        {
+            string currentUserId = _userManager.GetUserId(User);
+
+            IEnumerable<Amigo> amigos = _db.Amigos.ToList().Where(amigo => amigo.Ativo == false);
+
+            var amigoIds = amigos.Where(amigo => amigo.AmigoId == currentUserId).Select(amigo => amigo.UserId);
+
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(user => amigoIds.Contains(user.Id));
+
+            return View(users);
         }
     }
 }

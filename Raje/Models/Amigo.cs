@@ -8,11 +8,11 @@ namespace Raje.Models
     {
         public Guid Id { get; set; }
 
-        public String UserId { get; set; }
+        public string UserId { get; set; }
 
         [Required]
         [Display(Name = "Amigo")]
-        public String AmigoId { get; set; }
+        public string AmigoId { get; set; }
         [ForeignKey("AmigoId")]
         public virtual ApplicationUser Friend { get; set; }
 

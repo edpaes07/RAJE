@@ -12,11 +12,11 @@ namespace Raje.Models
         public int Nota { get; set; }
 
         [Required]
-        public String Comentario { get; set; }
+        public string Comentario { get; set; }
 
         [Required]
         [Display(Name = "User")]
-        public String UserId { get; set; }
+        public string UserId { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
 

@@ -14,8 +14,9 @@
     <div class="border p-3">
         <div class="row">
             <div class="col-lg-2">
-                <img src="~/images/@Model.ImagemURL" alt="@Model.ImagemURL" style="width: 150px; height: 200px" />
-                <p>&nbsp;</p>
+                <p></p>
+                <img src="~/images/@Model.ImagemURL" alt="@Model.ImagemURL" style="width: 160px; height: 220px" />
+                <p></p>
             </div>
             <div class="col-lg-3">
                 <h4>@Model.FullName</h4>
@@ -41,7 +42,7 @@
             <div class="border-left p-3 col-lg-7">
                 <center><h4 class="text-info pl-3">Amigos</h4></center>
                 <p></p>
-                <a asp-action="Upsert" asp-route-id="@Model.Id">Ver Mais</a>
+                <a  asp-controller="ApplicationUser" asp-action="Amigos" asp-route-id="@Model.Id">Ver Mais</a>
             </div>
         </div>
     </div>

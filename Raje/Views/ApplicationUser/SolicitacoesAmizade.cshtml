@@ -10,10 +10,10 @@
     <script>window.location.href = '/Identity/Account/Login';</script>
 }
 
-@model IEnumerable<Raje.ViewModel.ApplicationUserViewModel>
+@model IEnumerable<Raje.Models.ApplicationUser>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Amigos";
 }
 
 <table class="table">
@@ -36,9 +36,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Where(user => user.Id != UserManager.GetUserId(User)))
+        @foreach (var item in Model)
         {
-            <partial name="_StatusMessage" model="@item.StatusMessage" />
             <tr>
                 <td>
                     <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
@@ -57,9 +56,33 @@
                 </td>
 
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver Perfil</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Ver Perfil</a>
+                </td>
+                <td>
+                    <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AceitarAmigo" method="post">
+                        <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
+                        <button id="AceitarAmigo" onclick="aceitar()" class="btn btn-primary">Aceitar</button>
+                    </form>
+                </td>
+                <td>
+                    <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="RecusarAmigo" method="post">
+                        <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
+                        <button id="RecusarAmigo" onclick="recusar()" class="btn btn-danger">Recusar</button>
+                    </form>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<script>
+    function aceitar() {
+        alert("Pedido de amizade aceito com sucesso.");
+        form.submit();
+    }
+
+    function recusar() {
+        alert("Pedico de amizade Recusado!");
+        form.submit();
+    }
+</script>
