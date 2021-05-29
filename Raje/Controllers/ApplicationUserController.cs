@@ -11,6 +11,7 @@ using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
+using Raje.Models.ViewModels;
 
 namespace Raje.Controllers
 {
@@ -184,39 +185,41 @@ namespace Raje.Controllers
             return LocalRedirect(returnUrl);
         }
 
+
         //GET - Details
         public IActionResult Details(string id)
         {
             if (id == null)
             {
-                ApplicationUserViewModel userNovo = new();
-                //this is for create
-                return View(userNovo);
+                string userId = _userManager.GetUserId(User);
             }
-            else
+
+            List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
+            List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
+            List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
+            List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
+
+            var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
+            amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
+
+            List<ApplicationUser> friends = _db.ApplicationUser.Where(user => amigoIds.Contains(user.Id)).ToList();
+            ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
+
+            var friendIds = friends.Select(friend => friend.Id);
+
+            var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(user.Id)).ToList();
+
+            ListagemViewModel retorno = new()
             {
-                var user = _db.ApplicationUser.Find(id);
+                Filmes = filmes,
+                Livros = livros,
+                Series = series,
+                Users = users,
+                Amigos = friends,
+                User = user
+            };
 
-                if (user == null)
-                {
-                    return NotFound();
-                }
-
-                ApplicationUserViewModel userNovo = new()
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    FullName = user.FullName,
-                    PhoneNumber = user.PhoneNumber,
-                    Birthdate = user.Birthdate,
-                    City = user.City,
-                    State = user.State,
-                    ImagemURL = user.ImagemURL,
-                    StatusMessage = StatusMessageTemp
-                };
-
-                return View(userNovo);
-            }
+            return View(retorno);
         }
 
         //GET - DELETE

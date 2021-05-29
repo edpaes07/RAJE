@@ -10,7 +10,7 @@
     <script>window.location.href = '/Identity/Account/Login';</script>
 }
 
-@model IEnumerable<Raje.ViewModel.ApplicationUserViewModel>
+@model IEnumerable<Raje.Models.ApplicationUser>
 
 @{
     ViewData["Title"] = "Index";
@@ -38,28 +38,27 @@
     <tbody>
         @foreach (var item in Model.Where(user => user.Id != UserManager.GetUserId(User)))
         {
-            <partial name="_StatusMessage" model="@item.StatusMessage" />
-            <tr>
-                <td>
-                    <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Birthdate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State)
-                </td>
+        <tr>
+            <td>
+                <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
 
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver Perfil</a>
-                </td>
-            </tr>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver Perfil</a>
+            </td>
+         </tr>
         }
     </tbody>
 </table>

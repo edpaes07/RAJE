@@ -3,46 +3,50 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Raje.Data;
 using Raje.Models;
 using Raje.Models.ViewModels;
-using Raje.Utility;
 
 namespace Raje.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, UserManager<IdentityUser> userManager)
+        public HomeController(ApplicationDbContext db, UserManager<IdentityUser> userManager)
         {
-            _logger = logger;
             _db = db;
             _userManager = userManager;
         }
 
-        public async System.Threading.Tasks.Task<IActionResult> IndexAsync()
+        public IActionResult Index()
         {
-            IEnumerable<Filme> filmes = _db.Filmes.ToList().Where(filme => filme.Ativo);
-            IEnumerable<Serie> series = _db.Series.ToList().Where(serie => serie.Ativo);
-            IEnumerable<Livro> livros = _db.Livros.ToList().Where(livro => livro.Ativo);
+            string id = _userManager.GetUserId(User);
 
-            var user = await _userManager.GetUserAsync(User);
-            IEnumerable<ApplicationUser> users = new List<ApplicationUser>();
+            List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
+            List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
+            List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
+            List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
 
-            if (user != null)
-                users = _db.ApplicationUser.Take(3).ToList().Where(u => u.Id != user.Id);
-                
-            ListagemViewModel retorno = new ListagemViewModel
+            var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
+            amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
+
+            List<ApplicationUser> friends = _db.ApplicationUser.Where(user => amigoIds.Contains(user.Id)).ToList();
+            ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
+
+            var friendIds = friends.Select(friend => friend.Id);
+
+            var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(u.Id)).ToList();
+
+            ListagemViewModel retorno = new()
             {
-                Filmes = filmes.ToList(),
-                Livros = livros.ToList(),
-                Series = series.ToList(),
-                Users = users.ToList()
+                Filmes = filmes,
+                Livros = livros,
+                Series = series,
+                Users = users,
+                Amigos = friends,
+                User = user
             };
 
             return View(retorno);
