@@ -112,7 +112,7 @@ namespace Raje.Areas.Identity.Pages.Account
                     FullName = Input.FullName,
                     Birthdate = Input.Birthdate,
                     City = Input.City,
-                    State = Input.State       
+                    State = Input.State
                 };
 
                 if (Input.ImagemUpload != null)

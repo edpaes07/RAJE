@@ -37,6 +37,11 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Required]
+            [EmailAddress]
+            [Display(Name = "E-mail")]
+            public string Email { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
@@ -52,6 +57,12 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "ImagemUpload")]
             public IFormFile ImagemUpload { get; set; }
+
+            public string Id { get; set; }
+
+            public string FullName { get; set; }
+
+            public string ImagemURL { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
@@ -65,10 +76,14 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                Id = userCurrent.Id,
+                FullName = userCurrent.FullName,
                 PhoneNumber = userCurrent.PhoneNumber,
                 Birthdate = userCurrent.Birthdate,
                 City = userCurrent.City,
-                State = userCurrent.State
+                State = userCurrent.State,
+                ImagemURL = userCurrent.ImagemURL,
+                ImagemUpload = null
             };
         }
 
@@ -98,23 +113,25 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Erro inesperado ao tentar definir o número do telefone.";
-                    return RedirectToPage();
-                }
-            }
-
             var userCurrent = _context.ApplicationUser.ToList().Where(u => u.Id.Equals(user.Id)).FirstOrDefault();
 
+            userCurrent.FullName = Input.FullName;
             userCurrent.PhoneNumber = Input.PhoneNumber;
             userCurrent.Birthdate = Input.Birthdate;
             userCurrent.City = Input.City;
             userCurrent.State = Input.State;
+            userCurrent.ImagemURL = Input.ImagemURL;
+
+            if (Input.ImagemUpload != null)
+            {
+                var imgPrefixo = Guid.NewGuid() + "_";
+
+                if (!Util.Util.UploadArquivo(Input.ImagemUpload, imgPrefixo))
+                {
+                    return Page();
+                }
+                userCurrent.ImagemURL = imgPrefixo + Input.ImagemUpload.FileName;
+            }
 
             _context.ApplicationUser.Update(userCurrent);
             _context.SaveChanges();
