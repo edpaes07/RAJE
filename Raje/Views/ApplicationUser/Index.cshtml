@@ -21,22 +21,22 @@
         <tr>
             <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                Nome Completo
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Birthdate)
+                Data de Nascimento
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.City)
+                Cidade
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.State)
+                Estado
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Where(user => user.Id != UserManager.GetUserId(User)))
         {
         <tr>
             <td>
