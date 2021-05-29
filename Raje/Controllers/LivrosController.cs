@@ -12,11 +12,9 @@ namespace Raje.Controllers
     public class LivrosController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public LivrosController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public LivrosController(ApplicationDbContext db)
         {
             _db = db;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -40,7 +38,7 @@ namespace Raje.Controllers
         {
             if (id == null)
             {
-                LivroViewModel livroNovo = new LivroViewModel();
+                LivroViewModel livroNovo = new();
                 //this is for create
                 return View(livroNovo);
             }
@@ -53,7 +51,7 @@ namespace Raje.Controllers
                     return NotFound();
                 }
 
-                LivroViewModel livroNovo = new LivroViewModel()
+                LivroViewModel livroNovo = new()
                 {
                     Id = livro.Id,
                     Ativo = livro.Ativo,
@@ -74,7 +72,7 @@ namespace Raje.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(LivroViewModel livro)
         {
-            Livro livroInserir = new Livro
+            Livro livroInserir = new()
             {
                 Id = livro.Id,
                 Ativo = livro.Ativo,
@@ -99,10 +97,7 @@ namespace Raje.Controllers
 
             if (ModelState.IsValid)
             {
-                var files = HttpContext.Request.Form.Files;
-                string webRootPath = _webHostEnvironment.WebRootPath;
-
-                if (livro.Id == null)
+                if (livro.Titulo == null)
                 {
                     //Creating
                     _db.Livros.Add(livroInserir);

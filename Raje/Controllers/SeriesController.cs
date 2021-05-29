@@ -12,11 +12,9 @@ namespace Raje.Controllers
     public class SeriesController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public SeriesController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public SeriesController(ApplicationDbContext db)
         {
             _db = db;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -40,7 +38,7 @@ namespace Raje.Controllers
         {
             if (id == null)
             {
-                SerieViewModel serieNovo = new SerieViewModel();
+                SerieViewModel serieNovo = new();
                 //this is for create
                 return View(serieNovo);
             }
@@ -53,7 +51,7 @@ namespace Raje.Controllers
                     return NotFound();
                 }
 
-                SerieViewModel serieNovo = new SerieViewModel()
+                SerieViewModel serieNovo = new()
                 {
                     Id = serie.Id,
                     Ativo = serie.Ativo,
@@ -77,7 +75,7 @@ namespace Raje.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(SerieViewModel serie)
         {
-            Serie serieInserir = new Serie
+            Serie serieInserir = new()
             {
                 Id = serie.Id,
                 Ativo = serie.Ativo,
@@ -104,10 +102,7 @@ namespace Raje.Controllers
 
             if (ModelState.IsValid)
             {
-                var files = HttpContext.Request.Form.Files;
-                string webRootPath = _webHostEnvironment.WebRootPath;
-
-                if (serie.Id == null)
+                if (serie.Titulo == null)
                 {
                     //Creating
                     _db.Series.Add(serieInserir);

@@ -12,11 +12,9 @@ namespace Raje.Controllers
     public class FilmesController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment _webHostEnvironment;
-        public FilmesController(ApplicationDbContext db, IWebHostEnvironment webHostEnvironment)
+        public FilmesController(ApplicationDbContext db)
         {
             _db = db;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -40,7 +38,7 @@ namespace Raje.Controllers
         {
             if (id == null)
             {
-                FilmeViewModel filmeNovo = new FilmeViewModel();
+                FilmeViewModel filmeNovo = new();
                 //this is for create
                 return View(filmeNovo);
             }
@@ -53,7 +51,7 @@ namespace Raje.Controllers
                     return NotFound();
                 }
 
-                FilmeViewModel filmeNovo = new FilmeViewModel() 
+                FilmeViewModel filmeNovo = new() 
                 {
                     Id = filme.Id,
                     Ativo = filme.Ativo,
@@ -76,7 +74,7 @@ namespace Raje.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(FilmeViewModel filme)
         {
-            Filme filmeInserir = new Filme
+            Filme filmeInserir = new()
             {
                 Id = filme.Id,
                 Ativo = filme.Ativo,
@@ -102,10 +100,7 @@ namespace Raje.Controllers
 
             if (ModelState.IsValid)
             {
-                var files = HttpContext.Request.Form.Files;
-                string webRootPath = _webHostEnvironment.WebRootPath;
-
-                if (filme.Id == null)
+                if (filme.Titulo == null)
                 {
                     //Creating
                     _db.Filmes.Add(filmeInserir);

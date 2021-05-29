@@ -21,30 +21,21 @@ namespace Raje.Controllers
     public class ApplicationUserController : Controller
     {
         private readonly ApplicationDbContext _db;
-        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public ApplicationUserController
         (
             ApplicationDbContext db, 
-            IWebHostEnvironment webHostEnvironment,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager
+            IEmailSender emailSender
         )
         {
             _db = db;
-            _webHostEnvironment = webHostEnvironment;
-            _roleManager = roleManager;
             _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
             _emailSender = emailSender;
         }
 
@@ -52,21 +43,22 @@ namespace Raje.Controllers
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        [TempData]
+        public string StatusMessageTemp { get; set; }
+
         public IActionResult Index()
         {
-            IEnumerable<ApplicationUser> users = new List<ApplicationUser>();
-
-            users = _db.ApplicationUser.ToList();
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList();
 
             return View(users);
         }
 
         //GET - UPSERT
-        public IActionResult Upsert(String? id)
+        public IActionResult Upsert(string id)
         {
             if (id == null)
             {
-                ApplicationUserViewModel userNovo = new ApplicationUserViewModel();
+                ApplicationUserViewModel userNovo = new();
                 //this is for create
                 return View(userNovo);
             }
@@ -79,7 +71,7 @@ namespace Raje.Controllers
                     return NotFound();
                 }
 
-                ApplicationUserViewModel userNovo = new ApplicationUserViewModel()
+                ApplicationUserViewModel userNovo = new()
                 {
                     Id = user.Id,
                     Email = user.Email,
@@ -88,8 +80,8 @@ namespace Raje.Controllers
                     Birthdate = user.Birthdate,
                     City = user.City,
                     State = user.State,
-                    ImagemURL = user.ImagemURL
-
+                    ImagemURL = user.ImagemURL,
+                    StatusMessage = StatusMessageTemp
                 };
 
                 return View(userNovo);
@@ -104,7 +96,7 @@ namespace Raje.Controllers
             string returnUrl = Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
-            ApplicationUser userInserir = new ApplicationUser();
+            ApplicationUser userInserir = new();
 
             if (user.Id != null)
             {
@@ -133,10 +125,6 @@ namespace Raje.Controllers
                 userInserir.ImagemURL = imgPrefixo + user.ImagemUpload.FileName;
             }
 
-       
-                var files = HttpContext.Request.Form.Files;
-                string webRootPath = _webHostEnvironment.WebRootPath;
-
                 if (user.Id == null)
                 {
                     //Creating
@@ -159,7 +147,7 @@ namespace Raje.Controllers
                         var callbackUrl = Url.Page(
                             "/Account/ConfirmEmail",
                             pageHandler: null,
-                            values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                            values: new { area = "Identity", userId = user.Id, code, returnUrl },
                             protocol: Request.Scheme);
 
                         await _emailSender.SendEmailAsync(userInserir.Email, "Confirme seu email",
@@ -167,7 +155,7 @@ namespace Raje.Controllers
 
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
-                            return RedirectToPage("RegisterConfirmation", new { email = userInserir.Email, returnUrl = returnUrl });
+                            return RedirectToPage("RegisterConfirmation", new { email = userInserir.Email, returnUrl });
                         }
                         else
                         {
@@ -192,30 +180,51 @@ namespace Raje.Controllers
                     //updating
                     _db.ApplicationUser.Update(userInserir);
                     _db.SaveChanges();
-                }
+
+                    returnUrl = Url.Content($"~/ApplicationUser/Details/{userInserir.Id}");
+                    StatusMessageTemp = "Alterações realizadas com sucesso!";
+            }
 
             return LocalRedirect(returnUrl);
         }
 
         //GET - Details
-        public IActionResult Details(String? id)
+        public IActionResult Details(string id)
         {
             if (id == null)
             {
-                return NotFound();
+                ApplicationUserViewModel userNovo = new();
+                //this is for create
+                return View(userNovo);
             }
-            ApplicationUser user = _db.ApplicationUser.Find(id);
-
-            if (user == null)
+            else
             {
-                return NotFound();
-            }
+                var user = _db.ApplicationUser.Find(id);
 
-            return View(user);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                ApplicationUserViewModel userNovo = new()
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FullName = user.FullName,
+                    PhoneNumber = user.PhoneNumber,
+                    Birthdate = user.Birthdate,
+                    City = user.City,
+                    State = user.State,
+                    ImagemURL = user.ImagemURL,
+                    StatusMessage = StatusMessageTemp
+                };
+
+                return View(userNovo);
+            }
         }
 
         //GET - DELETE
-        public IActionResult Delete(String? id)
+        public IActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -234,7 +243,7 @@ namespace Raje.Controllers
         //POST - DELETE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeletePost(String? id)
+        public IActionResult DeletePost(string id)
         {
             var obj = _db.ApplicationUser.Find(id);
             if (obj == null)
@@ -245,6 +254,30 @@ namespace Raje.Controllers
             _db.ApplicationUser.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //POST - AMIGO
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AdicionarAmigo(string id)
+        {
+            string returnUrl = Url.Content($"~/ApplicationUser/Details/{id}");
+
+            Amigo amigo = new()
+            {
+                UserId = _userManager.GetUserId(User),
+                AmigoId = id
+            };
+
+            if (ModelState.IsValid)
+            {
+                //Creating
+                _db.Amigos.Add(amigo);
+                _db.SaveChanges();
+            }
+
+            StatusMessageTemp = "Pedido de amizade enviado com sucesso!";
+            return LocalRedirect(returnUrl);
         }
     }
 }
