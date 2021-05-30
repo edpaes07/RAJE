@@ -1,6 +1,6 @@
 ﻿@model Raje.Models.Serie
 
-<form method="post">
+<form enctype="multipart/form-data" asp-controller="Series" asp-action="Avaliar" method="post">
     <input asp-for="@Model.Id" id="Id" name="Id" class="form-control" hidden />
     <br />
     <br />
@@ -25,7 +25,7 @@
                         <b>Número de Temporadas:</b> @Model.NumeroTemporadas<br>
                         <b>Resumo:</b> @Model.Sinopse
                     </p>
-                    <p />
+                    &nbsp;
                 </font>
                 <table>
                     <tr>
