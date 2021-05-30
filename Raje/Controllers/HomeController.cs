@@ -29,7 +29,7 @@ namespace Raje.Controllers
                 List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
                 List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
                 List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
-                List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
+                List<Amigo> amigos = _db.Amigos.ToList();
 
                 var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
                 amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));

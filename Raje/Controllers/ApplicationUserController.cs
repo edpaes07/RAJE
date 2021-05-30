@@ -198,7 +198,7 @@ namespace Raje.Controllers
                 string userId = _userManager.GetUserId(User);
             }
 
-            List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
+            List<Amigo> amigos = _db.Amigos.ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
             amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
@@ -346,7 +346,7 @@ namespace Raje.Controllers
                 id = _userManager.GetUserId(User);
             }
 
-            IEnumerable<Amigo> amigos = _db.Amigos.ToList().Where(amigo => amigo.Ativo);
+            IEnumerable<Amigo> amigos = _db.Amigos.ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
             amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
