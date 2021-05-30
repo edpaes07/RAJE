@@ -50,36 +50,42 @@ namespace Raje.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [EmailAddress(ErrorMessage = "O campo E-mail não é um endereço de email válido.")]
+            [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Required(ErrorMessage = "O campo Senha é obrigatório.")]
             [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
+            [Required(ErrorMessage = "O campo Confirme a Senh é obrigatório.")]
             [Display(Name = "Confirme a Senha")]
             [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
 
+            [Required(ErrorMessage = "O campo Nome Completo é obrigatório.")]
             [Display(Name = "Nome completo")]
             public string FullName { get; set; }
 
             [Phone]
+            [Required(ErrorMessage = "O campo Número de telefone é obrigatório.")]
             [Display(Name = "Número de telefone")]
             [DataType(DataType.PhoneNumber)]
             public string PhoneNumber { get; set; }
 
+            [Required(ErrorMessage = "O campo Data de Nascimento é obrigatório.")]
             [Display(Name = "Data de Nascimento")]
             public DateTime Birthdate { get; set; }
 
+            [Required(ErrorMessage = "O campo Cidade é obrigatório.")]
             [Display(Name = "Cidade")]
             public string City { get; set; }
 
+            [Required(ErrorMessage = "O campo Estado é obrigatório.")]
             [Display(Name = "Estado")]
             public string State { get; set; }
 
@@ -116,7 +122,7 @@ namespace Raje.Areas.Identity.Pages.Account
                     FullName = Input.FullName,
                     Birthdate = Input.Birthdate,
                     City = Input.City,
-                    State = Input.State
+                    State = Input.State.ToUpper()
                 };
 
                 if (Input.ImagemUpload != null)

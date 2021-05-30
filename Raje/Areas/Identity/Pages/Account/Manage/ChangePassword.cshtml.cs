@@ -33,19 +33,20 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "O campo Senha Atual é obrigatório.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Senha Atual")]
             public string OldPassword { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "O campo Nova Senha é obrigatório.")]
             [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nova Senha")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
+            [Required(ErrorMessage = "O campo Confirme a Nova Senha é obrigatório.")]
+            [Display(Name = "Confirme a Nova Senha")]
             [Compare("NewPassword", ErrorMessage = "A nova senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
         }

@@ -27,17 +27,19 @@ namespace Raje.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
+            [EmailAddress(ErrorMessage = "O campo Email não é um endereço de email válido.")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [Required(ErrorMessage = "O campo Senha é obrigatório.")]
+            [StringLength(100, ErrorMessage = "A Senha deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
+            [Display(Name = "Senha")]
             public string Password { get; set; }
 
+            [Required(ErrorMessage = "O campo Confirme a Senha é obrigatório.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
+            [Display(Name = "Confirme a Senha")]
             [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
 
@@ -48,7 +50,7 @@ namespace Raje.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for password reset.");
+                return BadRequest("Um código deve ser fornecido para redefinir a senha.");
             }
             else
             {

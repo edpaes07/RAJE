@@ -43,8 +43,8 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "O campo E-mail é obrigatório.")]
+            [EmailAddress(ErrorMessage = "O campo Email não é um endereço de email válido.")]
             [Display(Name = "Novo e-mail")]
             public string NewEmail { get; set; }
         }

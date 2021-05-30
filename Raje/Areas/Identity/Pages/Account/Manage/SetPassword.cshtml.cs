@@ -30,15 +30,16 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [StringLength(100, ErrorMessage = "O {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [Required(ErrorMessage = "O campo Nova Senha é obrigatório.")]
+            [StringLength(100, ErrorMessage = "A Nova Senha deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [Display(Name = "Nova Senha")]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Required(ErrorMessage = "O campo Confirme a Nova Senha é obrigatório.")]
+            [Display(Name = "Confirme a Nova Senha")]
+            [Compare("NewPassword", ErrorMessage = "A nova senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -84,7 +85,7 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Sua senha foi definida.";
 
             return RedirectToPage();
         }

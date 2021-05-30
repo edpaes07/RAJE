@@ -29,7 +29,7 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "O campo Senha é obrigatório.")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
         }

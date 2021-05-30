@@ -37,21 +37,27 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "O campo Nome Completo é obrigatório.")]
+            [Display(Name = "Nome Completo")]
+            public string FullName { get; set; }
+
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Required(ErrorMessage = "O campo Número de Telefone é obrigatório.")]
+            [Display(Name = "Número de Telefone")]
             public string PhoneNumber { get; set; }
 
+            [Required(ErrorMessage = "O campo Data de Nascimento é obrigatório.")]
             [Display(Name = "Data de Nascimento")]
             public DateTime Birthdate { get; set; }
 
+            [Required(ErrorMessage = "O campo Cidade é obrigatório.")]
             [Display(Name = "Cidade")]
             public string City { get; set; }
 
+            [Required(ErrorMessage = "O campo Estado é obrigatório.")]
             [Display(Name = "Estado")]
             public string State { get; set; }
 
@@ -59,8 +65,6 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
             public IFormFile ImagemUpload { get; set; }
 
             public string Id { get; set; }
-
-            public string FullName { get; set; }
 
             public string ImagemURL { get; set; }
         }
@@ -80,7 +84,7 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
                 PhoneNumber = userCurrent.PhoneNumber,
                 Birthdate = userCurrent.Birthdate,
                 City = userCurrent.City,
-                State = userCurrent.State,
+                State = userCurrent.State.ToUpper(),
                 ImagemURL = userCurrent.ImagemURL,
                 ImagemUpload = null
             };
@@ -118,7 +122,7 @@ namespace Raje.Areas.Identity.Pages.Account.Manage
             userCurrent.PhoneNumber = Input.PhoneNumber;
             userCurrent.Birthdate = Input.Birthdate;
             userCurrent.City = Input.City;
-            userCurrent.State = Input.State;
+            userCurrent.State = Input.State.ToUpper();
             userCurrent.ImagemURL = Input.ImagemURL;
 
             if (Input.ImagemUpload != null)

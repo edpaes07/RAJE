@@ -80,7 +80,7 @@ namespace Raje.Controllers
                     PhoneNumber = user.PhoneNumber,
                     Birthdate = user.Birthdate,
                     City = user.City,
-                    State = user.State,
+                    State = user.State.ToUpper(),
                     ImagemURL = user.ImagemURL,
                     StatusMessage = StatusMessageTemp
                 };
@@ -113,7 +113,7 @@ namespace Raje.Controllers
             userInserir.PhoneNumber = user.PhoneNumber;
             userInserir.Birthdate = user.Birthdate;
             userInserir.City = user.City;
-            userInserir.State = user.State;
+            userInserir.State = user.State.ToUpper();
 
             if (user.ImagemUpload != null)
             {
