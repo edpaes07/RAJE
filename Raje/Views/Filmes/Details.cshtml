@@ -24,21 +24,56 @@
                         <b>Ano:</b> @Model.Ano<br>
                         <b>Resumo:</b> @Model.Sinopse
                     </p>
+                    <p></p>
                     <p />
                 </font>
-                <br />
-                <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Voltar</a>
-                <br />
-                <center><a asp-action="Upsert" asp-route-id="@Model.Id" class="btn btn-info">Adicionar Comentário</a></center>
+                <table>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nota:&nbsp;</label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                <input type="number" id="Nota" name="Nota" min="1" max="10" placeholder="Nota" class="form-control">
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<a asp-controller="Home" asp-action="Index" class="btn btn-success"><i class="fas fa-sign-out-alt"></i> Voltar</a>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <label>Comentário:&nbsp;</label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                <input type="text" id="Comentario" name="Comentario" placeholder="Comentário" class="form-control" />
+                            </div>
+                        </th>
+
+                        <th>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<button id="Avaliar" type="submit" class="btn btn-primary">Comentar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </table>
+                <div asp-validation-summary="All" class="text-danger"></div>
             </div>
         </div>
     </div>
     <div class="border p-3">
-        <div class="row">    
+        <div class="row">
             <div class="col-lg-6">
                 <p>&nbsp;</p>
                 <center><h2 class="text-info pl-3">Comentários</h2></center>
-                <p>&nbsp;</p>   
+                <p>&nbsp;</p>
                 <br />
             </div>
         </div>
