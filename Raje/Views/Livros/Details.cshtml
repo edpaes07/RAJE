@@ -1,7 +1,13 @@
-﻿@model Raje.Models.Livro
+﻿@model Raje.Models.ViewModels.ListagemViewModel
+
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Raje.Utility
 
 <form enctype="multipart/form-data" asp-controller="Livros" asp-action="Avaliar" method="post">
-    <input asp-for="Id" hidden />
+    <input asp-for="@Model.Livro.Id" hidden />
     <br />
     <br />
     <div class="border p-3">
@@ -9,19 +15,19 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-4">
                 <p>&nbsp;</p>
-                <img src="~/images/@Model.ImagemURL" alt="@Model.ImagemURL" style="width: 300px; height: 500px" />
+                <img src="~/images/@Model.Livro.ImagemURL" alt="@Model.Livro.ImagemURL" style="width: 300px; height: 500px" />
                 <p>&nbsp;</p>
             </div>
             <div class="col-lg-6">
                 <p>&nbsp;</p>
-                <center><h2 class="text-info pl-3">@Model.Titulo</h2></center>
+                <center><h2 class="text-info pl-3">@Model.Livro.Titulo</h2></center>
                 <p>&nbsp;</p>
                 <font size="2">
                     <p align=justify>
-                        <b>Autor(es):</b> @Model.Autores<br>
-                        <b>País:</b> @Model.Pais<br>
-                        <b>Ano:</b> @Model.Ano<br>
-                        <b>Resumo:</b> @Model.Sinopse
+                        <b>Autor(es):</b> @Model.Livro.Autores<br>
+                        <b>País:</b> @Model.Livro.Pais<br>
+                        <b>Ano:</b> @Model.Livro.Ano<br>
+                        <b>Resumo:</b> @Model.Livro.Sinopse
                     </p>
                     &nbsp;
                 </font>
@@ -68,11 +74,48 @@
     </div>
     <div class="border p-3">
         <div class="row">
-            <div class="col-lg-6">
-                <p>&nbsp;</p>
-                <center><h2 class="text-info pl-3">Comentários</h2></center>
-                <p>&nbsp;</p>
-                <br />
+            <div class="col-lg-12">
+                <center><h4 class="text-info pl-3">Comentários</h4></center>
+                <div class="row">
+                    @if (Model.Avaliacoes.Any())
+                    {
+                        @foreach (var avaliacao in Model.Avaliacoes)
+                        {
+                            <div class="col-lg-12 border-bottom p-3">
+                                <table>
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@avaliacao.User.Id"><img src="~/images/@avaliacao.User.ImagemURL" alt="@avaliacao.User.ImagemURL" style="width: 100px; height: 130px" /></a>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <font size="2">
+                                                &nbsp;
+                                                <p align=justify>
+                                                    <b>Nome:</b> @avaliacao.User.FullName<br>
+                                                    <b>Nota:</b> @avaliacao.Nota<br>
+                                                    <b>Comentário:</b> @avaliacao.Comentario
+                                                </p>
+                                                &nbsp;
+                                            </font>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p></p>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-lg-12">
+                            <p>&nbsp;</p>
+                            <center><h5>Livro Não Possui Comentários!</h5></center>
+                            <p>&nbsp;</p>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>

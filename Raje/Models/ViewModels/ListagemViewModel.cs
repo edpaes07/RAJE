@@ -14,6 +14,8 @@ namespace Raje.Models.ViewModels
 
         public Amigo Amigo { get; set; }
 
+        public Avaliacao Avaliacao { get; set; }
+
         public List<Filme> Filmes { get; set; }
 
         public List<Livro> Livros { get; set; }
@@ -23,5 +25,7 @@ namespace Raje.Models.ViewModels
         public List<ApplicationUser> Users { get; set; }
 
         public List<ApplicationUser> Amigos { get; set; }
+
+        public List<Avaliacao> Avaliacoes { get; set; }
     }
 }

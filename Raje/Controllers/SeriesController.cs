@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Raje.Data;
 using Raje.Models;
+using Raje.Models.ViewModels;
 using Raje.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,9 +15,12 @@ namespace Raje.Controllers
     public class SeriesController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public SeriesController(ApplicationDbContext db)
+        private readonly UserManager<IdentityUser> _userManager;
+
+        public SeriesController(UserManager<IdentityUser> userManager, ApplicationDbContext db)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -126,14 +132,17 @@ namespace Raje.Controllers
             {
                 return NotFound();
             }
+
             Serie serie = _db.Series.Find(id);
+            List<Avaliacao> avalicoes = _db.Avaliacoes.Include(a => a.Serie).Include(a => a.User).Where(a => a.SerieId == id).ToList();
 
-            if (serie == null)
+            ListagemViewModel retorno = new()
             {
-                return NotFound();
-            }
+                Serie = serie,
+                Avaliacoes = avalicoes
+            };
 
-            return View(serie);
+            return View(retorno);
         }
 
         //GET - DELETE
@@ -167,6 +176,31 @@ namespace Raje.Controllers
             _db.Series.Remove(obj);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        //POST - COMENTAR SERIE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Avaliar(Guid id, int nota, string comentario)
+        {
+            string returnUrl = Url.Content($"~/Series/Details/{id}");
+
+            Avaliacao avaliacao = new()
+            {
+                Nota = nota,
+                Comentario = comentario,
+                UserId = _userManager.GetUserId(User),
+                SerieId = id
+            };
+
+            if (ModelState.IsValid)
+            {
+                //Creating
+                _db.Avaliacoes.Add(avaliacao);
+                _db.SaveChanges();
+            }
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Raje.Data;
 using Raje.Models;
 using Raje.Models.ViewModels;
@@ -121,6 +122,26 @@ namespace Raje.Controllers
             return RedirectToAction("Index");
         }
 
+        //GET - Details
+        public IActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Filme filme = _db.Filmes.Find(id);
+            List<Avaliacao> avalicoes = _db.Avaliacoes.Include(a => a.Filme).Include(a => a.User).Where(a => a.FilmeId == id).ToList();
+
+            ListagemViewModel retorno = new()
+            {
+                Filme = filme,
+                Avaliacoes = avalicoes
+            };
+
+            return View(retorno);
+        }
+
         //GET - DELETE
         public IActionResult Delete(Guid? id)
         {
@@ -177,70 +198,6 @@ namespace Raje.Controllers
             }
 
             return LocalRedirect(returnUrl);
-        }
-
-        //GET - LISTAR AVALIACOES
-        public IActionResult Avaliacoes(Guid id)
-        {
-            IEnumerable<Avaliacao> avaliacoes = _db.Avaliacoes.ToList().Where(avaliacao => avaliacao.FilmeId == id);
-
-            return View(avaliacoes);
-        }
-
-
-
-        //GET - Details
-        public IActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            Filme filme = _db.Filmes.Find(id);
-
-            if (filme == null)
-            {
-                return NotFound();
-            }
-
-            return View(filme);
-        }
-
-
-        //GET - Details
-        public IActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                string userId = _userManager.GetUserId(User);
-            }
-
-            List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
-            List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
-            List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
-            List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
-
-            var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
-            amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
-
-            List<ApplicationUser> friends = _db.ApplicationUser.Where(user => amigoIds.Contains(user.Id)).ToList();
-            ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
-
-            var friendIds = friends.Select(friend => friend.Id);
-
-            var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(user.Id)).ToList();
-
-            ListagemViewModel retorno = new()
-            {
-                Filmes = filmes,
-                Livros = livros,
-                Series = series,
-                Users = users,
-                Amigos = friends,
-                User = user
-            };
-
-            return View(retorno);
         }
     }
 }
