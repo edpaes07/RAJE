@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using Raje.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Raje.Controllers
 {
@@ -194,9 +195,6 @@ namespace Raje.Controllers
                 string userId = _userManager.GetUserId(User);
             }
 
-            List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
-            List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
-            List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
             List<Amigo> amigos = _db.Amigos.Where(amigo => amigo.Ativo).ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
@@ -209,19 +207,25 @@ namespace Raje.Controllers
 
             var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(user.Id)).ToList();
 
+            List<Avaliacao> avalicoes = _db.Avaliacoes
+                                           .Include(a => a.Filme)
+                                           .Include(a => a.Livro)
+                                           .Include(a => a.Serie)
+                                           .Include(a => a.User)
+                                           .Where(a => a.UserId == id)
+                                           .ToList();
+
             ListagemViewModel retorno = new()
             {
-                Filmes = filmes,
-                Livros = livros,
-                Series = series,
                 Users = users,
                 Amigos = friends,
-                User = user
+                User = user,
+                Avaliacoes = avalicoes
             };
 
             return View(retorno);
         }
-
+               
         //GET - DELETE
         public IActionResult Delete(string id)
         {

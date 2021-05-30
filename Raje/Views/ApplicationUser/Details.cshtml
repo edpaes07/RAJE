@@ -76,11 +76,105 @@
     </div>
     <div class="border p-3">
         <div class="row">
-            <div class="col-lg-6">
-                <p>&nbsp;</p>
-                <center><h2 class="text-info pl-3">Comentários</h2></center>
-                <p>&nbsp;</p>
-                <br />
+            <div class="col-lg-12">
+                <center><h4 class="text-info pl-3">Comentários</h4></center>
+                <div class="row">
+                    @if (Model.Avaliacoes.Any())
+                    {
+                        @foreach (var avaliacao in Model.Avaliacoes.Where(avalicao => avalicao.Filme != null))
+                        {
+                            <div class="col-lg-12 border-bottom p-3">
+                                <table>
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <a asp-controller="Filmes" asp-action="Details" asp-route-id="@avaliacao.Filme.Id"><img src="~/images/@avaliacao.Filme.ImagemURL" alt="@avaliacao.Filme.ImagemURL" style="width: 100px; height: 130px" /></a>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <font size="2">
+                                                &nbsp;
+                                                <p align=justify>
+                                                    <b>Filme:</b> @avaliacao.Filme.Titulo<br>
+                                                    <b>Diretor:</b> @avaliacao.Filme.Diretor<br>
+                                                    <b>Nota:</b> @avaliacao.Nota<br>
+                                                    <b>Comentário:</b> @avaliacao.Comentario
+                                                </p>
+                                                &nbsp;
+                                            </font>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p></p>
+                        }
+                        @foreach (var avaliacao in Model.Avaliacoes.Where(avalicao => avalicao.Serie != null))
+                        {
+                            <div class="col-lg-12 border-bottom p-3">
+                                <table>
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <a asp-controller="Series" asp-action="Details" asp-route-id="@avaliacao.Serie.Id"><img src="~/images/@avaliacao.Serie.ImagemURL" alt="@avaliacao.Serie.ImagemURL" style="width: 100px; height: 130px" /></a>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <font size="2">
+                                                &nbsp;
+                                                <p align=justify>
+                                                    <b>Série:</b> @avaliacao.Serie.Titulo - @avaliacao.Serie.NumeroTemporadas Temporadas<br>
+                                                    <b>Diretor:</b> @avaliacao.Serie.Diretor<br>
+                                                    <b>Nota:</b> @avaliacao.Nota<br>
+                                                    <b>Comentário:</b> @avaliacao.Comentario
+                                                </p>
+                                                &nbsp;
+                                            </font>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p></p>
+                        }
+                        @foreach (var avaliacao in Model.Avaliacoes.Where(avalicao => avalicao.Livro != null))
+                        {
+                            <div class="col-lg-12 border-bottom p-3">
+                                <table>
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <a asp-controller="Livros" asp-action="Details" asp-route-id="@avaliacao.Livro.Id"><img src="~/images/@avaliacao.Livro.ImagemURL" alt="@avaliacao.Livro.ImagemURL" style="width: 100px; height: 130px" /></a>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                        <td>
+                                            <font size="2">
+                                                &nbsp;
+                                                <p align=justify>
+                                                    <b>Livro:</b> @avaliacao.Livro.Titulo<br>
+                                                    <b>Autor:</b> @avaliacao.Livro.Autores<br>
+                                                    <b>Nota:</b> @avaliacao.Nota<br>
+                                                    <b>Comentário:</b> @avaliacao.Comentario
+                                                </p>
+                                                &nbsp;
+                                            </font>
+                                        </td>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <p></p>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-lg-12">
+                            <p>&nbsp;</p>
+                            <center><h5>Usuário Não Possui Comentários!</h5></center>
+                            <p>&nbsp;</p>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </div>
