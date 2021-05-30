@@ -31,7 +31,7 @@ namespace Raje.Controllers
         [TempData]
         public string StatusMessageTemp { get; set; }
 
-        public IActionResult Amigos()
+        public IActionResult Amigos(string nome)
         {
             string currentUserId = _userManager.GetUserId(User);
 
@@ -42,6 +42,9 @@ namespace Raje.Controllers
             amigoIds = amigos.Where(amigo => amigo.AmigoId == currentUserId).Select(amigo => amigo.UserId);
 
             IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(user => amigoIds.Contains(user.Id));
+
+            if (nome != null)
+                users = users.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
 
             return View(users);
         }

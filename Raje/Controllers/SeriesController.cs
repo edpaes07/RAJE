@@ -23,7 +23,7 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string nome)
         {
             IEnumerable<Serie> series = new List<Serie>();
 
@@ -35,6 +35,9 @@ namespace Raje.Controllers
             {
                 series = _db.Series.ToList().Where(serie => serie.Ativo);
             }
+
+            if (nome != null)
+                series = series.Where(serie => serie.Titulo.ToLower().Contains(nome.ToLower()));
 
             return View(series);
         }

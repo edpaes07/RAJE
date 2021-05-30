@@ -15,9 +15,33 @@
     ViewData["Title"] = "Index";
 }
 
-<p>
-    <a asp-action="Upsert" class="btn btn-success">Adicionar Série</a>
-</p>
+<form enctype="multipart/form-data" asp-controller="Series" asp-action="Index" method="post">
+    <table>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <th>
+                <div class="form-group">
+                    <p>
+                        <a asp-action="Upsert" class="btn btn-success">Adicionar Série</a>
+                    </p>
+                </div>
+            </th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <th>
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                </div>
+            </th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <th>
+                <div class="form-group">
+                    <button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                </div>
+            </th>
+        </tr>
+    </table>
+</form>
+
 <table class="table table-hover">
     <thead>
         <tr>

@@ -22,7 +22,7 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string nome)
         {
             IEnumerable<Filme> filmes = new List<Filme>();
 
@@ -34,6 +34,9 @@ namespace Raje.Controllers
             {
                 filmes = _db.Filmes.ToList().Where(filme => filme.Ativo);
             }
+
+            if (nome != null)
+                filmes = filmes.Where(filme => filme.Titulo.ToLower().Contains(nome.ToLower()));
 
             return View(filmes);
         }

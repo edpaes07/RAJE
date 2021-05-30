@@ -16,6 +16,25 @@
     ViewData["Title"] = "Amigos";
 }
 
+<form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Amigos" method="post">
+    <table>
+        <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <th>
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                </div>
+            </th>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <th>
+                <div class="form-group">
+                    <button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                </div>
+            </th>
+        </tr>
+    </table>
+</form>
+
 <table class="table">
     <thead>
         <tr>

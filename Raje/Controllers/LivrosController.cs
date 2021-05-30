@@ -23,7 +23,7 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string nome)
         {
             IEnumerable<Livro> livros = new List<Livro>();
 
@@ -35,6 +35,9 @@ namespace Raje.Controllers
             {
                 livros = _db.Livros.ToList().Where(livro => livro.Ativo);
             }
+
+            if (nome != null)
+                livros = livros.Where(livro => livro.Titulo.ToLower().Contains(nome.ToLower()));
 
             return View(livros);
         }

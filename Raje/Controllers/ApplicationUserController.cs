@@ -44,9 +44,12 @@ namespace Raje.Controllers
         [TempData]
         public string StatusMessageTemp { get; set; }
 
-        public IActionResult Index()
+        public IActionResult Index(string nome)
         {
             IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList();
+
+            if (nome != null)
+                users = users.Where(serie => serie.FullName.ToLower().Contains(nome.ToLower()));
 
             return View(users);
         }
@@ -336,7 +339,7 @@ namespace Raje.Controllers
         }
 
         //GET - AMIGO
-        public IActionResult Amigos(string id)
+        public IActionResult Amigos(string id, string nome)
         {
             if (id == null)
             {
@@ -350,11 +353,14 @@ namespace Raje.Controllers
 
             IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(user => amigoIds.Contains(user.Id));
 
+            if (nome != null)
+                users = users.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
+
             return View(users);
         }
 
         //GET - SOLICITACOES
-        public IActionResult SolicitacoesAmizade()
+        public IActionResult SolicitacoesAmizade(string nome)
         {
             string currentUserId = _userManager.GetUserId(User);
 
@@ -363,6 +369,9 @@ namespace Raje.Controllers
             var amigoIds = amigos.Where(amigo => amigo.AmigoId == currentUserId).Select(amigo => amigo.UserId);
 
             IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(user => amigoIds.Contains(user.Id));
+
+            if (nome != null)
+                users = users.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
 
             return View(users);
         }
