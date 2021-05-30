@@ -69,7 +69,9 @@ namespace Raje.Areas.Identity.Pages.Account
             [Display(Name = "Nome completo")]
             public string FullName { get; set; }
 
+            [Phone]
             [Display(Name = "Número de telefone")]
+            [DataType(DataType.PhoneNumber)]
             public string PhoneNumber { get; set; }
 
             [Display(Name = "Data de Nascimento")]

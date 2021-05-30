@@ -26,8 +26,8 @@
                 <span asp-validation-for="Input.FullName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Input.PhoneNumber">Número de telefone</label>
-                <input asp-for="Input.PhoneNumber" id="PhoneNumber" name="PhoneNumber" class="form-control" />
+                <label asp-for="Input.PhoneNumber">Número de Telefone</label>
+                <input asp-for="Input.PhoneNumber" type="tel" id="PhoneNumber" name="PhoneNumber" class="form-control" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" placeholder="(00) 00000-0000" required>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -75,5 +75,17 @@
             $("#img_nome").text(this.files[0].name);
             $("#img_nome")[0].style.display = 'block';
         });
+
+        const PhoneNumber = document.getElementById('PhoneNumber') // Seletor do campo de telefone
+
+        PhoneNumber.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
+        PhoneNumber.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
+
+        const mascaraTelefone = (valor) => {
+            valor = valor.replace(/\D/g, "")
+            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+            valor = valor.replace(/(\d)(\d{4})$/, "$1-$2")
+            PhoneNumber.value = valor // Insere o(s) valor(es) no campo
+        }
     </script>
 }
