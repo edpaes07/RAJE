@@ -125,14 +125,15 @@
                                     <tr>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         <td>
-                                            <a asp-controller="Series" asp-action="Details" asp-route-id="@avaliacao.Serie.Id"><img src="~/images/@avaliacao.Serie.ImagemURL" alt="@avaliacao.Serie.ImagemURL" style="width: 10vh; height: 12vh" /></a>
+                                            <a asp-controller="Series" asp-action="Details" asp-route-id="@avaliacao.Serie.Id"><img src="~/images/@avaliacao.Serie.ImagemURL" alt="@avaliacao.Serie.ImagemURL" style="width: 100px; height: 130px" /></a>
                                         </td>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                                         <td>
                                             <font size="2">
                                                 &nbsp;
                                                 <p align=justify>
-                                                    <b>Série:</b> @avaliacao.Serie.Titulo - @avaliacao.Serie.NumeroTemporadas Temporadas<br>
+                                                    <b>Série:</b> @avaliacao.Serie.Titulo<br>
+                                                    <b>Temporadas:</b> @avaliacao.Serie.Diretor<br>
                                                     <b>Diretor:</b> @avaliacao.Serie.Diretor<br>
                                                     <b>Nota:</b> @avaliacao.Nota<br>
                                                     <b>Comentário:</b> @avaliacao.Comentario
