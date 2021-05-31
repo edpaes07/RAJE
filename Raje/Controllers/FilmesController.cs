@@ -106,6 +106,9 @@ namespace Raje.Controllers
                 filmeInserir.ImagemURL = imgPrefixo + filme.ImagemUpload.FileName;
             }
 
+            if (filmeInserir.ImagemURL == null)
+                filmeInserir.ImagemURL = "50bc7e78-0857-4000-a890-dafe2cd74c83_unnamed.jpg";
+
             if (ModelState.IsValid)
             {
                 if (filme.Titulo == null)

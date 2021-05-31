@@ -104,6 +104,9 @@ namespace Raje.Controllers
                 livroInserir.ImagemURL = imgPrefixo + livro.ImagemUpload.FileName;
             }
 
+            if (livroInserir.ImagemURL == null)
+                livroInserir.ImagemURL = "50bc7e78-0857-4000-a890-dafe2cd74c83_unnamed.jpg";
+
             if (ModelState.IsValid)
             {
                 if (livro.Titulo == null)
