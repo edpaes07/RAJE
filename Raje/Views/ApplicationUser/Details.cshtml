@@ -31,7 +31,7 @@
                         </p>
                     </font>
                     <p></p>
-                    <a asp-controller="Home" asp-action="Index" class="btn btn-success"><i class="fas fa-sign-out-alt"></i> Voltar</a>
+                    <a href="javascript:history.back()" class="btn btn-success"><i class="fas fa-sign-out-alt"></i> Voltar</a>
 
                     @if (@Model.User.Id != UserManager.GetUserId(User) && !Model.Amigos.Select(user => user.Id).Contains(UserManager.GetUserId(User)))
                     {

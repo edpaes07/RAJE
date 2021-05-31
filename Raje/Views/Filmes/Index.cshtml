@@ -18,25 +18,29 @@
 <div class="container">
     <center>
         <form enctype="multipart/form-data" asp-controller="Filmes" asp-action="Index" method="post">
-            <table>
-                <tr>
-                    <th>
-                        <div class="form-group">
-                            <button asp-action="Upsert" class="btn btn-success">Adicionar Filme</button> &nbsp;&nbsp;
-                        </div>
-                    </th>
-                    <th>
-                        <div class="form-group">
-                            <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
-                        </div>
-                    </th>
-                    <th>
-                        <div class="form-group">
-                            &nbsp;&nbsp;<button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
-                        </div>
-                    </th>
-                </tr>
-            </table>
+            <center>
+                <div class="col-lg-6">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                <div class="form-group">
+                                    <button style="width: 18vh" asp-action="Upsert" class="btn btn-success">Adicionar Filme</button> &nbsp;&nbsp;
+                                </div>
+                            </th>
+                            <th>
+                                <div class="form-group">
+                                    <input style="width: 25vh" type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="form-group">
+                                    <button style="width: 12vh" id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                                </div>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+            </center>
         </form>
 
         <table class="table table-hover">
@@ -45,6 +49,9 @@
                     <th></th>
                     <th>
                         @Html.DisplayNameFor(model => model.Titulo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Diretor)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Pais)
@@ -64,64 +71,44 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="ListarDetalhes(@item.Id)">
+                <tr onclick="window.location.href = '/Filmes/Details/@item.Id'">
+                    <td>
+                        <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Diretor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pais)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ano)
+                    </td>
+
+                    @if (User.IsInRole(WC.AdminRole))
+                    {
                         <td>
-                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                            @Html.DisplayFor(modelItem => item.Ativo)
                         </td>
+                    }
+
+                    @if (User.IsInRole(WC.AdminRole))
+                    {
                         <td>
-                            @Html.DisplayFor(modelItem => item.Titulo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Pais)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ano)
+                            <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
                         </td>
 
-                        @if (User.IsInRole(WC.AdminRole))
-                        {
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Ativo)
-                            </td>
-                        }
-
                         <td>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
                         </td>
+                    }
+                </tr>
 
-                        @if (User.IsInRole(WC.AdminRole))
-                        {
-                            <td>
-                                <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
-                            </td>
-
-                            <td>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
-                            </td>
-                        }
-                    </tr>
                 }
             </tbody>
         </table>
     </center>
 </div>
-
-@section Scripts{
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-<script>
-        $(document).ready(function () {
-            $('.summernote').summernote({
-                height: 250,
-                disable: true
-            });
-        });
-
-        function ListarDetalhes(id) {
-            window.location.href = '/Filmes/Details/'+ id
-        }
-</script>
-}
-
-<script>window.location.href = '/Identity/Account/Login';</script>
