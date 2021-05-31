@@ -125,7 +125,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
 
             }
-            return RedirectToAction("Index");
+            return LocalRedirect($"~/Series/Details/{serieInserir.Id}");
         }
 
         //GET - Details

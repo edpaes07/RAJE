@@ -120,7 +120,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
 
             }
-            return RedirectToAction("Index");
+            return LocalRedirect($"~/Livros/Details/{livroInserir.Id}");
         }
 
         //GET - Details

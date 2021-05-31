@@ -8,16 +8,12 @@ namespace Raje.ViewModel
     {
         public Guid Id { get; set; }
 
-        [Required]
         public string Titulo { get; set; }
 
-        [Required]
         public string Autores { get; set; }
 
-        [Required]
         public string Pais { get; set; }
 
-        [Required]
         public int Ano { get; set; }
 
         public string ImagemURL { get; set; }

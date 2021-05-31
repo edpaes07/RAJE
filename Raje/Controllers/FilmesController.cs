@@ -122,7 +122,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
               
             }
-            return RedirectToAction("Index");
+            return LocalRedirect($"~/Filmes/Details/{filmeInserir.Id}");
         }
 
         //GET - Details
