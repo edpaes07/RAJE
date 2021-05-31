@@ -25,7 +25,7 @@ namespace Raje.Controllers
 
         public ApplicationUserController
         (
-            ApplicationDbContext db, 
+            ApplicationDbContext db,
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IEmailSender emailSender
@@ -108,7 +108,7 @@ namespace Raje.Controllers
                 userInserir.UserName = user.Email;
                 userInserir.Email = user.Email;
             }
-                
+
             userInserir.FullName = user.FullName;
             userInserir.PhoneNumber = user.PhoneNumber;
             userInserir.Birthdate = user.Birthdate;
@@ -126,73 +126,73 @@ namespace Raje.Controllers
                 userInserir.ImagemURL = imgPrefixo + user.ImagemUpload.FileName;
             }
 
-                if (user.Id == null)
+            if (user.Id == null)
+            {
+                //Creating
+                var result = await _userManager.CreateAsync(userInserir, user.Password);
+
+                if (result.Succeeded)
                 {
-                    //Creating
-                    var result = await _userManager.CreateAsync(userInserir, user.Password);
-
-                    if (result.Succeeded)
+                    if (User.IsInRole(WC.AdminRole))
                     {
-                        if (User.IsInRole(WC.AdminRole))
+                        //an admin has logged in and they try to create a new user
+                        await _userManager.AddToRoleAsync(userInserir, WC.AdminRole);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(userInserir, WC.CustomerRole);
+                    }
+
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(userInserir);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = user.Id, code, returnUrl },
+                        protocol: Request.Scheme);
+
+                    await _emailSender.SendEmailAsync(userInserir.Email, "Confirme seu email",
+                        $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
+
+                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                    {
+                        return RedirectToPage("RegisterConfirmation", new { email = userInserir.Email, returnUrl });
+                    }
+                    else
+                    {
+                        if (!User.IsInRole(WC.AdminRole))
                         {
-                            //an admin has logged in and they try to create a new user
-                            await _userManager.AddToRoleAsync(userInserir, WC.AdminRole);
+                            await _signInManager.SignInAsync(userInserir, isPersistent: false);
                         }
                         else
                         {
-                            await _userManager.AddToRoleAsync(userInserir, WC.CustomerRole);
+                            return RedirectToAction("Index");
                         }
-
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(userInserir);
-                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                        var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { area = "Identity", userId = user.Id, code, returnUrl },
-                            protocol: Request.Scheme);
-
-                        await _emailSender.SendEmailAsync(userInserir.Email, "Confirme seu email",
-                            $"Por favor, confirme sua conta <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicando aqui</a>.");
-
-                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                        {
-                            return RedirectToPage("RegisterConfirmation", new { email = userInserir.Email, returnUrl });
-                        }
-                        else
-                        {
-                            if (!User.IsInRole(WC.AdminRole))
-                            {
-                                await _signInManager.SignInAsync(userInserir, isPersistent: false);
-                            }
-                            else
-                            {
-                                return RedirectToAction("Index");
-                            }
-                            return LocalRedirect(returnUrl);
-                        }
+                        return LocalRedirect(returnUrl);
                     }
-                    foreach (var error in result.Errors)
-                    {
-                        error.Description.Replace("Passwords must have at least one non alphanumeric character.", "As senhas devem ter pelo menos um caractere não alfanumérico.");
-                        error.Description.Replace("Passwords must have at least one lowercase ('a'-'z').", "As senhas devem ter pelo menos uma minúscula ('a' - 'z')");
-                        error.Description.Replace("Passwords must have at least one uppercase ('A'-'Z').", "As senhas devem ter pelo menos uma maiúscula ('A' - 'Z').");
-                        error.Description.Replace("Username", "O nome de usuário");
-                        error.Description.Replace("is already taken.", "já está em uso.");
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                    return View(user);
                 }
-                else
+                foreach (var error in result.Errors)
                 {
-                    //updating
-                    _db.ApplicationUser.Update(userInserir);
-                    _db.SaveChanges();
+                    error.Description = error.Description.Replace("Passwords must have at least one non alphanumeric character.", "As senhas devem ter pelo menos um caractere não alfanumérico.");
+                    error.Description = error.Description.Replace("Passwords must have at least one lowercase ('a'-'z').", "As senhas devem ter pelo menos uma minúscula ('a' - 'z')");
+                    error.Description = error.Description.Replace("Passwords must have at least one uppercase ('A'-'Z').", "As senhas devem ter pelo menos uma maiúscula ('A' - 'Z').");
+                    error.Description = error.Description.Replace("Username", "O E-mail");
+                    error.Description = error.Description.Replace("is already taken.", "já está em uso.");
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return View(user);
+            }
+            else
+            {
+                //updating
+                _db.ApplicationUser.Update(userInserir);
+                _db.SaveChanges();
 
-                    returnUrl = Url.Content($"~/ApplicationUser/Details/{userInserir.Id}");
-                    StatusMessageTemp = "Alterações realizadas com sucesso!";
+                returnUrl = Url.Content($"~/ApplicationUser/Details/{userInserir.Id}");
+                StatusMessageTemp = "Alterações realizadas com sucesso!";
             }
 
-            return LocalRedirect(returnUrl);  
+            return LocalRedirect(returnUrl);
         }
 
 
@@ -234,7 +234,7 @@ namespace Raje.Controllers
 
             return View(retorno);
         }
-               
+
         //GET - DELETE
         public IActionResult Delete(string id)
         {
@@ -301,9 +301,9 @@ namespace Raje.Controllers
             string currentUserId = _userManager.GetUserId(User);
 
             Amigo amigo = _db.Amigos.ToList()
-                                    .Where(amigo => 
+                                    .Where(amigo =>
                                            amigo.Ativo == false &&
-                                           amigo.UserId == id   &&
+                                           amigo.UserId == id &&
                                            amigo.AmigoId == currentUserId)
                                     .FirstOrDefault();
 
