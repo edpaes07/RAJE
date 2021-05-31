@@ -58,14 +58,14 @@ namespace Raje.Areas.Identity.Pages.Account
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(bool rememberMe, string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(bool rememberMe)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            returnUrl = returnUrl ?? Url.Content("~/");
+            string returnUrl = Url.Content("~/");
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)

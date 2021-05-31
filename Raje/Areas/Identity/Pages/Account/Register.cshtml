@@ -1,6 +1,6 @@
 ﻿@page
 @model RegisterModel
-</br>
+<br/>
 
 @if (User.IsInRole(Raje.WC.AdminRole))
 {
@@ -23,8 +23,8 @@ else
                             colaboradores, de modo a prover interação com contribuições na forma de dicas e
                             recomendações sobre filmes, livros e séries.
                         </p>
-                        &nbsp;&nbsp;<img src="https://lh4.googleusercontent.com/-DH47KG2gJnQ/VIRNPxW0xgI/AAAAAAAAMrk/hEZvxbprXu4/s300/2014back_logo.png" alt="some text" width="20%" height="20%">
-                        &nbsp;&nbsp;<img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width="20%" height="20%">
+                        &nbsp;&nbsp;<img src="https://lh4.googleusercontent.com/-DH47KG2gJnQ/VIRNPxW0xgI/AAAAAAAAMrk/hEZvxbprXu4/s300/2014back_logo.png" alt="some text" style="width: 20%; height: 20%">
+                        &nbsp;&nbsp;<img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" style="width: 20%; height: 20%">
                     </div> }
                 else
                 {
@@ -42,7 +42,7 @@ else
     <div class="col-md-1"></div>
     <div class="col-md-5">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Upsert">
-            </br>
+            <br/>
             <h4>Criar uma nova conta.</h4>
             <hr />
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -107,7 +107,7 @@ else
             }
 
         </form>
-        </br>
+        <br/>
     </div>
 </div>
 
