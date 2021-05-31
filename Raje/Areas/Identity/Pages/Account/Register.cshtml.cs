@@ -55,14 +55,14 @@ namespace Raje.Areas.Identity.Pages.Account
             [Display(Name = "E-mail")]
             public string Email { get; set; }
 
-            [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 8)]
             [DataType(DataType.Password)]
             [Required(ErrorMessage = "O campo Senha é obrigatório.")]
             [Display(Name = "Senha")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Required(ErrorMessage = "O campo Confirme a Senh é obrigatório.")]
+            [Required(ErrorMessage = "O campo Confirme a Senha é obrigatório.")]
             [Display(Name = "Confirme a Senha")]
             [Compare("Password", ErrorMessage = "A senha e a senha de confirmação não correspondem.")]
             public string ConfirmPassword { get; set; }

@@ -174,6 +174,7 @@ namespace Raje.Controllers
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
+                        returnUrl = Url.Content($"~/Identity/Account/Register");
                     }
                 }
                 else

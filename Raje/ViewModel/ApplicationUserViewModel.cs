@@ -14,7 +14,7 @@ namespace Raje.ViewModel
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 
-        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "A {0} deve ter pelo menos {2} e no máximo {1} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Required(ErrorMessage = "O campo Senha é obrigatório.")]
         [Display(Name = "Senha")]
