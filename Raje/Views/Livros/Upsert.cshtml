@@ -4,6 +4,7 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
+
 @if (!SignInManager.IsSignedIn(User))
 {
     <script>window.location.href = '/Identity/Account/Login';</script>
@@ -14,20 +15,22 @@
 <br />
 @if (Model.Titulo != null)
 {
+    <p></p>
     ViewData["Title"] = "Editar Livro";
-    <h4>Editar Livro</h4>
+    <h1>Editar Livro</h1>
 }
 else
 {
+    <p></p>
     ViewData["Title"] = "Adicionar Livro";
-    <h4>Adicionar Livro</h4>
+    <h1>Adicionar Livro</h1>
 }
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form enctype="multipart/form-data" asp-action="Upsert">
-
+<form enctype="multipart/form-data" asp-action="Upsert">
+    <p>&nbsp;</p>
+    <div class="row">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             @if (Model.Titulo != null)
             {
@@ -39,27 +42,29 @@ else
             }
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label">Título:</label>
-                <input asp-for="Titulo" class="form-control" />
+                <input asp-for="Titulo" class="form-control" required />
                 <span asp-validation-for="Titulo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Autores" class="control-label">Autor(es):</label>
-                <input asp-for="Autores" class="form-control" />
+                <label asp-for="Autores" class="control-label">Diretor(es):</label>
+                <input asp-for="Autores" class="form-control" required />
                 <span asp-validation-for="Autores" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Pais" class="control-label">País:</label>
-                <input asp-for="Pais" class="form-control" />
+                <input asp-for="Pais" class="form-control" required />
                 <span asp-validation-for="Pais" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Ano" class="control-label">Ano:</label>
-                <input asp-for="Ano" class="form-control" />
+                <label asp-for="Ano" class="control-label">Ano de Lançamento:</label>
+                <input asp-for="Ano" class="form-control" min="1000" max="@DateTime.Now.Year" required />
                 <span asp-validation-for="Ano" class="text-danger"></span>
             </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Sinopse" class="control-label">Sinopse:</label>
-                <input asp-for="Sinopse" class="form-control" />
+                <textarea asp-for="Sinopse" class="form-control" rows="8" cols="110" minlength="20" required></textarea>
                 <span asp-validation-for="Sinopse" class="text-danger"></span>
             </div>
 
@@ -67,12 +72,13 @@ else
                 <input asp-for="ImagemURL" class="form-control" hidden />
             </div>
 
+
             <div class="form-group">
-                <label asp-for="ImagemUpload" class="control-label"></label>
+                <label asp-for="ImagemUpload" class="control-label">Imagem:</label>
 
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" id="ImagemUpload" asp-for="ImagemUpload">
-                    <label data-browse="Procurar" style="width: 400px" class="custom-file-label" for="ImagemUpload"></label>
+                    <label data-browse="Procurar" style="width: 50vh" class="custom-file-label" for="ImagemUpload"></label>
                     <label style="display: none" id="img_nome"></label>
                 </div>
 
@@ -80,41 +86,32 @@ else
             </div>
             <br />
             <div class="form-group">
-                @if (Model.Titulo != null)
-                {
-                    //update
-                    <input type="submit" value="Atualizar" onclick="atualizar()" class="btn btn-success" />
-                }
-                else
-                {
-                    //create
-                    <input type="submit" value="Adicionar" onclick="cadastrar()" class="btn btn-success" />
-                }
-                <a asp-action="Index" class="btn btn-danger">Voltar</a>
+                <center>
+                    @if (Model.Titulo != null)
+                    {
+                        //update
+                        <input type="submit" value="Atualizar" class="btn btn-success" />
+                    }
+                    else
+                    {
+                        //create
+                        <input type="submit" value="Adicionar" class="btn btn-success" />
+                    }
+                    &nbsp;&nbsp;<a asp-action="Index" class="btn btn-danger">Voltar</a>
+                </center>
             </div>
             <br />
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-    $("#ImagemUpload").change(function () {
-    $("#img_nome").text(this.files[0].name);
-    $("#img_nome")[0].style.display = 'block';
-    });
-
-    //$("#ImagemUpload").attr("data-val", "true");
-    //$("#ImagemUpload").attr("data-val-required", "Preencha o campo Imagem");
-
-    function cadastrar() {
-        alert("Cadastro realizado com sucesso!\nPendente Aprovação do Administrador.");
-    }
-
-    function atualizar() {
-        alert("Livro atualizado com sucesso!");
-    }
+        $("#ImagemUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
+        });
     </script>
 }
