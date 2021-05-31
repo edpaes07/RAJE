@@ -173,9 +173,14 @@ namespace Raje.Controllers
                     }
                     foreach (var error in result.Errors)
                     {
+                        error.Description.Replace("Passwords must have at least one non alphanumeric character.", "As senhas devem ter pelo menos um caractere não alfanumérico.");
+                        error.Description.Replace("Passwords must have at least one lowercase ('a'-'z').", "As senhas devem ter pelo menos uma minúscula ('a' - 'z')");
+                        error.Description.Replace("Passwords must have at least one uppercase ('A'-'Z').", "As senhas devem ter pelo menos uma maiúscula ('A' - 'Z').");
+                        error.Description.Replace("Username", "O nome de usuário");
+                        error.Description.Replace("is already taken.", "já está em uso.");
                         ModelState.AddModelError(string.Empty, error.Description);
-                        returnUrl = Url.Content($"~/Identity/Account/Register");
                     }
+                    return View(user);
                 }
                 else
                 {
@@ -187,7 +192,7 @@ namespace Raje.Controllers
                     StatusMessageTemp = "Alterações realizadas com sucesso!";
             }
 
-            return LocalRedirect(returnUrl);
+            return LocalRedirect(returnUrl);  
         }
 
 

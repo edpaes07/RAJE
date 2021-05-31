@@ -1,0 +1,148 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@using Raje.Utility
+
+@model Raje.ViewModel.ApplicationUserViewModel
+</br>
+
+@if (User.IsInRole(Raje.WC.AdminRole))
+{
+    <h1>Cadastrar uma conta de Administrador</h1> }
+else
+{
+    <h1>Cadastrar</h1>}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Seja Bem Vindo ao Raje.</h4>
+            <hr />
+            @{ if ((@Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p style="text-align: justify;">
+                            Nossa empresa, optou por criar um aplicativo de recomendação para
+                            Filmes, Séries e Livros, capaz de permitir acesso e participação dos nossos
+                            colaboradores, de modo a prover interação com contribuições na forma de dicas e
+                            recomendações sobre filmes, livros e séries.
+                        </p>
+                        &nbsp;&nbsp;<img src="https://lh4.googleusercontent.com/-DH47KG2gJnQ/VIRNPxW0xgI/AAAAAAAAMrk/hEZvxbprXu4/s300/2014back_logo.png" alt="some text" width="20%" height="20%">
+                        &nbsp;&nbsp;<img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width="20%" height="20%">
+                    </div> }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in @Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>}
+                            </p>
+                        </div>
+                    </form> } }
+        </section>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Upsert">
+            <h4>Criar uma nova conta.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FullName"></label>
+                <input asp-for="FullName" class="form-control" id="FullName" name="FullName" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="form-control" id="Email" name="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber"></label>
+                <input asp-for="PhoneNumber" type="tel" id="PhoneNumber" name="PhoneNumber" class="form-control" maxlength="15" pattern="\(\d{2}\)\s*\d{5}-\d{4}" placeholder="(00) 00000-0000">
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" id="Password" name="Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" name="ConfirmPassword" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Birthdate"></label>
+                <input asp-for="Birthdate" class="form-control" id="Birthdate" name="Birthdate" />
+                <span asp-validation-for="Birthdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City"></label>
+                <input asp-for="City" class="form-control" id="City" name="City" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State"></label>
+                <input asp-for="State" class="form-control" id="State" name="State" maxlength="2" placeholder="UF" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagemUpload" class="control-label"></label>
+
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="ImagemUpload" name="ImagemUpload" asp-for="ImagemUpload">
+                    <label data-browse="Procurar" style="width: 400px" class="custom-file-label" for="ImagemUpload"></label>
+                    <label style="display: none" id="img_nome"></label>
+                </div>
+
+                <span asp-validation-for="ImagemUpload" class="text-danger"></span>
+            </div>
+            <br />
+            @if (User.IsInRole(Raje.WC.AdminRole))
+            {
+                <center><button type="submit" class="btn btn-warning">Registrar usuário administrador</button></center> }
+            else
+            {
+                <center><button type="submit" class="btn btn-primary">Cadastrar-se</button></center>
+            }
+
+        </form>
+        </br>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#ImagemUpload").change(function () {
+            $("#img_nome").text(this.files[0].name);
+            $("#img_nome")[0].style.display = 'block';
+        });
+
+        $("#ImagemUpload").attr("data-val", "true");
+
+        const PhoneNumber = document.getElementById('PhoneNumber') // Seletor do campo de telefone
+
+        PhoneNumber.addEventListener('keypress', (e) => mascaraTelefone(e.target.value)) // Dispara quando digitado no campo
+        PhoneNumber.addEventListener('change', (e) => mascaraTelefone(e.target.value)) // Dispara quando autocompletado o campo
+
+        const mascaraTelefone = (valor) => {
+            valor = valor.replace(/\D/g, "")
+            valor = valor.replace(/^(\d{2})(\d)/g, "($1) $2")
+            valor = valor.replace(/(\d)(\d{4})$/, "$1-$2")
+            PhoneNumber.value = valor // Insere o(s) valor(es) no campo
+        }
+
+        $("#State").on("input", function () {
+            var regexp = /[^a-zA-Z]/g;
+            if (this.value.match(regexp)) {
+                $(this).val(this.value.replace(regexp, ''));
+            }
+        });
+    </script>
+}

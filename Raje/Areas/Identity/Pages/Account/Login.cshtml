@@ -66,7 +66,7 @@
                         <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu a senha?</a>
                     </p>
                     <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Criar uma nova conta</a>
+                        <a asp-area="" asp-controller="ApplicationUser" asp-action="Upsert">Criar uma nova conta</a>
                     </p>
                     @*<p>
                 <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar e-mail de confirmação</a>
