@@ -34,7 +34,26 @@
                     <p />
                 }
             </div>
+            <p> &nbsp;</p>
         }
+        <form enctype="multipart/form-data" asp-controller="Home" asp-action="Index" method="post">
+            <center>
+                <table>
+                    <tr>
+                        <th>
+                            <div class="form-group">
+                                <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                &nbsp;&nbsp;<button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                            </div>
+                        </th>
+                    </tr>
+                </table>
+            </center>
+        </form>
         <div class="row">
             @foreach (var livro in Model.Livros)
             {

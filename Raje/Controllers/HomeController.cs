@@ -20,17 +20,24 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string nome)
         {
             string id = _userManager.GetUserId(User);
 
             if (id != null)
             {
-                List<Filme> filmes = _db.Filmes.Where(filme => filme.Ativo).ToList();
-                List<Serie> series = _db.Series.Where(serie => serie.Ativo).ToList();
-                List<Livro> livros = _db.Livros.Where(livro => livro.Ativo).ToList();
+                var filmes = _db.Filmes.Where(filme => filme.Ativo);
+                var series = _db.Series.Where(serie => serie.Ativo);
+                var livros = _db.Livros.Where(livro => livro.Ativo);
                 List<Amigo> amigos = _db.Amigos.ToList();
 
+                if (nome != null)
+                {
+                    filmes = filmes.Where(filme => filme.Titulo.ToLower().Contains(nome.ToLower()));
+                    livros = livros.Where(livro => livro.Titulo.ToLower().Contains(nome.ToLower()));
+                    series = series.Where(serie => serie.Titulo.ToLower().Contains(nome.ToLower()));
+                }
+                    
                 var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
                 amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
 
@@ -39,15 +46,15 @@ namespace Raje.Controllers
 
                 var friendIds = friends.Select(friend => friend.Id);
 
-                var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(u.Id)).ToList();
+                var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(u.Id));
 
                 ListagemViewModel retorno = new()
                 {
-                    Filmes = filmes,
-                    Livros = livros,
-                    Series = series,
-                    Users = users,
-                    Amigos = friends,
+                    Filmes = filmes.ToList(),
+                    Livros = livros.ToList(),
+                    Series = series.ToList(),
+                    Users = users.ToList(),
+                    Amigos = friends.ToList(),
                     User = user
                 };
 
