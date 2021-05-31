@@ -16,31 +16,29 @@
 }
 
 <div class="container">
-    <center>
-        <form enctype="multipart/form-data" asp-controller="Filmes" asp-action="Index" method="post">
-            <center>
-                <div class="col-lg-6">
-                    <table class="table">
-                        <tr>
-                            <th>
-                                <div class="form-group">
-                                    <a style="width: 18vh" asp-action="Upsert" class="btn btn-success">Adicionar Filme</a> &nbsp;&nbsp;
-                                </div>
-                            </th>
-                            <th>
-                                <div class="form-group">
-                                    <input style="width: 25vh" type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
-                                </div>
-                            </th>
-                            <th>
-                                <div class="form-group">
-                                    <button style="width: 12vh" id="Pesquisar" class="btn btn-primary">Pesquisar</button>
-                                </div>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-            </center>
+    <div class="text-center">
+        <form enctype="multipart/form-data" asp-controller="Home" asp-action="Index" method="post">
+            <table>
+                <tr>
+                    <th>
+                        <div class="form-group">
+                            <a style="width: 15vh" asp-action="Upsert" class="btn btn-success">Novo Filme</a>
+                        </div>
+                    </th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                    <th>
+                        <div class="form-group">
+                            <input style="width: 20vh" type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                        </div>
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <div class="form-group">
+                            <button style="width: 12vh" id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                        </div>
+                    </th>
+                </tr>
+            </table>
         </form>
 
         <table class="table table-hover">
@@ -54,7 +52,7 @@
                         @Html.DisplayNameFor(model => model.Diretor)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Pais)
+                        Origem
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Ano)
@@ -71,44 +69,44 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                <tr onclick="window.location.href = '/Filmes/Details/@item.Id'">
-                    <td>
-                        <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Titulo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Diretor)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Pais)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ano)
-                    </td>
-
-                    @if (User.IsInRole(WC.AdminRole))
-                    {
+                    <tr onclick="window.location.href = '/Filmes/Details/@item.Id'">
                         <td>
-                            @Html.DisplayFor(modelItem => item.Ativo)
+                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
                         </td>
-                    }
-
-                    @if (User.IsInRole(WC.AdminRole))
-                    {
                         <td>
-                            <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Diretor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pais)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ano)
                         </td>
 
-                        <td>
-                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
-                        </td>
-                    }
-                </tr>
+                        @if (User.IsInRole(WC.AdminRole))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ativo)
+                            </td>
+                        }
+
+                        @if (User.IsInRole(WC.AdminRole))
+                        {
+                            <td>
+                                <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                            </td>
+
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                            </td>
+                        }
+                    </tr>
 
                 }
             </tbody>
         </table>
-    </center>
+    </div>
 </div>
