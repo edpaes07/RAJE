@@ -1,5 +1,9 @@
 ﻿@model Raje.Models.Serie
 
+@{
+    ViewData["Title"] = "Deletar Série";
+}
+
 <form method="post">
     <input asp-for="Id" hidden />
     <br />
@@ -98,7 +102,7 @@
         $(document).ready(function () {
             $('.summernote').summernote({
                 height: 250,
-                disable:true
+                disable: true
             });
         });
 

@@ -12,102 +12,99 @@
 @model IEnumerable<Raje.Models.Livro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Livros";
 }
 
-<form enctype="multipart/form-data" asp-controller="Livros" asp-action="Index" method="post">
-    <table>
-        <tr>
-            <th>
-                <div class="form-group">
-                    <p>
-                        <a asp-action="Upsert" class="btn btn-success">Adicionar Livro</a>
-                    </p>
-                </div>
-            </th>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <th>
-                <div class="form-group">
-                    <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
-                </div>
-            </th>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <th>
-                <div class="form-group">
-                    <button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
-                </div>
-            </th>
-        </tr>
-    </table>
-</form>
+<div class="container">
+    <div class="text-center">
+        <p>&nbsp;</p>
+        <form enctype="multipart/form-data" asp-controller="Livros" asp-action="Index" method="post">
+            <table>
+                <tr>
+                    <th>
+                        <div class="form-group">
+                            <a style="width: 15vh" asp-action="Upsert" class="btn btn-success">Novo Livro</a>
+                        </div>
+                    </th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                    <th>
+                        <div class="form-group">
+                            <input style="width: 20vh" type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                        </div>
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <div class="form-group">
+                            <button style="width: 12vh" id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </form>
+        <p></p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Titulo)
+                    </th>
+                    <th>
+                        Autor
+                    </th>
+                    <th>
+                        Origem
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ano)
+                    </th>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                @Html.DisplayNameFor(model => model.Titulo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Autores)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Pais)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Ano)
-            </th>
-
-            @if (User.IsInRole(WC.AdminRole))
-            {
-                <th>
-                    @Html.DisplayNameFor(model => model.Ativo)
-                </th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Titulo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Autores)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Pais)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ano)
-                </td>
-
-                @if (User.IsInRole(WC.AdminRole))
+                    @if (User.IsInRole(WC.AdminRole))
+                    {
+                        <th>
+                            @Html.DisplayNameFor(model => model.Ativo)
+                        </th>
+                        <th></th>
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
                 {
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ativo)
-                    </td>
+                    <tr onclick="window.location.href = '/Livros/Details/@item.Id'">
+                        <td>
+                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Titulo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Autores)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pais)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ano)
+                        </td>
+
+                        @if (User.IsInRole(WC.AdminRole))
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Ativo)
+                            </td>
+                            <td>
+                                <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
+                            </td>
+
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
+                            </td>
+                        }
+                    </tr>
                 }
-
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Ver</a>
-                </td>
-
-                @if (User.IsInRole(WC.AdminRole))
-                {
-                    <td>
-                        <a asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-info">Editar</a>
-                    </td>
-
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Excluir</a>
-                    </td>
-                }
-            </tr>
-        }
-    </tbody>
-</table>
+            </tbody>
+        </table>
+    </div>
+</div>

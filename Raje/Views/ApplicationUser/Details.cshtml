@@ -6,6 +6,10 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
+@{
+    ViewData["Title"] = "Filme";
+}
+
 <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AdicionarAmigo" method="post">
     <input asp-for="@Model.User.Id" id="Id" name="Id" class="form-control" hidden />
     <br />
@@ -44,11 +48,8 @@
                     {
                         <div class="row">
                             <div class="col-lg-12"><h3>Amigos</h3></div>
-                            <p>&nbsp;</p>
                             @foreach (var user in Model.Amigos.Take(3))
                             {
-                                <div class="col-lg-1">
-                                </div>
                                 <div class="col-lg-4">
                                     <p></p>
                                     <center><h6>@user.FullName</h6></center>
@@ -67,7 +68,7 @@
                         </div>
                     }
 
-                    @if (Model.Amigos.Count() > 4)
+                    @if (Model.Amigos.Count() > 3)
                     {
                         <div class="col-lg-12">
                             <p></p>

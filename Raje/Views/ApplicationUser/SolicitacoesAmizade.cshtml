@@ -4,7 +4,6 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
-
 @if (!SignInManager.IsSignedIn(User))
 {
     <script>window.location.href = '/Identity/Account/Login';</script>
@@ -13,86 +12,75 @@
 @model IEnumerable<Raje.Models.ApplicationUser>
 
 @{
-    ViewData["Title"] = "Amigos";
+    ViewData["Title"] = "Solicitações de Amizade";
 }
 
-<form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="SolicitacoesAmizade" method="post">
-    <table>
-        <tr>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <th>
-                <div class="form-group">
-                    <input type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
-                </div>
-            </th>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <th>
-                <div class="form-group">
-                    <button id="Pesquisar" class="btn btn-primary">Pesquisar</button>
-                </div>
-            </th>
-        </tr>
-    </table>
-</form>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th></th>
-            <th>
-                Nome Completo
-            </th>
-            <th>
-                Data de Nascimento
-            </th>
-            <th>
-                Cidade
-            </th>
-            <th>
-                Estado
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @item.Birthdate.ToString("dd/MM/yyyy")
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.State)
-                </td>
-
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Ver Perfil</a>
-                </td>
-                <td>
-                    <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AceitarAmigo" method="post">
-                        <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
-                        <button id="AceitarAmigo" onclick="aceitar()" class="btn btn-primary">Aceitar</button>
-                    </form>
-                </td>
-                <td>
-                    <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="RecusarAmigo" method="post">
-                        <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
-                        <button id="RecusarAmigo" onclick="recusar()" class="btn btn-danger">Recusar</button>
-                    </form>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="container">
+    <div class="text-center">
+        <p>&nbsp;</p>
+        <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Amigos" method="post">
+            <table>
+                <tr>
+                    <th>
+                        <div class="form-group">
+                            <input style="width: 20vh" type="text" id="nome" name="nome" placeholder="Pesquisar" class="form-control" />
+                        </div>
+                    </th>
+                    <th>&nbsp;</th>
+                    <th>
+                        <div class="form-group">
+                            <button style="width: 12vh" id="Pesquisar" class="btn btn-primary">Pesquisar</button>
+                        </div>
+                    </th>
+                </tr>
+            </table>
+        </form>
+        <p></p>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        Aniversário
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr onclick="window.location.href = '/ApplicationUsers/Details/@item.Id'">
+                        <td>
+                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Birthdate)
+                        </td>
+                        <td>
+                            <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AceitarAmigo" method="post">
+                                <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
+                                <button id="AceitarAmigo" onclick="aceitar()" class="btn btn-primary">Aceitar</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="RecusarAmigo" method="post">
+                                <input asp-for="@item.Id" id="Id" name="Id" class="form-control" hidden />
+                                <button id="RecusarAmigo" onclick="recusar()" class="btn btn-danger">Recusar</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 <script>
     function aceitar() {

@@ -1,5 +1,9 @@
 ﻿@model Raje.Models.Filme
 
+@{
+    ViewData["Title"] = "Deletar Filme";
+}
+
 <form method="post">
     <input asp-for="Id" hidden />
     <br />
@@ -90,7 +94,7 @@
         $(document).ready(function () {
             $('.summernote').summernote({
                 height: 250,
-                disable:true
+                disable: true
             });
         });
 
