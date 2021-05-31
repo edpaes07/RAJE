@@ -43,9 +43,6 @@
                     <th>
                         Nome
                     </th>
-                    <th>
-                        Aniversário
-                    </th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -55,13 +52,10 @@
                 {
                     <tr onclick="window.location.href = '/ApplicationUser/Details/@item.Id'">
                         <td>
-                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 80px" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Birthdate)
                         </td>
                         <td>
                             <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AceitarAmigo" method="post">

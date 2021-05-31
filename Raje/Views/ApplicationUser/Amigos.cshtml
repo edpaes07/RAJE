@@ -59,13 +59,13 @@
                 {
                     <tr onclick="window.location.href = '/ApplicationUser/Details/@item.Id'">
                         <td>
-                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
+                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 80px" />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.FullName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Birthdate)
+                            @Html.DisplayFor(modelItem => item.Birthdate.ToString("dd/MM/yyyy"))
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.City)
