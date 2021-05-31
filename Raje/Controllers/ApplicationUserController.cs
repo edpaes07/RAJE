@@ -126,6 +126,9 @@ namespace Raje.Controllers
                 userInserir.ImagemURL = imgPrefixo + user.ImagemUpload.FileName;
             }
 
+            if (userInserir.ImagemURL == null)
+                userInserir.ImagemURL = "0c60afc4-b8d0-4cc8-916d-d56a70b6e0db_unnamed.png";
+
             if (user.Id == null)
             {
                 //Creating
@@ -204,7 +207,7 @@ namespace Raje.Controllers
                 string userId = _userManager.GetUserId(User);
             }
 
-            List<Amigo> amigos = _db.Amigos.ToList();
+            List<Amigo> amigos = _db.Amigos.Where(a => a.Ativo).ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
             amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
