@@ -18,7 +18,7 @@
 <div class="container">
     <div class="text-center">
         <p>&nbsp;</p>
-        <form enctype="multipart/form-data" asp-controller="ApplicationUsers" asp-action="Index" method="post">
+        <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Index" method="post">
             <table>
                 <tr>
                     <th>
@@ -57,7 +57,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr onclick="window.location.href = '/ApplicationUsers/Details/@item.Id'">
+                    <tr onclick="window.location.href = '/ApplicationUser/Details/@item.Id'">
                         <td>
                             <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 100px" />
                         </td>
