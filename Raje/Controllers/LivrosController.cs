@@ -37,7 +37,7 @@ namespace Raje.Controllers
             }
 
             if (nome != null)
-                livros = livros.Where(livro => livro.Titulo.ToLower().Contains(nome.ToLower()));
+                livros = livros.Where(livro => livro.Titulo.ToLower().Contains(nome.ToLower()) || livro.Autores.ToLower().Contains(nome.ToLower()));
 
             return View(livros);
         }
