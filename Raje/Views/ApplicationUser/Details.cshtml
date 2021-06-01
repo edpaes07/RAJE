@@ -40,7 +40,7 @@
                             {
                                 <center>
                                     <a asp-controller="ApplicationUser" asp-action="AmigosComum" asp-route-id="@Model.User.Id">
-                                        <b>@Model.Users.Where(u => Model.Users.Select(u => u.Id).Contains(u.Id)).Count() Amigo(s) em Comum</b>
+                                        <b>@Model.AmigosComumQtd Amigo(s) em Comum</b>
                                     </a>
                                 </center>
                             }

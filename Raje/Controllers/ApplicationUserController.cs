@@ -220,6 +220,8 @@ namespace Raje.Controllers
 
             IEnumerable<ApplicationUser> usersAmigos = _db.ApplicationUser.ToList().Where(user => friendIds.Contains(user.Id));
 
+            int amigosComumQtd = GetAmigosComum(id).Count;
+
             List<Avaliacao> avalicoes = _db.Avaliacoes
                                            .Include(a => a.Filme)
                                            .Include(a => a.Livro)
@@ -233,7 +235,8 @@ namespace Raje.Controllers
                 Users = users.ToList(),
                 Amigos = usersAmigos.ToList(),
                 User = user,
-                Avaliacoes = avalicoes
+                Avaliacoes = avalicoes,
+                AmigosComumQtd = amigosComumQtd
             };
 
             return View(retorno);
@@ -400,7 +403,27 @@ namespace Raje.Controllers
         {
             string currentUserId = _userManager.GetUserId(User);
 
+            var comumFriends = GetAmigosComum(id);
+
             ApplicationUser user = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
+
+            if (nome != null)
+                comumFriends = comumFriends.Where(user => user.FullName.ToLower().Contains(nome.ToLower())).ToList();
+
+
+            ListagemViewModel retorno = new()
+            {
+                Users = comumFriends.ToList(),
+                User = user
+            };
+
+            return View(retorno);
+        }
+
+        //GET - AMIGO EM COMUM
+        public List<ApplicationUser> GetAmigosComum(string id)
+        {
+            string currentUserId = _userManager.GetUserId(User);
 
             List<Amigo> friendsByCurrentUser = _db.Amigos.Where(a => a.Ativo && (a.UserId == currentUserId || a.AmigoId == currentUserId)).ToList();
 
@@ -415,17 +438,7 @@ namespace Raje.Controllers
 
             var comumFriends = _db.ApplicationUser.Where(u => u.Id != currentUserId && u.Id != id && comumFriendIds.Contains(u.Id));
 
-            if (nome != null)
-                comumFriends = comumFriends.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
-
-
-            ListagemViewModel retorno = new()
-            {
-                Users = comumFriends.ToList(),
-                User = user
-            };
-
-            return View(retorno);
+            return comumFriends.ToList();
         }
     }
 }

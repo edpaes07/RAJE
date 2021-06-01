@@ -27,5 +27,7 @@ namespace Raje.Models.ViewModels
         public List<ApplicationUser> Amigos { get; set; }
 
         public List<Avaliacao> Avaliacoes { get; set; }
+
+        public int AmigosComumQtd { get; set; }
     }
 }
