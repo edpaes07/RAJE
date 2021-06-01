@@ -1,7 +1,19 @@
 ﻿@model Raje.Models.Serie
 
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 @{
     ViewData["Title"] = "Deletar Série";
+    <p>&nbsp;</p>
+    <center><h3>Deletar Série @Model.Titulo</h3> </center>
+}
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
 }
 
 <form method="post">

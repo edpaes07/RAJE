@@ -1,7 +1,19 @@
 ﻿@model Raje.Models.Livro
 
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
+}
+
 @{
     ViewData["Title"] = "Deletar Livro";
+    <p>&nbsp;</p>
+    <center><h3>Deletar Livro @Model.Titulo</h3> </center>
 }
 
 <form method="post">

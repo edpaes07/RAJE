@@ -356,6 +356,8 @@ namespace Raje.Controllers
                 id = _userManager.GetUserId(User);
             }
 
+            ApplicationUser user = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
+
             IEnumerable<Amigo> amigos = _db.Amigos.Where(a => a.Ativo).ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
@@ -366,7 +368,14 @@ namespace Raje.Controllers
             if (nome != null)
                 users = users.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
 
-            return View(users);
+
+            ListagemViewModel retorno = new()
+            {
+                Users = users.ToList(),
+                User = user
+            };
+
+            return View(retorno);
         }
 
         //GET - SOLICITACOES
@@ -384,6 +393,39 @@ namespace Raje.Controllers
                 users = users.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
 
             return View(users);
+        }
+
+        //GET - AMIGO EM COMUM
+        public IActionResult AmigosComum(string id, string nome)
+        {
+            string currentUserId = _userManager.GetUserId(User);
+
+            ApplicationUser user = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
+
+            List<Amigo> friendsByCurrentUser = _db.Amigos.Where(a => a.Ativo && (a.UserId == currentUserId || a.AmigoId == currentUserId)).ToList();
+
+            var friendCurrentUserIds = friendsByCurrentUser.Where(u => u.Id.ToString() != currentUserId).Select(a => a.AmigoId);
+            friendCurrentUserIds = friendCurrentUserIds.Concat(friendsByCurrentUser.Where(u => u.Id.ToString() != currentUserId).Select(a => a.UserId));
+
+            List<Amigo> friends = _db.Amigos.Where(a => a.Ativo && (a.UserId == id || a.AmigoId == id)).ToList();
+            var friendIds = friends.Where(u => u.Id.ToString() != id).Select(a => a.AmigoId);
+            friendIds = friendIds.Concat(friends.Where(u => u.Id.ToString() != id).Select(a => a.UserId));
+
+            var comumFriendIds = friendCurrentUserIds.Where(id => friendIds.Contains(id));
+
+            var comumFriends = _db.ApplicationUser.Where(u => u.Id != currentUserId && u.Id != id && comumFriendIds.Contains(u.Id));
+
+            if (nome != null)
+                comumFriends = comumFriends.Where(user => user.FullName.ToLower().Contains(nome.ToLower()));
+
+
+            ListagemViewModel retorno = new()
+            {
+                Users = comumFriends.ToList(),
+                User = user
+            };
+
+            return View(retorno);
         }
     }
 }

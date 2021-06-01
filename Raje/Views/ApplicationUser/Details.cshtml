@@ -4,10 +4,14 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@using Raje.Utility
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
+}
 
 @{
-    ViewData["Title"] = "Usuário";
+    ViewData["Title"] = Model.User.FullName;
 }
 
 <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AdicionarAmigo" method="post">
@@ -32,6 +36,14 @@
                             <b>Celular:</b> @Model.User.PhoneNumber<br>
                             <b>Cidade:</b> @Model.User.City<br>
                             <b>Estado:</b> @Model.User.State<br>
+                            @if (Model.User.Id != UserManager.GetUserId(User))
+                            {
+                                <center>
+                                    <a asp-controller="ApplicationUser" asp-action="AmigosComum" asp-route-id="@Model.User.Id">
+                                        <b>@Model.Users.Where(u => Model.Users.Select(u => u.Id).Contains(u.Id)).Count() Amigo(s) em Comum</b>
+                                    </a>
+                                </center>
+                            }
                         </p>
                     </font>
                     <p></p>

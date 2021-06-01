@@ -6,8 +6,13 @@
 @inject UserManager<IdentityUser> UserManager
 @using Raje.Utility
 
+@if (!SignInManager.IsSignedIn(User))
+{
+    <script>window.location.href = '/Identity/Account/Login';</script>
+}
+
 @{
-    ViewData["Title"] = "Série";
+    ViewData["Title"] = Model.Serie.Titulo;
 }
 
 <form enctype="multipart/form-data" asp-controller="Series" asp-action="Avaliar" method="post">

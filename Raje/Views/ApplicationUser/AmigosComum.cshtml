@@ -11,15 +11,15 @@
 @model Raje.Models.ViewModels.ListagemViewModel
 
 @{
-    ViewData["Title"] = "Amigos";
+    ViewData["Title"] = "Amigos em Comum";
     <p>&nbsp;</p>
-    <center><h3>Amigos de @Model.User.FullName</h3></center>
+    <center><h3>Amigos em Comum com @Model.User.FullName</h3></center>
 }
 
 <div class="container">
     <div class="text-center">
         <p>&nbsp;</p>
-        <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Amigos" method="post">
+        <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AmigosComum" method="post">
             <table>
                 <tr>
                     <th>
