@@ -13,6 +13,7 @@ namespace Raje.Models
         [Required]
         [Display(Name = "Amigo")]
         public string AmigoId { get; set; }
+
         [ForeignKey("AmigoId")]
         public virtual ApplicationUser Friend { get; set; }
 

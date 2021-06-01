@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Raje.Data;
 using Raje.Models;
 using Raje.Models.ViewModels;
@@ -29,7 +30,6 @@ namespace Raje.Controllers
                 var filmes = _db.Filmes.Where(filme => filme.Ativo);
                 var series = _db.Series.Where(serie => serie.Ativo);
                 var livros = _db.Livros.Where(livro => livro.Ativo);
-                List<Amigo> amigos = _db.Amigos.ToList();
 
                 if (nome != null)
                 {
@@ -37,16 +37,23 @@ namespace Raje.Controllers
                     livros = livros.Where(livro => livro.Titulo.ToLower().Contains(nome.ToLower()));
                     series = series.Where(serie => serie.Titulo.ToLower().Contains(nome.ToLower()));
                 }
-                    
-                var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
-                amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
 
-                List<ApplicationUser> friends = _db.ApplicationUser.Where(user => amigoIds.Contains(user.Id)).ToList();
                 ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
 
-                var friendIds = friends.Select(friend => friend.Id);
+                List<Amigo> amigos = _db.Amigos.Include(a => a.Friend).Where(a => a.UserId == id || a.AmigoId == id).ToList();
 
-                var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(u.Id));
+                var amigosIds = amigos.Select(a => a.AmigoId);
+                amigosIds = amigosIds.Concat(amigos.Select(a => a.UserId));
+
+                List<ApplicationUser> users = _db.ApplicationUser.Where(u => u.Id != id && !amigosIds.Contains(u.Id)).ToList();
+
+                List<Avaliacao> avalicoes = _db.Avaliacoes
+                                               .Include(a => a.Filme)
+                                               .Include(a => a.Livro)
+                                               .Include(a => a.Serie)
+                                               .Include(a => a.User)
+                                               .Where(a => a.UserId == id)
+                                               .ToList();
 
                 ListagemViewModel retorno = new()
                 {
@@ -54,7 +61,7 @@ namespace Raje.Controllers
                     Livros = livros.ToList(),
                     Series = series.ToList(),
                     Users = users.ToList(),
-                    Amigos = friends.ToList(),
+                    Amigos = amigos.ToList(),
                     User = user
                 };
 

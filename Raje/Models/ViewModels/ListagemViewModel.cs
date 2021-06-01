@@ -24,7 +24,7 @@ namespace Raje.Models.ViewModels
 
         public List<ApplicationUser> Users { get; set; }
 
-        public List<ApplicationUser> Amigos { get; set; }
+        public List<Amigo> Amigos { get; set; }
 
         public List<Avaliacao> Avaliacoes { get; set; }
     }

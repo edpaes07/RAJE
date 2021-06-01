@@ -202,22 +202,16 @@ namespace Raje.Controllers
         //GET - Details
         public IActionResult Details(string id)
         {
-            if (id == null)
-            {
-                string userId = _userManager.GetUserId(User);
-            }
+            string userId = _userManager.GetUserId(User);
 
-            List<Amigo> amigos = _db.Amigos.Where(a => a.Ativo).ToList();
-
-            var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
-            amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
-
-            List<ApplicationUser> friends = _db.ApplicationUser.Where(user => amigoIds.Contains(user.Id)).ToList();
             ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
 
-            var friendIds = friends.Select(friend => friend.Id);
+            List<Amigo> amigos = _db.Amigos.Include(a => a.Friend).Where(a => a.UserId == id || a.AmigoId == id).ToList();
 
-            var users = _db.ApplicationUser.Where(u => u.Id != user.Id && !friendIds.Contains(user.Id)).ToList();
+            var amigosIds = amigos.Select(a => a.AmigoId);
+            amigosIds = amigosIds.Concat(amigos.Select(a => a.UserId));
+
+            var users = _db.ApplicationUser.Where(u => u.Id != userId && !amigosIds.Contains(userId));
 
             List<Avaliacao> avalicoes = _db.Avaliacoes
                                            .Include(a => a.Filme)
@@ -229,8 +223,8 @@ namespace Raje.Controllers
 
             ListagemViewModel retorno = new()
             {
-                Users = users,
-                Amigos = friends,
+                Users = users.ToList(),
+                Amigos = amigos,
                 User = user,
                 Avaliacoes = avalicoes
             };
