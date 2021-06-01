@@ -46,16 +46,16 @@
                     <p>&nbsp;</p>
                 </div>
                 <div class="border-left p-3 col-lg-7">
-                    @if (Model.Amigos.Where(a => a.Ativo).Any())
+                    @if (Model.Amigos.Any())
                     {
                         <div class="row">
-                            <div class="col-lg-12"><h3>@Model.Amigos.Where(a => a.Ativo).Count() Amigo(s)</h3></div>
-                            @foreach (var user in Model.Amigos.Where(a => a.Ativo).Take(3))
+                            <div class="col-lg-12"><h3>@Model.Amigos.Count() Amigo(s)</h3></div>
+                            @foreach (var user in Model.Amigos.Take(3))
                             {
                                 <div class="col-lg-4">
                                     <p></p>
-                                    <center><h6>@user.Friend.FullName</h6></center>
-                                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Friend.Id"><img src="~/images/@user.Friend.ImagemURL" alt="@user.Friend.ImagemURL" style="width: 170px; height: 190px" /></a>
+                                    <center><h6>@user.FullName</h6></center>
+                                    <a asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@user.Id"><img src="~/images/@user.ImagemURL" alt="@user.ImagemURL" style="width: 170px; height: 190px" /></a>
                                     <p></p>
                                 </div>
                             }

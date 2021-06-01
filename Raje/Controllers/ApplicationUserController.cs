@@ -204,14 +204,21 @@ namespace Raje.Controllers
         {
             string userId = _userManager.GetUserId(User);
 
-            ApplicationUser user = _db.ApplicationUser.Where(user => user.Id == id).FirstOrDefault();
+            ApplicationUser user = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
 
-            List<Amigo> amigos = _db.Amigos.Include(a => a.Friend).Where(a => a.UserId == id || a.AmigoId == id).ToList();
+            List<Amigo> amigos = _db.Amigos.Where(a => a.UserId == userId || a.AmigoId == userId).ToList();
 
-            var amigosIds = amigos.Select(a => a.AmigoId);
-            amigosIds = amigosIds.Concat(amigos.Select(a => a.UserId));
+            var friendCurrentUserIds = amigos.Where(u => u.Id.ToString() != userId).Select(a => a.AmigoId);
+            friendCurrentUserIds = friendCurrentUserIds.Concat(amigos.Where(u => u.Id.ToString() != userId).Select(a => a.UserId));
 
-            var users = _db.ApplicationUser.Where(u => u.Id != userId && !amigosIds.Contains(userId));
+            IEnumerable<ApplicationUser> users = _db.ApplicationUser.ToList().Where(u => !friendCurrentUserIds.Contains(u.Id));
+
+            amigos = _db.Amigos.Where(a => a.Ativo).ToList();
+
+            var friendIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
+            friendIds = friendIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
+
+            IEnumerable<ApplicationUser> usersAmigos = _db.ApplicationUser.ToList().Where(user => friendIds.Contains(user.Id));
 
             List<Avaliacao> avalicoes = _db.Avaliacoes
                                            .Include(a => a.Filme)
@@ -224,7 +231,7 @@ namespace Raje.Controllers
             ListagemViewModel retorno = new()
             {
                 Users = users.ToList(),
-                Amigos = amigos,
+                Amigos = usersAmigos.ToList(),
                 User = user,
                 Avaliacoes = avalicoes
             };
@@ -349,7 +356,7 @@ namespace Raje.Controllers
                 id = _userManager.GetUserId(User);
             }
 
-            IEnumerable<Amigo> amigos = _db.Amigos.ToList();
+            IEnumerable<Amigo> amigos = _db.Amigos.Where(a => a.Ativo).ToList();
 
             var amigoIds = amigos.Where(amigo => amigo.UserId == id).Select(amigo => amigo.AmigoId);
             amigoIds = amigoIds.Concat(amigos.Where(amigo => amigo.AmigoId == id).Select(amigo => amigo.UserId));
