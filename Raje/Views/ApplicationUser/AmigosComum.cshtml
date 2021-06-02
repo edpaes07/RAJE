@@ -51,30 +51,37 @@
                         Nome
                     </th>
                     <th>
-                        Cidade
+                        Idade
                     </th>
                     <th>
-                        Estado
+                        Local
                     </th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model.Users)
                 {
-                    <tr onclick="window.location.href = '/ApplicationUser/Details/@item.Id'">
+                <tr onclick="window.location.href = '/ApplicationUser/Details/@item.Id'">
+                    <td>
+                        <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 80px" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    @if (DateTime.Now.Year - item.Birthdate.Year > 0)
+                    {
+                        var today = DateTime.Now;
+                        var birthdate = item.Birthdate;
+                        var age = today.Year - birthdate.Year;
+                        if (birthdate > today.AddYears(-age)) age--;
                         <td>
-                            <img src="~/images/@item.ImagemURL" alt="@item.ImagemURL" style="width: 70px; height: 80px" />
+                            @age anos
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.State)
-                        </td>
-                    </tr>
+                    }
+                    <td>
+                        @Html.DisplayFor(modelItem => item.City)<br />@Html.DisplayFor(modelItem => item.State)
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

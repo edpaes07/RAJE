@@ -52,10 +52,10 @@
                         Nome
                     </th>
                     <th>
-                        Cidade
+                        Idade
                     </th>
                     <th>
-                        Estado
+                        Local
                     </th>
                 </tr>
             </thead>
@@ -69,11 +69,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.FullName)
                         </td>
+                        @if (DateTime.Now.Year - item.Birthdate.Year > 0)
+                        {
+                            var today = DateTime.Now;
+                            var birthdate = item.Birthdate;
+                            var age = today.Year - birthdate.Year;
+                            if (birthdate > today.AddYears(-age)) age--;
+                            <td>
+                                @age anos 
+                            </td>
+                        }
                         <td>
-                            @Html.DisplayFor(modelItem => item.City)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.State)
+                            @Html.DisplayFor(modelItem => item.City)<br />@Html.DisplayFor(modelItem => item.State)
                         </td>
                     </tr>
                 }
