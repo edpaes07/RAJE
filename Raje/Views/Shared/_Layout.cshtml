@@ -19,7 +19,35 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" href="/"><img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width="80" height="30"></a>
+                <a class="navbar-brand" style="width: 10vh" href="/"><img src="https://www.pngkit.com/png/full/365-3650259_raje-raje-radio-logo.png" alt="some text" width="80" height="30"></a>
+
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="Index" method="post">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>
+                                        <div class="navbar-nav flex-grow-1" style="padding-bottom: 3px">
+                                            <br>
+                                            <input style="width: 145px" type="text" id="nome" name="nome" placeholder="Buscar Membros" class="form-control">
+                                        </div>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                    <th>
+                                        <div class="navbar-nav flex-grow-1" style="padding-bottom: 3px">
+                                            <br>
+                                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                                            <button style="width: 45px" id="Pesquisar" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                        </div>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                }
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,30 +57,29 @@
 
                     @if (SignInManager.IsSignedIn(User))
                     {
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@UserManager.GetUserAsync(User).Result.Id">Meu Perfil</a>
-                    </li>
-                    @if (User.IsInRole(WC.AdminRole))
-                    {
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Gerenciar
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Upsert">Criar Admin</a>
-                            </div>
-                        </li>
-                    }
-                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a></li>
-                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Séries</a></li>
-                    <li><a class="nav-link text-dark" asp-area="" asp-controller="Livros" asp-action="Index">Livros</a></li>
-                    <li><a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Index">Membros</a></li>
-                    <li><a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="SolicitacoesAmizade">Solicitações de Amizade</a></li>
-                </ul>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item" style="padding-left: 100px">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Details" asp-route-id="@UserManager.GetUserAsync(User).Result.Id">Perfil</a>
+                            </li>
+                            @if (User.IsInRole(WC.AdminRole))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Gerenciar
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="Upsert">Criar Admin</a>
+                                    </div>
+                                </li>
+                            }
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Filmes" asp-action="Index">Filmes</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Series" asp-action="Index">Séries</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Livros" asp-action="Index">Livros</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="ApplicationUser" asp-action="SolicitacoesAmizade">Solicitações</a></li>
+                        </ul>
                     }
                 </div>
             </div>
