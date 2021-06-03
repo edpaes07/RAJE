@@ -33,6 +33,7 @@ namespace Raje.Models
         public bool Ativo { get; set; }
 
         [TempData]
+        [NotMapped]
         public string StatusMessage { get; set; }
 
         public static implicit operator List<object>(Filme v)

@@ -28,6 +28,7 @@ namespace Raje.Models
         public bool Ativo { get; set; }
 
         [TempData]
+        [NotMapped]
         public string StatusMessage { get; set; }
     }
 }
