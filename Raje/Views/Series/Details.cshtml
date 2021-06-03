@@ -16,6 +16,7 @@
 }
 
 <form enctype="multipart/form-data" asp-controller="Series" asp-action="Avaliar" method="post">
+    <partial name="_StatusMessage" model="Model.Serie.StatusMessage" />
     <input asp-for="@Model.Serie.Id" id="Id" name="Id" class="form-control" hidden />
     <br />
     <br />

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Raje.Models
 {
@@ -30,5 +32,8 @@ namespace Raje.Models
         public String Sinopse { get; set; }
 
         public bool Ativo { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
     }
 }

@@ -15,6 +15,7 @@
 }
 
 <form enctype="multipart/form-data" asp-controller="ApplicationUser" asp-action="AdicionarAmigo" method="post">
+    <partial name="_StatusMessage" model="Model.User.StatusMessage" />
     <input asp-for="@Model.User.Id" id="Id" name="Id" class="form-control" hidden />
     <br />
     <br />

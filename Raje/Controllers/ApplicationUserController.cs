@@ -42,7 +42,7 @@ namespace Raje.Controllers
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         [TempData]
-        public string StatusMessageTemp { get; set; }
+        public string StatusMessage { get; set; }
 
         public IActionResult Index(string nome)
         {
@@ -82,7 +82,7 @@ namespace Raje.Controllers
                     City = user.City,
                     State = user.State.ToUpper(),
                     ImagemURL = user.ImagemURL,
-                    StatusMessage = StatusMessageTemp
+                    StatusMessage = StatusMessage
                 };
 
                 return View(userNovo);
@@ -192,7 +192,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
 
                 returnUrl = Url.Content($"~/ApplicationUser/Details/{userInserir.Id}");
-                StatusMessageTemp = "Alterações realizadas com sucesso!";
+                StatusMessage = "Alterações realizadas com sucesso!";
             }
 
             return LocalRedirect(returnUrl);
@@ -238,6 +238,8 @@ namespace Raje.Controllers
                 Avaliacoes = avalicoes,
                 AmigosComumQtd = amigosComumQtd
             };
+
+            user.StatusMessage = StatusMessage;
 
             return View(retorno);
         }
@@ -295,7 +297,8 @@ namespace Raje.Controllers
                 _db.SaveChanges();
             }
 
-            StatusMessageTemp = "Pedido de amizade enviado com sucesso!";
+            StatusMessage = "Pedido de amizade enviado com sucesso!";
+
             return LocalRedirect(returnUrl);
         }
 
@@ -321,7 +324,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
             }
 
-            StatusMessageTemp = "Pedido de amizade aceito com sucesso!";
+            StatusMessage = "Pedido de amizade aceito com sucesso!";
             return LocalRedirect(returnUrl);
         }
 
@@ -346,7 +349,7 @@ namespace Raje.Controllers
                 _db.SaveChanges();
             }
 
-            StatusMessageTemp = "Pedido de amizade aceito com sucesso!";
+            StatusMessage = "Pedido de amizade aceito com sucesso!";
 
             return LocalRedirect(returnUrl);
         }

@@ -23,6 +23,9 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IActionResult Index(string nome)
         {
             IEnumerable<Livro> livros = new List<Livro>();
@@ -121,8 +124,9 @@ namespace Raje.Controllers
                 }
 
                 _db.SaveChanges();
-
+                StatusMessage = "Livro cadastrado com sucesso!\n Pendente aprovação do Administrador.";
             }
+
             return LocalRedirect($"~/Livros/Details/{livroInserir.Id}");
         }
 
@@ -142,6 +146,8 @@ namespace Raje.Controllers
                 Livro = livro,
                 Avaliacoes = avalicoes
             };
+
+            livro.StatusMessage = StatusMessage;
 
             return View(retorno);
         }

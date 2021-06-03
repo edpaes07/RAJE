@@ -22,6 +22,9 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IActionResult Index(string nome)
         {
             IEnumerable<Filme> filmes = new List<Filme>();
@@ -123,8 +126,9 @@ namespace Raje.Controllers
                 }
 
                 _db.SaveChanges();
-              
+                StatusMessage = "Filme cadastrado com sucesso!\n Pendente aprovação do Administrador.";
             }
+
             return LocalRedirect($"~/Filmes/Details/{filmeInserir.Id}");
         }
 
@@ -144,6 +148,8 @@ namespace Raje.Controllers
                 Filme = filme,
                 Avaliacoes = avalicoes
             };
+
+            filme.StatusMessage = StatusMessage;
 
             return View(retorno);
         }

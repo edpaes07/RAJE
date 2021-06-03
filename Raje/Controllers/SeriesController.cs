@@ -23,6 +23,9 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IActionResult Index(string nome)
         {
             IEnumerable<Serie> series = new List<Serie>();
@@ -126,8 +129,9 @@ namespace Raje.Controllers
                 }
 
                 _db.SaveChanges();
-
+                StatusMessage = "Série cadastrada com sucesso!\n Pendente aprovação do Administrador.";
             }
+
             return LocalRedirect($"~/Series/Details/{serieInserir.Id}");
         }
 
@@ -147,6 +151,8 @@ namespace Raje.Controllers
                 Serie = serie,
                 Avaliacoes = avalicoes
             };
+
+            serie.StatusMessage = StatusMessage;
 
             return View(retorno);
         }

@@ -21,6 +21,9 @@ namespace Raje.Controllers
             _userManager = userManager;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public IActionResult Index(string nome)
         {
             string id = _userManager.GetUserId(User);
@@ -71,6 +74,11 @@ namespace Raje.Controllers
                     Amigos = usersAmigos.ToList(),
                     User = user
                 };
+
+                if (_db.Amigos.Where(a => a.AmigoId == id && a.Ativo == false).Any())
+                {
+                    user.StatusMessage = "Você possui solicitações de amizade!";
+                }
 
                 return View(retorno);
             }

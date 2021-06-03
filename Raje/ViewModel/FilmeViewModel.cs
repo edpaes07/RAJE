@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -25,5 +26,8 @@ namespace Raje.ViewModel
         public String Sinopse { get; set; }
 
         public bool Ativo { get; set; }
+
+        [TempData]
+        public string StatusMessage { get; set; }
     }
 }
