@@ -207,6 +207,8 @@ namespace Raje.Controllers
                 _db.SaveChanges();
             }
 
+            StatusMessage = "Avaliação realizada com sucesso!";
+
             return LocalRedirect(returnUrl);
         }
     }
