@@ -280,13 +280,16 @@ namespace Raje.Controllers
         //POST - ENVIAR SOLICITACAO AMIZADE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AdicionarAmigo(string id)
+        public async System.Threading.Tasks.Task<IActionResult> AdicionarAmigo(string id)
         {
             string returnUrl = Url.Content($"~/ApplicationUser/Details/{id}");
 
+            ApplicationUser currentUser = _db.ApplicationUser.Where(u => u.Id == _userManager.GetUserId(User)).FirstOrDefault();
+            ApplicationUser friend = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
+
             Amigo amigo = new()
             {
-                UserId = _userManager.GetUserId(User),
+                UserId = currentUser.Id,
                 AmigoId = id
             };
 
@@ -299,22 +302,27 @@ namespace Raje.Controllers
 
             StatusMessage = "Pedido de amizade enviado com sucesso!";
 
+            await _emailSender.SendEmailAsync(friend.Email, "RAJE - Solicitação de Amizade",
+                        $"Você acabou de receber uma solicitação de amizade do membro {currentUser.FullName}, saiba mais <a href='https://raje.azurewebsites.net/ApplicationUser/SolicitacoesAmizade'>clicando aqui</a>.");
+
             return LocalRedirect(returnUrl);
         }
 
         //POST - ACEITAR SOLICITACAO AMIZADE
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AceitarAmigo(string id)
+        public async System.Threading.Tasks.Task<IActionResult> AceitarAmigo(string id)
         {
             string returnUrl = Url.Content($"~/ApplicationUser/SolicitacoesAmizade");
-            string currentUserId = _userManager.GetUserId(User);
+
+            ApplicationUser currentUser = _db.ApplicationUser.Where(u => u.Id == _userManager.GetUserId(User)).FirstOrDefault();
+            ApplicationUser friend = _db.ApplicationUser.Where(u => u.Id == id).FirstOrDefault();
 
             Amigo amigo = _db.Amigos.ToList()
                                     .Where(amigo =>
                                            amigo.Ativo == false &&
                                            amigo.UserId == id &&
-                                           amigo.AmigoId == currentUserId)
+                                           amigo.AmigoId == currentUser.Id)
                                     .FirstOrDefault();
 
             if (ModelState.IsValid)
@@ -323,6 +331,9 @@ namespace Raje.Controllers
                 _db.Amigos.Update(amigo);
                 _db.SaveChanges();
             }
+
+            await _emailSender.SendEmailAsync(friend.Email, "RAJE - Solicitação de Amizade",
+                        $"O membro {currentUser.FullName} acabou de aceitar sua solicitação de amizade, saiba mais <a href='https://raje.azurewebsites.net/ApplicationUser/Details/{currentUser.Id}'>clicando aqui</a>.");
 
             StatusMessage = "Pedido de amizade aceito com sucesso!";
             return LocalRedirect(returnUrl);
