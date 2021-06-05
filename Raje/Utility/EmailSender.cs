@@ -41,7 +41,7 @@ namespace Raje.Utility
        "From",
        new JObject {
         {"Email", "dotnetmastery@protonmail.com"},
-        {"Name", "Raje NoReply"}
+        {"Name", "Raje"}
        }
       }, {
        "To",
